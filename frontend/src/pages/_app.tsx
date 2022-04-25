@@ -1,7 +1,7 @@
 import type { AppProps } from 'next/app'
-import NextHead from 'next/head'
 import { InjectedConnector, StarknetProvider } from '@starknet-react/core'
-import { ChakraProvider } from '@chakra-ui/react'
+import { ChakraProvider, Box } from '@chakra-ui/react'
+import Header from 'Components/header'
 
 
 function MyApp({ Component, pageProps }: AppProps) {
@@ -10,7 +10,10 @@ function MyApp({ Component, pageProps }: AppProps) {
   return (
     <StarknetProvider autoConnect connectors={connectors}>
       <ChakraProvider>
-        <Component {...pageProps} />
+        <Header />
+        <Box as="main" pt={{ base: 16, md: 32 }} pb={{ base: 24, md: 16 }}>
+          <Component {...pageProps} />
+        </Box>
       </ChakraProvider>
     </StarknetProvider>
   )
