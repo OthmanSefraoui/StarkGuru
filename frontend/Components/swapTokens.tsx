@@ -21,7 +21,7 @@ const SwapTokens = () => {
                     <TagLabel>USDC</TagLabel>
                 </Tag>
             </HStack>
-            <Text>You sell</Text>
+            <Text>You buy</Text>
             <HStack>
                 <NumberInput defaultValue={0.0} size="lg" width={400}>
                     <NumberInputField />

@@ -18,10 +18,9 @@ import {
   TabPanel,
   Stack,
   Box,
-  Tag, 
+  Tag,
   TagLabel,
-  Avatar, 
-  StackDivider
+  Avatar
 } from '@chakra-ui/react';
 import SwapTokens from 'Components/swapTokens';
 import { useStarknet, InjectedConnector } from '@starknet-react/core';
@@ -68,7 +67,7 @@ const Home: NextPage = () => {
                     <Text>Limit Price</Text>
                     <HStack>
                       <NumberInput defaultValue={0.0} size="lg" width={400}>
-                        <NumberInputField/>
+                        <NumberInputField />
                       </NumberInput>
                       <Tag size='lg' colorScheme='teal' borderRadius='full'>
                         <Avatar
@@ -88,6 +87,58 @@ const Home: NextPage = () => {
             <Button colorScheme='teal' size="lg">
               Swap Tokens
             </Button>
+            <Divider />
+            <Heading pt={8} size="md">Current Limit Order</Heading>
+            <Box
+              p={6}
+              w={'full'}
+              bg={'white'}
+              boxShadow={"md"}
+              rounded={'md'}
+              pos={'relative'}
+              zIndex={1}>
+              <Stack>
+                <HStack>
+                  <Text>You sell: 1500</Text>
+                  <Tag size='lg' colorScheme='teal' borderRadius='full'>
+                    <Avatar
+                      src='/usdc.png'
+                      size='xs'
+                      name='usdc'
+                      ml={-1}
+                      mr={2}
+                    />
+                    <TagLabel>USDC</TagLabel>
+                  </Tag>
+                </HStack>
+                <HStack>
+                  <Text>You buy: 1500</Text>
+                  <Tag size='lg' colorScheme='teal' borderRadius='full'>
+                    <Avatar
+                      src='/ether.png'
+                      size='xs'
+                      name='ether'
+                      ml={-1}
+                      mr={2}
+                    />
+                    <TagLabel>ETH</TagLabel>
+                  </Tag>
+                </HStack>
+                <HStack>
+                  <Text>Limit Price: 1390</Text>
+                  <Tag size='lg' colorScheme='teal' borderRadius='full'>
+                    <Avatar
+                      src='/usdc.png'
+                      size='xs'
+                      name='usdc'
+                      ml={-1}
+                      mr={2}
+                    />
+                    <TagLabel>USDC</TagLabel>
+                  </Tag>
+                </HStack>
+              </Stack>
+            </Box>
           </Stack>
         </Box>
       }
