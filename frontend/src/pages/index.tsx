@@ -22,7 +22,6 @@ import {
   TagLabel,
   Avatar
 } from '@chakra-ui/react';
-import SwapTokens from 'Components/swapTokens';
 import { useStarknet, InjectedConnector } from '@starknet-react/core';
 import { MdAccountBalanceWallet } from 'react-icons/md';
 import { SP } from 'next/dist/shared/lib/utils';
