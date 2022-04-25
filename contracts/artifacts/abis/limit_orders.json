@@ -1,5 +1,47 @@
 [
     {
+        "members": [
+            {
+                "name": "pool_id",
+                "offset": 0,
+                "type": "felt"
+            },
+            {
+                "name": "price",
+                "offset": 1,
+                "type": "felt"
+            },
+            {
+                "name": "amount",
+                "offset": 2,
+                "type": "felt"
+            },
+            {
+                "name": "token",
+                "offset": 3,
+                "type": "felt"
+            },
+            {
+                "name": "order_type",
+                "offset": 4,
+                "type": "felt"
+            },
+            {
+                "name": "executed",
+                "offset": 5,
+                "type": "felt"
+            },
+            {
+                "name": "order_owner",
+                "offset": 6,
+                "type": "felt"
+            }
+        ],
+        "name": "order_core",
+        "size": 7,
+        "type": "struct"
+    },
+    {
         "data": [
             {
                 "name": "order_id",
@@ -29,6 +71,52 @@
         "keys": [],
         "name": "order_created",
         "type": "event"
+    },
+    {
+        "inputs": [
+            {
+                "name": "order_id",
+                "type": "felt"
+            }
+        ],
+        "name": "get_price",
+        "outputs": [
+            {
+                "name": "price",
+                "type": "felt"
+            }
+        ],
+        "stateMutability": "view",
+        "type": "function"
+    },
+    {
+        "inputs": [
+            {
+                "name": "order_id",
+                "type": "felt"
+            }
+        ],
+        "name": "get_order",
+        "outputs": [
+            {
+                "name": "order",
+                "type": "order_core"
+            }
+        ],
+        "stateMutability": "view",
+        "type": "function"
+    },
+    {
+        "inputs": [],
+        "name": "get_number_of_orders",
+        "outputs": [
+            {
+                "name": "get_number_of_orders",
+                "type": "felt"
+            }
+        ],
+        "stateMutability": "view",
+        "type": "function"
     },
     {
         "inputs": [
