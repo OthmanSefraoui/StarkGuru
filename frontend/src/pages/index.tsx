@@ -20,19 +20,27 @@ import {
   Box,
   Tag,
   TagLabel,
-  Avatar
+  Avatar,
 } from '@chakra-ui/react';
-import { useStarknet, InjectedConnector } from '@starknet-react/core';
+import {
+  useStarknet,
+  InjectedConnector,
+  useStarknetInvoke,
+} from '@starknet-react/core';
 import { MdAccountBalanceWallet } from 'react-icons/md';
 import { SP } from 'next/dist/shared/lib/utils';
-import { useState } from 'react';
+import { useCallback, useState } from 'react';
 // import { Tag, Avatar, Text, TagLabel, NumberInput, NumberInputField, HStack, Stack, Spacer } from '@chakra-ui/react'
 import TokenABalance from 'Components/tokenABalance';
 import TokenBBalance from 'Components/tokenBBalance';
 import React, { useMemo } from 'react';
 import { useStarknetCall } from '@starknet-react/core';
-import { uint256ToBN } from 'starknet/dist/utils/uint256';
-import { useAMMContract, useTokenAContract, useTokenBContract } from '~/hooks/contracts';
+import { bnToUint256, uint256ToBN } from 'starknet/dist/utils/uint256';
+import {
+  useAMMContract,
+  useTokenAContract,
+  useTokenBContract,
+} from '~/hooks/contracts';
 
 const Home: NextPage = () => {
   const { account, connect } = useStarknet();
@@ -42,12 +50,25 @@ const Home: NextPage = () => {
   const [limit, setLimit] = useState('');
   const [showLimit, setShowLimit] = useState(false);
 
-  function swapTokens() {
-    //TODO
-  }
+  const ammContract = useAMMContract().contract;
+  const tokenAAddress = useTokenAContract().contract?.address;
+  const tokenBAddress = useTokenBContract().contract?.address;
+
+  const { loading, error, reset, invoke } = useStarknetInvoke({
+    contract: ammContract,
+    method: 'swap',
+  });
+
+  const onSwapTokens = useCallback(() => {
+    reset();
+    const poolNb = 1;
+    const token = tokenAAddress;
+    const amountToUint = bnToUint256(sell);
+    invoke({ args: [poolNb, token, amountToUint] });
+  }, []);
 
   function putLimitOrder() {
-    setShowLimit(true)
+    setShowLimit(true);
   }
 
   function cancelCurrentOrder() {
@@ -55,13 +76,8 @@ const Home: NextPage = () => {
   }
 
   //Price A
-  const { contract } = useAMMContract();
-  const tokenAAddress = useTokenAContract().contract?.address;
-
-  console.log(tokenAAddress);
-
   const resp1 = useStarknetCall({
-    contract,
+    contract: ammContract,
     method: 'get_price',
     args: [1, tokenAAddress],
   });
@@ -80,11 +96,10 @@ const Home: NextPage = () => {
   }, [resp1.data, resp1.loading, resp1.error]);
 
   //Price B
-  const tokenAddressB = useTokenBContract().contract?.address;
   const resp2 = useStarknetCall({
-    contract,
+    contract: ammContract,
     method: 'get_price',
-    args: [1, tokenAddressB],
+    args: [1, tokenBAddress],
   });
 
   const priceB = useMemo(() => {
@@ -102,10 +117,19 @@ const Home: NextPage = () => {
 
   return (
     <Container maxW="container.sm">
-      {account == null ?
+      {account == null ? (
         <Container centerContent p={8}>
-          <Button colorScheme={"orange"} padding={8} size={"lg"} rightIcon={<MdAccountBalanceWallet />} onClick={() => connect(new InjectedConnector())}>Connect with Argent X</Button>
-        </Container> :
+          <Button
+            colorScheme={'orange'}
+            padding={8}
+            size={'lg'}
+            rightIcon={<MdAccountBalanceWallet />}
+            onClick={() => connect(new InjectedConnector())}
+          >
+            Connect with Argent X
+          </Button>
+        </Container>
+      ) : (
         <Box
           role={'group'}
           p={6}
@@ -114,9 +138,10 @@ const Home: NextPage = () => {
           boxShadow={'2xl'}
           rounded={'lg'}
           pos={'relative'}
-          zIndex={1}>
+          zIndex={1}
+        >
           <Stack>
-            <Tabs size={"lg"} isFitted colorScheme={"teal"}>
+            <Tabs size={'lg'} isFitted colorScheme={'teal'}>
               <TabList>
                 <Tab>Swap</Tab>
                 <Tab>Limit</Tab>
@@ -128,13 +153,15 @@ const Home: NextPage = () => {
                     <Text>You sell</Text>
                     <HStack>
                       <NumberInput defaultValue={0.0} size="lg" width={400}>
-                        <NumberInputField onChange={(e) => setSell(e.currentTarget.value)} />
+                        <NumberInputField
+                          onChange={(e) => setSell(e.currentTarget.value)}
+                        />
                       </NumberInput>
-                      <Tag size='lg' colorScheme='teal' borderRadius='full'>
+                      <Tag size="lg" colorScheme="teal" borderRadius="full">
                         <Avatar
-                          src='/ether.png'
-                          size='xs'
-                          name='eth'
+                          src="/ether.png"
+                          size="xs"
+                          name="eth"
                           ml={-1}
                           mr={2}
                         />
@@ -147,13 +174,15 @@ const Home: NextPage = () => {
                     </HStack>
                     <Text>You buy</Text>
                     <HStack>
-                      <Text size='xl' width={400}>{(sell * priceA) / priceB}</Text>
+                      <Text size="xl" width={400}>
+                        {(sell * priceA) / priceB}
+                      </Text>
 
-                      <Tag size='lg' colorScheme='teal' borderRadius='full'>
+                      <Tag size="lg" colorScheme="teal" borderRadius="full">
                         <Avatar
-                          src='/StarkNet-Icon.png'
-                          size='xs'
-                          name='stark'
+                          src="/StarkNet-Icon.png"
+                          size="xs"
+                          name="stark"
                           ml={-1}
                           mr={2}
                         />
@@ -164,7 +193,7 @@ const Home: NextPage = () => {
                       <Spacer />
                       <TokenBBalance />
                     </HStack>
-                    <Button onClick={swapTokens} colorScheme='teal' size="lg">
+                    <Button onClick={onSwapTokens} colorScheme="teal" size="lg">
                       Swap Tokens
                     </Button>
                   </Stack>
@@ -175,13 +204,15 @@ const Home: NextPage = () => {
                       <Text>You sell</Text>
                       <HStack>
                         <NumberInput defaultValue={0.0} size="lg" width={400}>
-                          <NumberInputField onChange={(e) => setSell(e.currentTarget.value)} />
+                          <NumberInputField
+                            onChange={(e) => setSell(e.currentTarget.value)}
+                          />
                         </NumberInput>
-                        <Tag size='lg' colorScheme='teal' borderRadius='full'>
+                        <Tag size="lg" colorScheme="teal" borderRadius="full">
                           <Avatar
-                            src='/ether.png'
-                            size='xs'
-                            name='eth'
+                            src="/ether.png"
+                            size="xs"
+                            name="eth"
                             ml={-1}
                             mr={2}
                           />
@@ -194,13 +225,15 @@ const Home: NextPage = () => {
                       </HStack>
                       <Text>You buy</Text>
                       <HStack>
-                        <Text size='xl' width={400}>{(sell * priceA) / priceB}</Text>
+                        <Text size="xl" width={400}>
+                          {(sell * priceA) / priceB}
+                        </Text>
 
-                        <Tag size='lg' colorScheme='teal' borderRadius='full'>
+                        <Tag size="lg" colorScheme="teal" borderRadius="full">
                           <Avatar
-                            src='/StarkNet-Icon.png'
-                            size='xs'
-                            name='stark'
+                            src="/StarkNet-Icon.png"
+                            size="xs"
+                            name="stark"
                             ml={-1}
                             mr={2}
                           />
@@ -215,20 +248,26 @@ const Home: NextPage = () => {
                     <Text>Limit Price</Text>
                     <HStack>
                       <NumberInput defaultValue={0.0} size="lg" width={400}>
-                        <NumberInputField onChange={(e) => setLimit(e.currentTarget.value)} />
+                        <NumberInputField
+                          onChange={(e) => setLimit(e.currentTarget.value)}
+                        />
                       </NumberInput>
-                      <Tag size='lg' colorScheme='teal' borderRadius='full'>
+                      <Tag size="lg" colorScheme="teal" borderRadius="full">
                         <Avatar
-                          src='/ether.png'
-                          size='xs'
-                          name='eth'
+                          src="/ether.png"
+                          size="xs"
+                          name="eth"
                           ml={-1}
                           mr={2}
                         />
                         <TagLabel>ETH</TagLabel>
                       </Tag>
                     </HStack>
-                    <Button onClick={putLimitOrder} colorScheme='teal' size="lg">
+                    <Button
+                      onClick={putLimitOrder}
+                      colorScheme="teal"
+                      size="lg"
+                    >
                       Put Limit Order
                     </Button>
                   </Stack>
@@ -238,24 +277,27 @@ const Home: NextPage = () => {
             <Divider />
             {showLimit && (
               <Stack>
-                <Heading pt={8} size="md">Current Limit Order</Heading>
+                <Heading pt={8} size="md">
+                  Current Limit Order
+                </Heading>
 
                 <Box
                   p={6}
                   w={'full'}
                   bg={'white'}
-                  boxShadow={"md"}
+                  boxShadow={'md'}
                   rounded={'md'}
                   pos={'relative'}
-                  zIndex={1}>
+                  zIndex={1}
+                >
                   <Stack>
                     <HStack>
                       <Text>You sell: {sell}</Text>
-                      <Tag size='lg' colorScheme='teal' borderRadius='full'>
+                      <Tag size="lg" colorScheme="teal" borderRadius="full">
                         <Avatar
-                          src='/ether.png'
-                          size='xs'
-                          name='eth'
+                          src="/ether.png"
+                          size="xs"
+                          name="eth"
                           ml={-1}
                           mr={2}
                         />
@@ -264,11 +306,11 @@ const Home: NextPage = () => {
                     </HStack>
                     <HStack>
                       <Text>You buy: {(sell * priceA) / priceB}</Text>
-                      <Tag size='lg' colorScheme='teal' borderRadius='full'>
+                      <Tag size="lg" colorScheme="teal" borderRadius="full">
                         <Avatar
-                          src='/StarkNet-Icon.png'
-                          size='xs'
-                          name='stark'
+                          src="/StarkNet-Icon.png"
+                          size="xs"
+                          name="stark"
                           ml={-1}
                           mr={2}
                         />
@@ -277,11 +319,11 @@ const Home: NextPage = () => {
                     </HStack>
                     <HStack>
                       <Text>Limit Price: {limit}</Text>
-                      <Tag size='lg' colorScheme='teal' borderRadius='full'>
+                      <Tag size="lg" colorScheme="teal" borderRadius="full">
                         <Avatar
-                          src='/ether.png'
-                          size='xs'
-                          name='eth'
+                          src="/ether.png"
+                          size="xs"
+                          name="eth"
                           ml={-1}
                           mr={2}
                         />
@@ -289,8 +331,12 @@ const Home: NextPage = () => {
                       </Tag>
                     </HStack>
                     <HStack>
-                      <Spacer/>
-                      <Button onClick={cancelCurrentOrder} colorScheme='teal' size="lg">
+                      <Spacer />
+                      <Button
+                        onClick={cancelCurrentOrder}
+                        colorScheme="teal"
+                        size="lg"
+                      >
                         Cancel Order
                       </Button>
                     </HStack>
@@ -300,7 +346,7 @@ const Home: NextPage = () => {
             )}
           </Stack>
         </Box>
-      }
+      )}
     </Container>
   );
 };
