@@ -55,6 +55,39 @@
         "type": "function"
     },
     {
+        "inputs": [
+            {
+                "name": "pool_id",
+                "type": "felt"
+            },
+            {
+                "name": "token",
+                "type": "felt"
+            }
+        ],
+        "name": "get_price",
+        "outputs": [
+            {
+                "name": "balance",
+                "type": "felt"
+            }
+        ],
+        "stateMutability": "view",
+        "type": "function"
+    },
+    {
+        "inputs": [],
+        "name": "get_number_of_pools",
+        "outputs": [
+            {
+                "name": "number_of_pools",
+                "type": "felt"
+            }
+        ],
+        "stateMutability": "view",
+        "type": "function"
+    },
+    {
         "inputs": [],
         "name": "constructor",
         "outputs": [],

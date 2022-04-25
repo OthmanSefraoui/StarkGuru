@@ -3,12 +3,10 @@
 from starkware.cairo.common.cairo_builtins import HashBuiltin
 from starkware.cairo.common.math import (assert_not_zero, assert_in_range, assert_le, unsigned_div_rem)
 
-from starkware.starknet.common.syscalls import (get_contract_address, get_caller_address, get_block_number, get_block_timestamp)
+from starkware.starknet.common.syscalls import (get_contract_address, get_caller_address)
 from starkware.cairo.common.uint256 import (
     Uint256, uint256_add, uint256_sub, uint256_le, uint256_lt, uint256_check, uint256_eq
 )
-from starkware.cairo.common.alloc import alloc
-from starkware.starknet.common.messages import send_message_to_l1
 
 from contracts.token.IERC20 import IERC20
 
@@ -54,6 +52,26 @@ func get_balance_token{syscall_ptr : felt*, pedersen_ptr : HashBuiltin*, range_c
     return (balance)
 end
 
+@view
+func get_price{syscall_ptr : felt*, pedersen_ptr : HashBuiltin*, range_check_ptr}(pool_id: felt, token: felt) -> (balance: felt):
+    let (token_a_balance) = tokens_balances.read(pool_id, token)
+    let (pool_core_instance) = pools_storage.read(pool_id)    
+    if token == pool_core_instance.token_a:
+        tempvar token_b = pool_core_instance.token_b
+    else:
+        tempvar token_b = pool_core_instance.token_a
+    end
+    let (token_b_balance) = tokens_balances.read(pool_id, token_b)
+    let (b, _) = unsigned_div_rem(token_b_balance , token_a_balance + 1)
+    return(b)
+end
+
+@view
+func get_number_of_pools{syscall_ptr : felt*, pedersen_ptr : HashBuiltin*, range_check_ptr}() -> (number_of_pools: felt):
+    let (number_of_pools) = pools_length_storage.read()
+    return(number_of_pools)
+end
+
 ######### Constructor
 
 @constructor
@@ -90,7 +108,7 @@ func swap{syscall_ptr : felt*, pedersen_ptr : HashBuiltin*, range_check_ptr}(poo
     else:
         tempvar token_b = pool_core_instance.token_a
     end
-    let (token_b_balance) = tokens_balances.read(pool_id, token_address)
+    let (token_b_balance) = tokens_balances.read(pool_id, token_b)
     let (b, _) = unsigned_div_rem(token_b_balance * token_amount, token_a_balance + token_amount)
     let (contract_address) = get_contract_address()
     IERC20.transferFrom(contract_address = token_address, sender = sender_address, recipient = contract_address, amount = Uint256(token_amount,0))
