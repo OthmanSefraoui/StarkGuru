@@ -88,6 +88,27 @@
         "type": "function"
     },
     {
+        "inputs": [
+            {
+                "name": "pool_id",
+                "type": "felt"
+            },
+            {
+                "name": "token_a",
+                "type": "felt"
+            }
+        ],
+        "name": "get_pair",
+        "outputs": [
+            {
+                "name": "token_b",
+                "type": "felt"
+            }
+        ],
+        "stateMutability": "view",
+        "type": "function"
+    },
+    {
         "inputs": [],
         "name": "constructor",
         "outputs": [],
@@ -124,7 +145,12 @@
             }
         ],
         "name": "swap",
-        "outputs": [],
+        "outputs": [
+            {
+                "name": "amount",
+                "type": "felt"
+            }
+        ],
         "type": "function"
     },
     {

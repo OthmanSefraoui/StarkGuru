@@ -86,13 +86,17 @@ end
 
 @external
 func execute_order{syscall_ptr : felt*, pedersen_ptr : HashBuiltin*, range_check_ptr}(order_id: felt):
+    let (sender_address) = get_caller_address()
     assert_not_zero(order_id)
     let (order_core_instance) = orders_storage.read(order_id)
+    let executed = order_core_instance.executed
+    assert executed = 0
     let (amm_contract) = amm_contract_address.read()
     let token = order_core_instance.token
     let pool_id = order_core_instance.pool_id
     let price = order_core_instance.price
     let amount = order_core_instance.amount
+    let order_type = order_core_instance.order_type
     let order_owner = order_core_instance.order_owner
     let (current_price) = Iamm.get_price(contract_address = amm_contract, pool_id= pool_id, token= token)
     let (slippage_cost,_) = unsigned_div_rem(price * 1000000000000000000, 100000000000000000000)
@@ -100,7 +104,12 @@ func execute_order{syscall_ptr : felt*, pedersen_ptr : HashBuiltin*, range_check
     let lower_bound = price - slippage_cost
     assert_in_range(current_price, lower_bound, upper_bound)
     IERC20.approve(contract_address = token, spender= amm_contract, amount= Uint256(amount, 0))
-    Iamm.swap(contract_address = amm_contract, pool_id= pool_id, token_amount= amount, token_address= token)
-    IERC20.transfer(contract_address = token, recipient= order_owner, amount= Uint256(amount, 0))
+    let (amount_token_received) = Iamm.swap(contract_address = amm_contract, pool_id= pool_id, token_amount= amount, token_address= token)
+    let (token_received) = Iamm.get_pair(contract_address= amm_contract, pool_id= pool_id, token_a= token)
+    let (executor_bonus,_) = unsigned_div_rem(amount_token_received, 1000)
+    IERC20.transfer(contract_address = token_received, recipient= order_owner, amount= Uint256(amount_token_received - executor_bonus, 0))
+    IERC20.transfer(contract_address = token_received, recipient= sender_address, amount= Uint256(executor_bonus, 0))
+    let order_core_instance_executed = order_core(pool_id = pool_id, price = price, amount = amount, token = token, order_type = order_type, executed = 1, order_owner = order_owner)
+    orders_storage.write(order_id, order_core_instance_executed)
     return()
 end
