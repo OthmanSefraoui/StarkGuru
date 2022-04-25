@@ -8,6 +8,7 @@ import {
   NumberInputField,
   HStack,
   Divider,
+  Spacer,
 } from '@chakra-ui/react';
 import {
   Tabs,
@@ -16,7 +17,11 @@ import {
   Tab,
   TabPanel,
   Stack,
-  Box
+  Box,
+  Tag, 
+  TagLabel,
+  Avatar, 
+  StackDivider
 } from '@chakra-ui/react';
 import SwapTokens from 'Components/swapTokens';
 import { useStarknet, InjectedConnector } from '@starknet-react/core';
@@ -47,7 +52,7 @@ const Home: NextPage = () => {
           pos={'relative'}
           zIndex={1}>
           <Stack>
-            <Tabs size={"lg"} isFitted>
+            <Tabs size={"lg"} isFitted colorScheme={"teal"}>
               <TabList>
                 <Tab>Swap</Tab>
                 <Tab>Limit</Tab>
@@ -60,17 +65,27 @@ const Home: NextPage = () => {
                 <TabPanel>
                   <Stack>
                     <SwapTokens />
-                    <Text>Limit Price USD</Text>
+                    <Text>Limit Price</Text>
                     <HStack>
-                      <NumberInput defaultValue={0.0}>
-                        <NumberInputField />
+                      <NumberInput defaultValue={0.0} size="lg" width={400}>
+                        <NumberInputField/>
                       </NumberInput>
+                      <Tag size='lg' colorScheme='teal' borderRadius='full'>
+                        <Avatar
+                          src='/usdc.png'
+                          size='xs'
+                          name='usdc'
+                          ml={-1}
+                          mr={2}
+                        />
+                        <TagLabel>USDC</TagLabel>
+                      </Tag>
                     </HStack>
                   </Stack>
                 </TabPanel>
               </TabPanels>
             </Tabs>
-            <Button colorScheme='teal' size='md'>
+            <Button colorScheme='teal' size="lg">
               Swap Tokens
             </Button>
           </Stack>

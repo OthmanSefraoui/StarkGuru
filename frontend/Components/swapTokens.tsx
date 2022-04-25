@@ -1,5 +1,5 @@
 import React from "react";
-import { Container, Heading, Text, Button, NumberInput, NumberInputField, HStack, Select, Stack } from '@chakra-ui/react'
+import { Tag, Avatar, Text, TagLabel, NumberInput, NumberInputField, HStack, Select, Stack, Spacer, StackDivider } from '@chakra-ui/react'
 
 
 const SwapTokens = () => {
@@ -7,25 +7,35 @@ const SwapTokens = () => {
         <Stack>
             <Text>You sell</Text>
             <HStack>
-                <NumberInput defaultValue={0.0} >
+                <NumberInput defaultValue={0.0} size="lg" width={400}>
                     <NumberInputField />
                 </NumberInput>
-                <Select placeholder='Select currency' width={200}>
-                    <option value='option1'>ETH</option>
-                    <option value='option2'>DAI</option>
-                    <option value='option3'>USDC</option>
-                </Select>
+                <Tag size='lg' colorScheme='teal' borderRadius='full'>
+                    <Avatar
+                        src='/usdc.png'
+                        size='xs'
+                        name='usdc'
+                        ml={-1}
+                        mr={2}
+                    />
+                    <TagLabel>USDC</TagLabel>
+                </Tag>
             </HStack>
             <Text>You sell</Text>
             <HStack>
-                <NumberInput defaultValue={0.0}>
+                <NumberInput defaultValue={0.0} size="lg" width={400}>
                     <NumberInputField />
                 </NumberInput>
-                <Select placeholder='Select currency' width={200}>
-                    <option value='option1'>ETH</option>
-                    <option value='option2'>DAI</option>
-                    <option value='option3'>USDC</option>
-                </Select>
+                <Tag size='lg' colorScheme='teal' borderRadius='full'>
+                    <Avatar
+                        src='/ether.png'
+                        size='xs'
+                        name='Ether'
+                        ml={-1}
+                        mr={2}
+                    />
+                    <TagLabel>ETH</TagLabel>
+                </Tag>
             </HStack>
         </Stack>
     )
