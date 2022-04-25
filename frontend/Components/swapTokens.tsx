@@ -69,13 +69,13 @@ const SwapTokens = () => {
                 </NumberInput>
                 <Tag size='lg' colorScheme='teal' borderRadius='full'>
                     <Avatar
-                        src='/usdc.png'
+                        src='/ether.png'
                         size='xs'
-                        name='usdc'
+                        name='eth'
                         ml={-1}
                         mr={2}
                     />
-                    <TagLabel>USDC</TagLabel>
+                    <TagLabel>ETH</TagLabel>
                 </Tag>
             </HStack>
             <HStack>
@@ -88,13 +88,13 @@ const SwapTokens = () => {
                 
                 <Tag size='lg' colorScheme='teal' borderRadius='full'>
                     <Avatar
-                        src='/ether.png'
+                        src='/StarkNet-Icon.png'
                         size='xs'
-                        name='Ether'
+                        name='stark'
                         ml={-1}
                         mr={2}
                     />
-                    <TagLabel>ETH</TagLabel>
+                    <TagLabel>STARK</TagLabel>
                 </Tag>
             </HStack>
             <HStack>
