@@ -1,8 +1,21 @@
 import {
+  Avatar,
+  HStack,
+  NumberInput,
+  NumberInputField,
+  Select,
+  Stack,
+  Tag,
+  TagLabel,
+  Text,
+} from '@chakra-ui/react';
+import {
   useStarknet,
   useStarknetCall,
   useStarknetInvoke,
 } from '@starknet-react/core';
+import TokenABalance from 'Components/tokenABalance';
+import TokenBBalance from 'Components/tokenBBalance';
 import type { NextPage } from 'next';
 import { useCallback, useMemo, useState } from 'react';
 import { toBN } from 'starknet/dist/utils/number';
@@ -15,115 +28,115 @@ import {
   useAMMContract,
 } from '~/hooks/contracts';
 
-function UserBalance() {
-  const { account } = useStarknet();
-  const { contract } = useTokenAContract();
+// function UserBalance() {
+//   const { account } = useStarknet();
+//   const { contract } = useTokenAContract();
 
-  const { data, loading, error } = useStarknetCall({
-    contract,
-    method: 'balanceOf',
-    args: account ? [account] : undefined,
-  });
+//   const { data, loading, error } = useStarknetCall({
+//     contract,
+//     method: 'balanceOf',
+//     args: account ? [account] : undefined,
+//   });
 
-  const content = useMemo(() => {
-    if (loading || !data?.length) {
-      return <div>Loading balance</div>;
-    }
+//   const content = useMemo(() => {
+//     if (loading || !data?.length) {
+//       return <div>Loading balance</div>;
+//     }
 
-    if (error) {
-      return <div>Error: {error}</div>;
-    }
+//     if (error) {
+//       return <div>Error: {error}</div>;
+//     }
 
-    const balance = uint256ToBN(data[0]);
-    return <div>{balance.toString(10)}</div>;
-  }, [data, loading, error]);
+//     const balance = uint256ToBN(data[0]);
+//     return <div>{balance.toString(10)}</div>;
+//   }, [data, loading, error]);
 
-  return (
-    <div>
-      <h2>User balance</h2>
-      {content}
-    </div>
-  );
-}
+//   return (
+//     <div>
+//       <h2>User balance</h2>
+//       {content}
+//     </div>
+//   );
+// }
 
-function UserBalanceB() {
-  const { account } = useStarknet();
-  const { contract } = useTokenBContract();
+// function UserBalanceB() {
+//   const { account } = useStarknet();
+//   const { contract } = useTokenBContract();
 
-  const { data, loading, error } = useStarknetCall({
-    contract,
-    method: 'balanceOf',
-    args: account ? [account] : undefined,
-  });
+//   const { data, loading, error } = useStarknetCall({
+//     contract,
+//     method: 'balanceOf',
+//     args: account ? [account] : undefined,
+//   });
 
-  const content = useMemo(() => {
-    if (loading || !data?.length) {
-      return <div>Loading balance</div>;
-    }
+//   const content = useMemo(() => {
+//     if (loading || !data?.length) {
+//       return <div>Loading balance</div>;
+//     }
 
-    if (error) {
-      return <div>Error: {error}</div>;
-    }
+//     if (error) {
+//       return <div>Error: {error}</div>;
+//     }
 
-    const balance = uint256ToBN(data[0]);
-    return <div>{balance.toString(10)}</div>;
-  }, [data, loading, error]);
+//     const balance = uint256ToBN(data[0]);
+//     return <div>{balance.toString(10)}</div>;
+//   }, [data, loading, error]);
 
-  return (
-    <div>
-      <h2>User balance Token B</h2>
-      {content}
-    </div>
-  );
-}
+//   return (
+//     <div>
+//       <h2>User balance Token B</h2>
+//       {content}
+//     </div>
+//   );
+// }
 
-function FaucetA() {
-  const { contract } = useTokenAContract();
+// function FaucetA() {
+//   const { contract } = useTokenAContract();
 
-  const { loading, error, reset, invoke } = useStarknetInvoke({
-    contract,
-    method: 'faucet',
-  });
+//   const { loading, error, reset, invoke } = useStarknetInvoke({
+//     contract,
+//     method: 'faucet',
+//   });
 
-  const onFaucetA = useCallback(() => {
-    reset();
-    invoke({ args: [] });
-  }, []);
+//   const onFaucetA = useCallback(() => {
+//     reset();
+//     invoke({ args: [] });
+//   }, []);
 
-  return (
-    <div>
-      <h2>Faucet A</h2>
-      <button onClick={onFaucetA}>
-        {loading ? 'Waiting for wallet' : 'Faucet A'}
-      </button>
-      {error && <p>Error: {error}</p>}
-    </div>
-  );
-}
+//   return (
+//     <div>
+//       <h2>Faucet A</h2>
+//       <button onClick={onFaucetA}>
+//         {loading ? 'Waiting for wallet' : 'Faucet A'}
+//       </button>
+//       {error && <p>Error: {error}</p>}
+//     </div>
+//   );
+// }
 
-function FaucetB() {
-  const { contract } = useTokenBContract();
+// function FaucetB() {
+//   const { contract } = useTokenBContract();
 
-  const { loading, error, reset, invoke } = useStarknetInvoke({
-    contract,
-    method: 'faucet',
-  });
+//   const { loading, error, reset, invoke } = useStarknetInvoke({
+//     contract,
+//     method: 'faucet',
+//   });
 
-  const onFaucetB = useCallback(() => {
-    reset();
-    invoke({ args: [] });
-  }, []);
+//   const onFaucetB = useCallback(() => {
+//     reset();
+//     invoke({ args: [] });
+//   }, []);
 
-  return (
-    <div>
-      <h2>Faucet B</h2>
-      <button onClick={onFaucetB}>
-        {loading ? 'Waiting for wallet' : 'Faucet B'}
-      </button>
-      {error && <p>Error: {error}</p>}
-    </div>
-  );
-}
+//   return (
+//     <div>
+//       <h2>Faucet B</h2>
+//       <button onClick={onFaucetB}>
+//         {loading ? 'Waiting for wallet' : 'Faucet B'}
+//       </button>
+//       {error && <p>Error: {error}</p>}
+//     </div>
+//   );
+// }
 
 function SwapTokens() {
   const { account } = useStarknet();
@@ -184,29 +197,53 @@ function SwapTokens() {
   }, [loading, account, amountError]);
 
   return (
-    <div>
-      <h2>Swap tokens</h2>
-      <p>
-        <span>Amount of token A: </span>
-        <input
-          type="number"
-          onChange={(evt) => updateAmountA(evt.target.value)}
-        />
-      </p>
+    <Stack>
+      <Text>You sell</Text>
+      <HStack>
+        <NumberInput defaultValue={0.0} size="lg" width={400}>
+          <NumberInputField />
+        </NumberInput>
+        <Tag size="lg" colorScheme="teal" borderRadius="full">
+          <Avatar src="/usdc.png" size="xs" name="usdc" ml={-1} mr={2} />
+          <TagLabel>USDC</TagLabel>
+        </Tag>
+        <TokenABalance />
+      </HStack>
+      <Text>You sell</Text>
+      <HStack>
+        <NumberInput defaultValue={0.0} size="lg" width={400}>
+          <NumberInputField />
+        </NumberInput>
+        <Tag size="lg" colorScheme="teal" borderRadius="full">
+          <Avatar src="/ether.png" size="xs" name="Ether" ml={-1} mr={2} />
+          <TagLabel>ETH</TagLabel>
+        </Tag>
+        <TokenBBalance />
+      </HStack>
+    </Stack>
+    // <div>
+    //   <h2>Swap tokens</h2>
+    //   <p>
+    //     <span>Amount of token A: </span>
+    //     <input
+    //       type="number"
+    //       onChange={(evt) => updateAmountA(evt.target.value)}
+    //     />
+    //   </p>
 
-      <p>
-        <span>Amount of token B: </span>
-        <input
-          type="number"
-          onChange={(evt) => updateAmountB(evt.target.value)}
-        />
-      </p>
+    //   <p>
+    //     <span>Amount of token B: </span>
+    //     <input
+    //       type="number"
+    //       onChange={(evt) => updateAmountB(evt.target.value)}
+    //     />
+    //   </p>
 
-      <button disabled={swapButtonDisabled} onClick={onSwap}>
-        {loading ? 'Waiting for wallet' : 'Swap'}
-      </button>
-      {error && <p>Error: {error}</p>}
-    </div>
+    //   <button disabled={swapButtonDisabled} onClick={onSwap}>
+    //     {loading ? 'Waiting for wallet' : 'Swap'}
+    //   </button>
+    //   {error && <p>Error: {error}</p>}
+    // </div>
   );
 }
 
@@ -224,15 +261,15 @@ const TokenPage: NextPage = () => {
   return (
     <div>
       <p>Connected: {account}</p>
-      <UserBalance />
-      <UserBalanceB />
-      <FaucetA />
-      <FaucetB />
+      {/* <UserBalance /> */}
+      {/* <UserBalanceB /> */}
+      {/* <FaucetA /> */}
+      {/* <FaucetB /> */}
 
       <h2>SWAP</h2>
       <SwapTokens></SwapTokens>
 
-      <TransactionList />
+      {/* <TransactionList /> */}
     </div>
   );
 };
