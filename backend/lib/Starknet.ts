@@ -20,8 +20,10 @@ export default class Starknet {
   lastOrderFetched: number;
   ammContract: Contract;
   ordersContract: Contract;
+  logger: any;
 
-  constructor(nodeUrl: string) {
+  constructor(nodeUrl: string, logger: any) {
+    this.logger = logger;
     this.orders = [];
     this.lastOrderFetched = 0;
     this.provider = new Provider({
@@ -46,7 +48,7 @@ export default class Starknet {
   async collectOrders() {
     const numberOfOrders = await this.ordersContract.get_number_of_orders();
 
-    console.log(
+    this.logger.info(
       `${numberOfOrders[0].sub(new BN(this.lastOrderFetched))} new order(s)`,
     );
 
@@ -67,14 +69,14 @@ export default class Starknet {
 
   async checkStatuses() {
     for (let i = 0; i < this.orders.length; i += 1) {
-      console.log(`Checking status of order ${this.orders[i].order_id}`);
+      this.logger.info(`Checking status of order ${this.orders[i].order_id}`);
       const order = await this.ordersContract.get_order(
         this.orders[i].order_id,
       );
-      console.log(order[0]);
+      this.logger.debug(order[0]);
 
       if (!order[0].status.eq(new BN(0))) {
-        console.log(`remove order ${order[0].order_id}`);
+        this.logger.info(`remove order ${order[0].order_id}`);
       }
     }
   }
@@ -86,7 +88,9 @@ export default class Starknet {
   }
 
   async checkPrice(order: any, position: number) {
-    console.log(`Checking the price for order ${order.order_id.toString()}`);
+    this.logger.info(
+      `Checking the price for order ${order.order_id.toString()}`,
+    );
 
     const price = await this.getPrice(order.pool_id, order.token);
     const onePercent = order.price.div(new BN(100));
@@ -105,9 +109,9 @@ export default class Starknet {
   }
 
   async executeOrder(id: number) {
-    console.log(`Executing order ${id}`);
+    this.logger.info(`Executing order ${id}`);
     const res = await this.ordersContract.execute_order(id, { maxFee: '0' });
     await this.provider.waitForTransaction(res.transaction_hash);
-    console.log(`Order ${id} executed`);
+    this.logger.info(`Order ${id} executed`);
   }
 }

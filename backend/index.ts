@@ -1,13 +1,17 @@
 import fs from 'fs';
 
 import { CronJob } from 'cron';
+import log4js from 'log4js';
+const logger = log4js.getLogger();
+logger.level = 'debug';
+
 import Starknet from './lib/Starknet';
 
 // const keyPair = JSON.parse(
 //   fs.readFileSync('./key-pair.json').toString('ascii'),
 // );
 
-const starknet = new Starknet('https://hackathon-3.starknet.io');
+const starknet = new Starknet('https://hackathon-3.starknet.io', logger);
 
 let collecting = false;
 
@@ -21,7 +25,7 @@ const job = new CronJob(
       await starknet.collectOrders();
       await starknet.checkPrices();
     } catch (err) {
-      console.log(err);
+      logger.error(err);
     }
     collecting = false;
   },
