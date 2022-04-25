@@ -1,41 +1,35 @@
-import { useStarknetCall } from '@starknet-react/core'
-import type { NextPage } from 'next'
-import { useMemo } from 'react'
-import { toBN } from 'starknet/dist/utils/number'
-import { ConnectWallet } from '~/components/ConnectWallet'
-import { IncrementCounter } from '~/components/IncrementCounter'
-import { TransactionList } from '~/components/TransactionList'
-import { useCounterContract } from '~/hooks/counter'
-import { Container, Heading, Text, Button, NumberInput, NumberInputField, HStack, Select, Divider } from '@chakra-ui/react'
-import { Tabs, TabList, TabPanels, Tab, TabPanel, Stack, Box } from '@chakra-ui/react'
-import SwapTokens from 'Components/swapTokens'
-import { useStarknet, InjectedConnector } from '@starknet-react/core'
-import { MdAccountBalanceWallet } from "react-icons/md"
-
+import type { NextPage } from 'next';
+import {
+  Container,
+  Heading,
+  Text,
+  Button,
+  NumberInput,
+  NumberInputField,
+  HStack,
+  Divider,
+} from '@chakra-ui/react';
+import {
+  Tabs,
+  TabList,
+  TabPanels,
+  Tab,
+  TabPanel,
+  Stack,
+  Box
+} from '@chakra-ui/react';
+import SwapTokens from 'Components/swapTokens';
+import { useStarknet, InjectedConnector } from '@starknet-react/core';
+import { MdAccountBalanceWallet } from 'react-icons/md';
 
 const Home: NextPage = () => {
-  const { contract: counter } = useCounterContract()
-
-  const { data: counterResult } = useStarknetCall({
-    contract: counter,
-    method: 'counter',
-    args: [],
-  })
-
-  const counterValue = useMemo(() => {
-    if (counterResult && counterResult.length > 0) {
-      const value = toBN(counterResult[0])
-      return value.toString(10)
-    }
-  }, [counterResult])
-
-  const { account, connect } = useStarknet()
+  const { account, connect } = useStarknet();
 
   // if (account) {
   //   return <p>Account: {account}</p>
   // }
 
-  // return 
+  // return
 
   return (
     <Container maxW="container.sm">
@@ -83,7 +77,7 @@ const Home: NextPage = () => {
         </Box>
       }
     </Container>
-  )
-}
+  );
+};
 
-export default Home
+export default Home;
