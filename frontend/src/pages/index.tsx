@@ -1,10 +1,4 @@
-import { useStarknetCall } from '@starknet-react/core';
 import type { NextPage } from 'next';
-import { useMemo } from 'react';
-import { toBN } from 'starknet/dist/utils/number';
-import { ConnectWallet } from '~/components/ConnectWallet';
-import { IncrementCounter } from '~/components/IncrementCounter';
-import { TransactionList } from '~/components/TransactionList';
 import {
   Container,
   Heading,
@@ -13,39 +7,76 @@ import {
   NumberInput,
   NumberInputField,
   HStack,
-  Select,
+  Divider,
 } from '@chakra-ui/react';
+import {
+  Tabs,
+  TabList,
+  TabPanels,
+  Tab,
+  TabPanel,
+  Stack,
+} from '@chakra-ui/react';
+import SwapTokens from 'Components/swapTokens';
+import { useStarknet, InjectedConnector } from '@starknet-react/core';
+import { MdAccountBalanceWallet } from 'react-icons/md';
 
 const Home: NextPage = () => {
-  return (
-    <Container>
-      <Heading>Stark Guru</Heading>
-      <ConnectWallet />
-      <Heading>Swap</Heading>
-      <HStack>
-        <NumberInput defaultValue={0.0}>
-          <NumberInputField />
-        </NumberInput>
-        <Select placeholder="Select option">
-          <option value="option1">ETH</option>
-          <option value="option2">DAI</option>
-          <option value="option3">USDC</option>
-        </Select>
-      </HStack>
-      <HStack>
-        <NumberInput defaultValue={0.0}>
-          <NumberInputField />
-        </NumberInput>
-        <Select placeholder="Select option">
-          <option value="option1">ETH</option>
-          <option value="option2">DAI</option>
-          <option value="option3">USDC</option>
-        </Select>
-      </HStack>
+  const { account, connect } = useStarknet();
 
-      <Button colorScheme="teal" size="md">
-        Swap Tokens
-      </Button>
+  // if (account) {
+  //   return <p>Account: {account}</p>
+  // }
+
+  // return
+
+  return (
+    <Container maxW="container.sm">
+      <Heading>Stark Guru</Heading>
+      <Divider />
+
+      {account == null ? (
+        <Container centerContent p={8}>
+          <Button
+            colorScheme={'orange'}
+            padding={8}
+            size={'lg'}
+            rightIcon={<MdAccountBalanceWallet />}
+            onClick={() => connect(new InjectedConnector())}
+          >
+            Connect with Argent X
+          </Button>
+        </Container>
+      ) : (
+        <Stack>
+          <Tabs size={'lg'}>
+            <TabList>
+              <Tab>Swap</Tab>
+              <Tab>Limit</Tab>
+            </TabList>
+
+            <TabPanels>
+              <TabPanel>
+                <SwapTokens />
+              </TabPanel>
+              <TabPanel>
+                <Stack>
+                  <SwapTokens />
+                  <Text>Limit Price USD</Text>
+                  <HStack>
+                    <NumberInput defaultValue={0.0}>
+                      <NumberInputField />
+                    </NumberInput>
+                  </HStack>
+                </Stack>
+              </TabPanel>
+            </TabPanels>
+          </Tabs>
+          <Button colorScheme="teal" size="md">
+            Swap Tokens
+          </Button>
+        </Stack>
+      )}
     </Container>
   );
 };

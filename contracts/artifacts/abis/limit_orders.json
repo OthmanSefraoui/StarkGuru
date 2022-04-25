@@ -1,1 +1,82 @@
-[]
+[
+    {
+        "data": [
+            {
+                "name": "order_id",
+                "type": "felt"
+            },
+            {
+                "name": "pool_id",
+                "type": "felt"
+            },
+            {
+                "name": "price",
+                "type": "felt"
+            },
+            {
+                "name": "amount",
+                "type": "felt"
+            },
+            {
+                "name": "token",
+                "type": "felt"
+            },
+            {
+                "name": "order_type",
+                "type": "felt"
+            }
+        ],
+        "keys": [],
+        "name": "order_created",
+        "type": "event"
+    },
+    {
+        "inputs": [
+            {
+                "name": "amm_contract",
+                "type": "felt"
+            }
+        ],
+        "name": "constructor",
+        "outputs": [],
+        "type": "constructor"
+    },
+    {
+        "inputs": [
+            {
+                "name": "pool_id",
+                "type": "felt"
+            },
+            {
+                "name": "price",
+                "type": "felt"
+            },
+            {
+                "name": "amount",
+                "type": "felt"
+            },
+            {
+                "name": "token",
+                "type": "felt"
+            },
+            {
+                "name": "order_type",
+                "type": "felt"
+            }
+        ],
+        "name": "create_order",
+        "outputs": [],
+        "type": "function"
+    },
+    {
+        "inputs": [
+            {
+                "name": "order_id",
+                "type": "felt"
+            }
+        ],
+        "name": "execute_order",
+        "outputs": [],
+        "type": "function"
+    }
+]
