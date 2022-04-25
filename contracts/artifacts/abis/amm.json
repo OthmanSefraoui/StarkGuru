@@ -109,6 +109,27 @@
         "type": "function"
     },
     {
+        "inputs": [
+            {
+                "name": "token_b",
+                "type": "felt"
+            },
+            {
+                "name": "token_a",
+                "type": "felt"
+            }
+        ],
+        "name": "get_pool_id",
+        "outputs": [
+            {
+                "name": "pool_id",
+                "type": "felt"
+            }
+        ],
+        "stateMutability": "view",
+        "type": "function"
+    },
+    {
         "inputs": [],
         "name": "constructor",
         "outputs": [],

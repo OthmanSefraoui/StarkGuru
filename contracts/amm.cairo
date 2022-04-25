@@ -83,6 +83,12 @@ func get_pair{syscall_ptr : felt*, pedersen_ptr : HashBuiltin*, range_check_ptr}
     return(token_b)
 end
 
+@view
+func get_pool_id{syscall_ptr : felt*, pedersen_ptr : HashBuiltin*, range_check_ptr}(token_b: felt, token_a: felt) -> (pool_id: felt):
+    let (pool_id) = get_pool_storage.read(token_a, token_b)
+    return(pool_id)
+end
+
 ######### Constructor
 
 @constructor
