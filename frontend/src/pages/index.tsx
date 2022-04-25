@@ -6,7 +6,7 @@ import { ConnectWallet } from '~/components/ConnectWallet'
 import { IncrementCounter } from '~/components/IncrementCounter'
 import { TransactionList } from '~/components/TransactionList'
 import { useCounterContract } from '~/hooks/counter'
-import { Container, Heading, Text } from '@chakra-ui/react'
+import { Container, Heading, Text, Button, NumberInput, NumberInputField } from '@chakra-ui/react'
 
 const Home: NextPage = () => {
   const { contract: counter } = useCounterContract()
@@ -30,16 +30,19 @@ const Home: NextPage = () => {
         Stark Guru
       </Heading>
       <ConnectWallet />
-      <Heading>
-        Counter Contract
-      </Heading>
-      <Text>{counter?.address}</Text>
-      <Text>{counterValue}</Text>
-      <Text>Recent Transactions</Text>
-      <TransactionList />
+      <Heading>Swap</Heading>
+      <NumberInput defaultValue={0.0}>
+        <NumberInputField />
+      </NumberInput>
+      <NumberInput defaultValue={0.0}>
+        <NumberInputField />
+      </NumberInput>
+
+      <Button colorScheme='teal' size='md'>
+        Swap Tokens
+      </Button>
     </Container>
   )
-  //test
 }
 
 export default Home
