@@ -59,6 +59,8 @@ const Home: NextPage = () => {
     method: 'swap',
   });
 
+  console.log("tokenAAddress");
+
   const onSwapTokens = useCallback(() => {
     reset();
     const poolNb = 1;
