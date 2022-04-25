@@ -4,7 +4,7 @@ import { Abi } from 'starknet';
 import Erc20Abi from '~/../../contracts/artifacts/abis/dummy_token.json';
 import AMMAbi from '~/../../contracts/artifacts/abis/amm.json';
 
-export function useTokenContract() {
+export function useTokenAContract() {
   return useContract({
     abi: Erc20Abi as Abi,
     address:
