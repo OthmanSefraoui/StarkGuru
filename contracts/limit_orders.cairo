@@ -11,7 +11,8 @@ from starkware.cairo.common.uint256 import (
 from contracts.token.IERC20 import IERC20
 from contracts.Iamm import Iamm
 
-struct order_core : 
+struct order_core :
+    member order_id: felt
     member pool_id: felt
     member price: felt
     member amount: felt
@@ -74,13 +75,14 @@ func create_order{syscall_ptr : felt*, pedersen_ptr : HashBuiltin*, range_check_
     let (contract_address) = get_contract_address()
     let (user_balance_256) = IERC20.balanceOf(contract_address = token, account= sender_address)
     let user_balance = user_balance_256.low
+    let (orders_length) = orders_length_storage.read()
+    let order_id = orders_length + 1
     assert_le(amount, user_balance)
     IERC20.transferFrom(contract_address = token, sender = sender_address, recipient = contract_address, amount = Uint256(amount,0))
-    let order_core_instance = order_core(pool_id = pool_id, price = price, amount = amount, token = token, order_type = order_type, executed = 0, order_owner = sender_address)
-    let (orders_length) = orders_length_storage.read()
-    orders_storage.write(orders_length + 1, order_core_instance)
-    orders_length_storage.write(orders_length + 1)
-    order_created.emit(orders_length + 1, pool_id, price, amount, token, order_type)
+    let order_core_instance = order_core(order_id= order_id, pool_id = pool_id, price = price, amount = amount, token = token, order_type = order_type, executed = 0, order_owner = sender_address)
+    orders_storage.write(order_id, order_core_instance)
+    orders_length_storage.write(order_id)
+    order_created.emit(order_id, pool_id, price, amount, token, order_type)
     return()
 end
 
@@ -109,7 +111,7 @@ func execute_order{syscall_ptr : felt*, pedersen_ptr : HashBuiltin*, range_check
     let (executor_bonus,_) = unsigned_div_rem(amount_token_received, 1000)
     IERC20.transfer(contract_address = token_received, recipient= order_owner, amount= Uint256(amount_token_received - executor_bonus, 0))
     IERC20.transfer(contract_address = token_received, recipient= sender_address, amount= Uint256(executor_bonus, 0))
-    let order_core_instance_executed = order_core(pool_id = pool_id, price = price, amount = amount, token = token, order_type = order_type, executed = 1, order_owner = order_owner)
+    let order_core_instance_executed = order_core(order_id= order_id, pool_id = pool_id, price = price, amount = amount, token = token, order_type = order_type, executed = 1, order_owner = order_owner)
     orders_storage.write(order_id, order_core_instance_executed)
     return()
 end

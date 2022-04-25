@@ -2,43 +2,48 @@
     {
         "members": [
             {
-                "name": "pool_id",
+                "name": "order_id",
                 "offset": 0,
                 "type": "felt"
             },
             {
-                "name": "price",
+                "name": "pool_id",
                 "offset": 1,
                 "type": "felt"
             },
             {
-                "name": "amount",
+                "name": "price",
                 "offset": 2,
                 "type": "felt"
             },
             {
-                "name": "token",
+                "name": "amount",
                 "offset": 3,
                 "type": "felt"
             },
             {
-                "name": "order_type",
+                "name": "token",
                 "offset": 4,
                 "type": "felt"
             },
             {
-                "name": "executed",
+                "name": "order_type",
                 "offset": 5,
                 "type": "felt"
             },
             {
-                "name": "order_owner",
+                "name": "executed",
                 "offset": 6,
+                "type": "felt"
+            },
+            {
+                "name": "order_owner",
+                "offset": 7,
                 "type": "felt"
             }
         ],
         "name": "order_core",
-        "size": 7,
+        "size": 8,
         "type": "struct"
     },
     {
