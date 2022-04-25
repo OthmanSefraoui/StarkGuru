@@ -30,6 +30,8 @@ const SwapTokens = () => {
   const { contract } = useAMMContract();
   const tokenAAddress = useTokenAContract().contract?.address;
 
+  console.log(tokenAAddress);
+
   const resp1 = useStarknetCall({
     contract,
     method: 'get_price',
