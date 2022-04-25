@@ -1,5 +1,7 @@
 import React from "react";
 import { Tag, Avatar, Text, TagLabel, NumberInput, NumberInputField, HStack, Select, Stack, Spacer, StackDivider } from '@chakra-ui/react'
+import TokenABalance from 'Components/tokenABalance';
+import TokenBBalance from 'Components/tokenBBalance';
 
 
 const SwapTokens = () => {
@@ -21,6 +23,10 @@ const SwapTokens = () => {
                     <TagLabel>USDC</TagLabel>
                 </Tag>
             </HStack>
+            <HStack>
+                <Spacer />
+                <TokenABalance />
+            </HStack>
             <Text>You buy</Text>
             <HStack>
                 <NumberInput defaultValue={0.0} size="lg" width={400}>
@@ -36,6 +42,10 @@ const SwapTokens = () => {
                     />
                     <TagLabel>ETH</TagLabel>
                 </Tag>
+            </HStack>
+            <HStack>
+                <Spacer />
+                <TokenBBalance />
             </HStack>
         </Stack>
     )

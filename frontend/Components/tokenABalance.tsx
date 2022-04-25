@@ -2,6 +2,7 @@ import React, { useMemo } from 'react';
 import { useStarknet, useStarknetCall } from '@starknet-react/core';
 import { uint256ToBN } from 'starknet/dist/utils/uint256';
 import { useTokenAContract } from '~/hooks/contracts';
+import { Text } from '@chakra-ui/react';
 
 const TokenABalance = () => {
   const { account } = useStarknet();
@@ -26,10 +27,7 @@ const TokenABalance = () => {
   }, [data, loading, error]);
 
   return (
-    <div>
-      <h2>User balance</h2>
-      {content}
-    </div>
+    <Text color = 'gray.500'>User balance: {content}</Text>
   );
 };
 
