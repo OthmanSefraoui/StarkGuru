@@ -88,7 +88,7 @@ const Home: NextPage = () => {
               Swap Tokens
             </Button>
             <Divider />
-            <Heading pt={8}>Current Limit Order</Heading>
+            <Heading pt={8} size="md">Current Limit Order</Heading>
             <Box
               p={6}
               w={'full'}
