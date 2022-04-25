@@ -1,62 +1,83 @@
-import { useStarknetCall } from '@starknet-react/core'
-import type { NextPage } from 'next'
-import { useMemo } from 'react'
-import { toBN } from 'starknet/dist/utils/number'
-import { ConnectWallet } from '~/components/ConnectWallet'
-import { IncrementCounter } from '~/components/IncrementCounter'
-import { TransactionList } from '~/components/TransactionList'
-import { useCounterContract } from '~/hooks/counter'
-import { Container, Heading, Text, Button, NumberInput, NumberInputField, HStack, Select } from '@chakra-ui/react'
+import type { NextPage } from 'next';
+import {
+  Container,
+  Heading,
+  Text,
+  Button,
+  NumberInput,
+  NumberInputField,
+  HStack,
+  Divider,
+} from '@chakra-ui/react';
+import {
+  Tabs,
+  TabList,
+  TabPanels,
+  Tab,
+  TabPanel,
+  Stack,
+  Box
+} from '@chakra-ui/react';
+import SwapTokens from 'Components/swapTokens';
+import { useStarknet, InjectedConnector } from '@starknet-react/core';
+import { MdAccountBalanceWallet } from 'react-icons/md';
 
 const Home: NextPage = () => {
-  const { contract: counter } = useCounterContract()
+  const { account, connect } = useStarknet();
 
-  const { data: counterResult } = useStarknetCall({
-    contract: counter,
-    method: 'counter',
-    args: [],
-  })
+  // if (account) {
+  //   return <p>Account: {account}</p>
+  // }
 
-  const counterValue = useMemo(() => {
-    if (counterResult && counterResult.length > 0) {
-      const value = toBN(counterResult[0])
-      return value.toString(10)
-    }
-  }, [counterResult])
+  // return
 
   return (
-    <Container>
-      <Heading>
-        Stark Guru
-      </Heading>
-      <ConnectWallet />
-      <Heading>Swap</Heading>
-      <HStack>
-        <NumberInput defaultValue={0.0}>
-          <NumberInputField />
-        </NumberInput>
-        <Select placeholder='Select option'>
-          <option value='option1'>ETH</option>
-          <option value='option2'>DAI</option>
-          <option value='option3'>USDC</option>
-        </Select>
-      </HStack>
-      <HStack>
-        <NumberInput defaultValue={0.0}>
-          <NumberInputField />
-        </NumberInput>
-        <Select placeholder='Select option'>
-          <option value='option1'>ETH</option>
-          <option value='option2'>DAI</option>
-          <option value='option3'>USDC</option>
-        </Select>
-      </HStack>
+    <Container maxW="container.sm">
+      {account == null ?
+        <Container centerContent p={8}>
+          <Button colorScheme={"orange"} padding={8} size={"lg"} rightIcon={<MdAccountBalanceWallet />} onClick={() => connect(new InjectedConnector())}>Connect with Argent X</Button>
+        </Container> :
+        <Box
+          role={'group'}
+          p={6}
+          w={'full'}
+          bg={'white'}
+          boxShadow={'2xl'}
+          rounded={'lg'}
+          pos={'relative'}
+          zIndex={1}>
+          <Stack>
+            <Tabs size={"lg"} isFitted>
+              <TabList>
+                <Tab>Swap</Tab>
+                <Tab>Limit</Tab>
+              </TabList>
 
-      <Button colorScheme='teal' size='md'>
-        Swap Tokens
-      </Button>
+              <TabPanels>
+                <TabPanel>
+                  <SwapTokens />
+                </TabPanel>
+                <TabPanel>
+                  <Stack>
+                    <SwapTokens />
+                    <Text>Limit Price USD</Text>
+                    <HStack>
+                      <NumberInput defaultValue={0.0}>
+                        <NumberInputField />
+                      </NumberInput>
+                    </HStack>
+                  </Stack>
+                </TabPanel>
+              </TabPanels>
+            </Tabs>
+            <Button colorScheme='teal' size='md'>
+              Swap Tokens
+            </Button>
+          </Stack>
+        </Box>
+      }
     </Container>
-  )
-}
+  );
+};
 
-export default Home
+export default Home;
