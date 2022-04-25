@@ -1,34 +1,33 @@
 import React, { useMemo } from 'react';
 import { useStarknet, useStarknetCall } from '@starknet-react/core';
 import { uint256ToBN } from 'starknet/dist/utils/uint256';
-import { useTokenAContract } from '~/hooks/contracts';
+import { useAMMContract, useTokenBContract } from '~/hooks/contracts';
 import { Text } from '@chakra-ui/react';
 
-const TokenABalance = () => {
+const TokenBPrice = () => {
   const { account } = useStarknet();
-  const { contract } = useTokenAContract();
+  const { contract } = useAMMContract();
+  const tokenAddress = useTokenBContract().contract?.address;
   const { data, loading, error } = useStarknetCall({
     contract,
-    method: 'balanceOf',
-    args: account ? [account] : undefined,
+    method: 'get_price',
+    args: [1, tokenAddress],
   });
 
   const content = useMemo(() => {
     if (loading || !data?.length) {
-      return <div>Loading balance</div>;
+      return <div>Loading price</div>;
     }
 
     if (error) {
       return <div>Error: {error}</div>;
     }
 
-    const balance = uint256ToBN(data[0])/1000000000000000000;
-    return <span>{balance.toString(10)}</span>;
+    const price = data[0] / 1000000000000000000;
+    return <span>{price.toString(10)}</span>;
   }, [data, loading, error]);
 
-  return (
-    <Text color = 'gray.500'>User balance: {content}</Text>
-  );
+  return <Text color="gray.500">Token price: {content}</Text>;
 };
 
-export default TokenABalance;
+export default TokenBPrice;
