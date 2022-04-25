@@ -150,7 +150,7 @@
                     "type": "felt"
                 }
             ],
-            "name": "withdraw",
+            "name": "cancel_order",
             "outputs": [],
             "type": "function"
         }
@@ -165,7 +165,7 @@
         "EXTERNAL": [
             {
                 "offset": "0x4ec",
-                "selector": "0x15511cc3694f64379908437d6d64458dc76d02482052bfb8a5b33a72c054c77"
+                "selector": "0x1ce71ba7239e3e78e2c0009c4461923344dc98ce84fc1ceb7282704459a14c1"
             },
             {
                 "offset": "0x42b",
@@ -1535,6 +1535,11 @@
                 "autogen/starknet/event/order_created/061e12d2ab61277b9c9f3e137932ed9dc55f304b27d122b3d1541234d0033a6d.cairo": "func emit{syscall_ptr : felt*, range_check_ptr}():\nend\n",
                 "autogen/starknet/event/order_created/65c5085194e774f24b349fa5ca17d70e9ee7479a2b72fa6bed01a6505af19ff9.cairo": "alloc_locals\nlet (local __keys_ptr : felt*) = alloc()\nassert [__keys_ptr] = SELECTOR\nlet (local __data_ptr : felt*) = alloc()\nlet __calldata_ptr = __data_ptr\n",
                 "autogen/starknet/event/order_created/858f2c0e8fdda3108b2e383053abb5bae67b6b5a2bf306a848bd20c7d5507d8c.cairo": "emit_event(keys_len=1, keys=__keys_ptr, data_len=__calldata_ptr - __data_ptr, data=__data_ptr)\nreturn ()\n",
+                "autogen/starknet/external/cancel_order/424b26e79f70343cc02557f1fbd25745138efb26a3dc5c8b593ca765b73138b7.cairo": "let pedersen_ptr = [cast([cast(fp + (-5), felt**)] + 1, starkware.cairo.common.cairo_builtins.HashBuiltin**)]\n",
+                "autogen/starknet/external/cancel_order/4ba2b119ceb30fe10f4cca3c9d73ef620c0fb5eece91b99a99d71217bba1001c.cairo": "return (syscall_ptr,pedersen_ptr,range_check_ptr,retdata_size,retdata)\n",
+                "autogen/starknet/external/cancel_order/c7060df96cb0acca1380ae43bf758cab727bfdf73cb5d34a93e24a9742817fda.cairo": "let syscall_ptr = [cast([cast(fp + (-5), felt**)] + 0, felt**)]\n",
+                "autogen/starknet/external/cancel_order/cfd82518e709bc152f35e3f0774c30086dbb577ee828c5e06bbe84a6f92c48a0.cairo": "let ret_struct = __wrapped_func{syscall_ptr=syscall_ptr, pedersen_ptr=pedersen_ptr, range_check_ptr=range_check_ptr}(order_id=__calldata_arg_order_id,)\n%{ memory[ap] = segments.add() %}        # Allocate memory for return value.\ntempvar retdata : felt*\nlet retdata_size = 0\n",
+                "autogen/starknet/external/cancel_order/e651458745e7cd218121c342e0915890767e2f59ddc2e315b8844ad0f47d582e.cairo": "let range_check_ptr = [cast([cast(fp + (-5), felt**)] + 2, felt*)]\n",
                 "autogen/starknet/external/constructor/424b26e79f70343cc02557f1fbd25745138efb26a3dc5c8b593ca765b73138b7.cairo": "let pedersen_ptr = [cast([cast(fp + (-5), felt**)] + 1, starkware.cairo.common.cairo_builtins.HashBuiltin**)]\n",
                 "autogen/starknet/external/constructor/4ba2b119ceb30fe10f4cca3c9d73ef620c0fb5eece91b99a99d71217bba1001c.cairo": "return (syscall_ptr,pedersen_ptr,range_check_ptr,retdata_size,retdata)\n",
                 "autogen/starknet/external/constructor/c7060df96cb0acca1380ae43bf758cab727bfdf73cb5d34a93e24a9742817fda.cairo": "let syscall_ptr = [cast([cast(fp + (-5), felt**)] + 0, felt**)]\n",
@@ -1562,11 +1567,6 @@
                 "autogen/starknet/external/get_order/e651458745e7cd218121c342e0915890767e2f59ddc2e315b8844ad0f47d582e.cairo": "let range_check_ptr = [cast([cast(fp + (-5), felt**)] + 2, felt*)]\n",
                 "autogen/starknet/external/return/get_number_of_orders/00bd4adee1ff7baaf414de13b1523768f107fed62fa3f159082957444754cc9c.cairo": "func get_number_of_orders_encode_return(ret_struct : __main__.get_number_of_orders.Return, range_check_ptr) -> (\n        range_check_ptr, data_len : felt, data : felt*):\n    %{ memory[ap] = segments.add() %}\n    alloc_locals\n    local __return_value_ptr_start : felt*\n    let __return_value_ptr = __return_value_ptr_start\n    with range_check_ptr:\n    end\n    return (\n        range_check_ptr=range_check_ptr,\n        data_len=__return_value_ptr - __return_value_ptr_start,\n        data=__return_value_ptr_start)\nend\n",
                 "autogen/starknet/external/return/get_order/8e3d3d35723a8d90168cf9192ee20a845ab036f632f68cc45859030d232749b4.cairo": "func get_order_encode_return(ret_struct : __main__.get_order.Return, range_check_ptr) -> (\n        range_check_ptr, data_len : felt, data : felt*):\n    %{ memory[ap] = segments.add() %}\n    alloc_locals\n    local __return_value_ptr_start : felt*\n    let __return_value_ptr = __return_value_ptr_start\n    with range_check_ptr:\n    end\n    return (\n        range_check_ptr=range_check_ptr,\n        data_len=__return_value_ptr - __return_value_ptr_start,\n        data=__return_value_ptr_start)\nend\n",
-                "autogen/starknet/external/withdraw/424b26e79f70343cc02557f1fbd25745138efb26a3dc5c8b593ca765b73138b7.cairo": "let pedersen_ptr = [cast([cast(fp + (-5), felt**)] + 1, starkware.cairo.common.cairo_builtins.HashBuiltin**)]\n",
-                "autogen/starknet/external/withdraw/4ba2b119ceb30fe10f4cca3c9d73ef620c0fb5eece91b99a99d71217bba1001c.cairo": "return (syscall_ptr,pedersen_ptr,range_check_ptr,retdata_size,retdata)\n",
-                "autogen/starknet/external/withdraw/c7060df96cb0acca1380ae43bf758cab727bfdf73cb5d34a93e24a9742817fda.cairo": "let syscall_ptr = [cast([cast(fp + (-5), felt**)] + 0, felt**)]\n",
-                "autogen/starknet/external/withdraw/cfd82518e709bc152f35e3f0774c30086dbb577ee828c5e06bbe84a6f92c48a0.cairo": "let ret_struct = __wrapped_func{syscall_ptr=syscall_ptr, pedersen_ptr=pedersen_ptr, range_check_ptr=range_check_ptr}(order_id=__calldata_arg_order_id,)\n%{ memory[ap] = segments.add() %}        # Allocate memory for return value.\ntempvar retdata : felt*\nlet retdata_size = 0\n",
-                "autogen/starknet/external/withdraw/e651458745e7cd218121c342e0915890767e2f59ddc2e315b8844ad0f47d582e.cairo": "let range_check_ptr = [cast([cast(fp + (-5), felt**)] + 2, felt*)]\n",
                 "autogen/starknet/storage_var/amm_contract_address/decl.cairo": "namespace amm_contract_address:\n    from starkware.starknet.common.storage import normalize_address\n    from starkware.starknet.common.syscalls import storage_read, storage_write\n    from starkware.cairo.common.cairo_builtins import HashBuiltin\n    from starkware.cairo.common.hash import hash2\n\n    func addr{pedersen_ptr : HashBuiltin*, range_check_ptr}() -> (res : felt):\n        let res = 0\n        call hash2\n        call normalize_address\n    end\n\n    func read{syscall_ptr : felt*, pedersen_ptr : HashBuiltin*, range_check_ptr}() -> (\n        amm_contract : felt\n    ):\n        let storage_addr = 0\n        call addr\n        call storage_read\n    end\n\n    func write{syscall_ptr : felt*, pedersen_ptr : HashBuiltin*, range_check_ptr}(value : felt):\n        let storage_addr = 0\n        call addr\n        call storage_write\n    end\nend",
                 "autogen/starknet/storage_var/amm_contract_address/impl.cairo": "namespace amm_contract_address:\n    from starkware.starknet.common.storage import normalize_address\n    from starkware.starknet.common.syscalls import storage_read, storage_write\n    from starkware.cairo.common.cairo_builtins import HashBuiltin\n    from starkware.cairo.common.hash import hash2\n\n    func addr{pedersen_ptr : HashBuiltin*, range_check_ptr}() -> (res : felt):\n        let res = 741340858602212947722864634591971536219055525437524804750978253410158359926\n        return (res=res)\n    end\n\n    func read{syscall_ptr : felt*, pedersen_ptr : HashBuiltin*, range_check_ptr}() -> (\n        amm_contract : felt\n    ):\n        let (storage_addr) = addr()\n        let (__storage_var_temp0) = storage_read(address=storage_addr + 0)\n\n        tempvar syscall_ptr = syscall_ptr\n        tempvar pedersen_ptr = pedersen_ptr\n        tempvar range_check_ptr = range_check_ptr\n        tempvar __storage_var_temp0 : felt = __storage_var_temp0\n        return ([cast(&__storage_var_temp0, felt*)])\n    end\n\n    func write{syscall_ptr : felt*, pedersen_ptr : HashBuiltin*, range_check_ptr}(value : felt):\n        let (storage_addr) = addr()\n        storage_write(address=storage_addr + 0, value=[cast(&value, felt) + 0])\n        return ()\n    end\nend",
                 "autogen/starknet/storage_var/last_index_executed_storage/decl.cairo": "namespace last_index_executed_storage:\n    from starkware.starknet.common.storage import normalize_address\n    from starkware.starknet.common.syscalls import storage_read, storage_write\n    from starkware.cairo.common.cairo_builtins import HashBuiltin\n    from starkware.cairo.common.hash import hash2\n\n    func addr{pedersen_ptr : HashBuiltin*, range_check_ptr}(price_entry : felt) -> (res : felt):\n        let res = 0\n        call hash2\n        call normalize_address\n    end\n\n    func read{syscall_ptr : felt*, pedersen_ptr : HashBuiltin*, range_check_ptr}(\n        price_entry : felt\n    ) -> (last_index_executed : felt):\n        let storage_addr = 0\n        call addr\n        call storage_read\n    end\n\n    func write{syscall_ptr : felt*, pedersen_ptr : HashBuiltin*, range_check_ptr}(\n        price_entry : felt, value : felt\n    ):\n        let storage_addr = 0\n        call addr\n        call storage_write\n    end\nend",
@@ -48002,7 +48002,7 @@
                     "accessible_scopes": [
                         "__main__",
                         "__main__",
-                        "__main__.withdraw"
+                        "__main__.cancel_order"
                     ],
                     "flow_tracking_data": {
                         "ap_tracking": {
@@ -48010,15 +48010,15 @@
                             "offset": 0
                         },
                         "reference_ids": {
-                            "__main__.withdraw.order_id": 749,
-                            "__main__.withdraw.pedersen_ptr": 751,
-                            "__main__.withdraw.range_check_ptr": 752,
-                            "__main__.withdraw.syscall_ptr": 750
+                            "__main__.cancel_order.order_id": 749,
+                            "__main__.cancel_order.pedersen_ptr": 751,
+                            "__main__.cancel_order.range_check_ptr": 752,
+                            "__main__.cancel_order.syscall_ptr": 750
                         }
                     },
                     "hints": [],
                     "inst": {
-                        "end_col": 34,
+                        "end_col": 38,
                         "end_line": 133,
                         "input_file": {
                             "filename": "contracts/limit_orders.cairo"
@@ -48047,7 +48047,7 @@
                             },
                             "While expanding the reference 'syscall_ptr' in:"
                         ],
-                        "start_col": 15,
+                        "start_col": 19,
                         "start_line": 133
                     }
                 },
@@ -48055,7 +48055,7 @@
                     "accessible_scopes": [
                         "__main__",
                         "__main__",
-                        "__main__.withdraw"
+                        "__main__.cancel_order"
                     ],
                     "flow_tracking_data": {
                         "ap_tracking": {
@@ -48063,10 +48063,10 @@
                             "offset": 1
                         },
                         "reference_ids": {
-                            "__main__.withdraw.order_id": 749,
-                            "__main__.withdraw.pedersen_ptr": 751,
-                            "__main__.withdraw.range_check_ptr": 752,
-                            "__main__.withdraw.syscall_ptr": 750
+                            "__main__.cancel_order.order_id": 749,
+                            "__main__.cancel_order.pedersen_ptr": 751,
+                            "__main__.cancel_order.range_check_ptr": 752,
+                            "__main__.cancel_order.syscall_ptr": 750
                         }
                     },
                     "hints": [],
@@ -48084,7 +48084,7 @@
                     "accessible_scopes": [
                         "__main__",
                         "__main__",
-                        "__main__.withdraw"
+                        "__main__.cancel_order"
                     ],
                     "flow_tracking_data": {
                         "ap_tracking": {
@@ -48092,11 +48092,11 @@
                             "offset": 6
                         },
                         "reference_ids": {
-                            "__main__.withdraw.order_id": 749,
-                            "__main__.withdraw.pedersen_ptr": 751,
-                            "__main__.withdraw.range_check_ptr": 752,
-                            "__main__.withdraw.sender_address": 754,
-                            "__main__.withdraw.syscall_ptr": 753
+                            "__main__.cancel_order.order_id": 749,
+                            "__main__.cancel_order.pedersen_ptr": 751,
+                            "__main__.cancel_order.range_check_ptr": 752,
+                            "__main__.cancel_order.sender_address": 754,
+                            "__main__.cancel_order.syscall_ptr": 753
                         }
                     },
                     "hints": [],
@@ -48150,7 +48150,7 @@
                     "accessible_scopes": [
                         "__main__",
                         "__main__",
-                        "__main__.withdraw"
+                        "__main__.cancel_order"
                     ],
                     "flow_tracking_data": {
                         "ap_tracking": {
@@ -48158,16 +48158,16 @@
                             "offset": 7
                         },
                         "reference_ids": {
-                            "__main__.withdraw.order_id": 749,
-                            "__main__.withdraw.pedersen_ptr": 751,
-                            "__main__.withdraw.range_check_ptr": 752,
-                            "__main__.withdraw.sender_address": 754,
-                            "__main__.withdraw.syscall_ptr": 753
+                            "__main__.cancel_order.order_id": 749,
+                            "__main__.cancel_order.pedersen_ptr": 751,
+                            "__main__.cancel_order.range_check_ptr": 752,
+                            "__main__.cancel_order.sender_address": 754,
+                            "__main__.cancel_order.syscall_ptr": 753
                         }
                     },
                     "hints": [],
                     "inst": {
-                        "end_col": 63,
+                        "end_col": 67,
                         "end_line": 133,
                         "input_file": {
                             "filename": "contracts/limit_orders.cairo"
@@ -48196,7 +48196,7 @@
                             },
                             "While expanding the reference 'pedersen_ptr' in:"
                         ],
-                        "start_col": 36,
+                        "start_col": 40,
                         "start_line": 133
                     }
                 },
@@ -48204,7 +48204,7 @@
                     "accessible_scopes": [
                         "__main__",
                         "__main__",
-                        "__main__.withdraw"
+                        "__main__.cancel_order"
                     ],
                     "flow_tracking_data": {
                         "ap_tracking": {
@@ -48212,16 +48212,16 @@
                             "offset": 8
                         },
                         "reference_ids": {
-                            "__main__.withdraw.order_id": 749,
-                            "__main__.withdraw.pedersen_ptr": 751,
-                            "__main__.withdraw.range_check_ptr": 752,
-                            "__main__.withdraw.sender_address": 754,
-                            "__main__.withdraw.syscall_ptr": 753
+                            "__main__.cancel_order.order_id": 749,
+                            "__main__.cancel_order.pedersen_ptr": 751,
+                            "__main__.cancel_order.range_check_ptr": 752,
+                            "__main__.cancel_order.sender_address": 754,
+                            "__main__.cancel_order.syscall_ptr": 753
                         }
                     },
                     "hints": [],
                     "inst": {
-                        "end_col": 80,
+                        "end_col": 84,
                         "end_line": 133,
                         "input_file": {
                             "filename": "contracts/limit_orders.cairo"
@@ -48250,7 +48250,7 @@
                             },
                             "While expanding the reference 'range_check_ptr' in:"
                         ],
-                        "start_col": 65,
+                        "start_col": 69,
                         "start_line": 133
                     }
                 },
@@ -48258,7 +48258,7 @@
                     "accessible_scopes": [
                         "__main__",
                         "__main__",
-                        "__main__.withdraw"
+                        "__main__.cancel_order"
                     ],
                     "flow_tracking_data": {
                         "ap_tracking": {
@@ -48266,16 +48266,16 @@
                             "offset": 9
                         },
                         "reference_ids": {
-                            "__main__.withdraw.order_id": 749,
-                            "__main__.withdraw.pedersen_ptr": 751,
-                            "__main__.withdraw.range_check_ptr": 752,
-                            "__main__.withdraw.sender_address": 754,
-                            "__main__.withdraw.syscall_ptr": 753
+                            "__main__.cancel_order.order_id": 749,
+                            "__main__.cancel_order.pedersen_ptr": 751,
+                            "__main__.cancel_order.range_check_ptr": 752,
+                            "__main__.cancel_order.sender_address": 754,
+                            "__main__.cancel_order.syscall_ptr": 753
                         }
                     },
                     "hints": [],
                     "inst": {
-                        "end_col": 96,
+                        "end_col": 100,
                         "end_line": 133,
                         "input_file": {
                             "filename": "contracts/limit_orders.cairo"
@@ -48292,7 +48292,7 @@
                             },
                             "While expanding the reference 'order_id' in:"
                         ],
-                        "start_col": 82,
+                        "start_col": 86,
                         "start_line": 133
                     }
                 },
@@ -48300,7 +48300,7 @@
                     "accessible_scopes": [
                         "__main__",
                         "__main__",
-                        "__main__.withdraw"
+                        "__main__.cancel_order"
                     ],
                     "flow_tracking_data": {
                         "ap_tracking": {
@@ -48308,11 +48308,11 @@
                             "offset": 10
                         },
                         "reference_ids": {
-                            "__main__.withdraw.order_id": 749,
-                            "__main__.withdraw.pedersen_ptr": 751,
-                            "__main__.withdraw.range_check_ptr": 752,
-                            "__main__.withdraw.sender_address": 754,
-                            "__main__.withdraw.syscall_ptr": 753
+                            "__main__.cancel_order.order_id": 749,
+                            "__main__.cancel_order.pedersen_ptr": 751,
+                            "__main__.cancel_order.range_check_ptr": 752,
+                            "__main__.cancel_order.sender_address": 754,
+                            "__main__.cancel_order.syscall_ptr": 753
                         }
                     },
                     "hints": [],
@@ -48330,7 +48330,7 @@
                     "accessible_scopes": [
                         "__main__",
                         "__main__",
-                        "__main__.withdraw"
+                        "__main__.cancel_order"
                     ],
                     "flow_tracking_data": {
                         "ap_tracking": {
@@ -48338,13 +48338,13 @@
                             "offset": 115
                         },
                         "reference_ids": {
-                            "__main__.withdraw.order_core_instance": 758,
-                            "__main__.withdraw.order_id": 749,
-                            "__main__.withdraw.order_owner": 759,
-                            "__main__.withdraw.pedersen_ptr": 756,
-                            "__main__.withdraw.range_check_ptr": 757,
-                            "__main__.withdraw.sender_address": 754,
-                            "__main__.withdraw.syscall_ptr": 755
+                            "__main__.cancel_order.order_core_instance": 758,
+                            "__main__.cancel_order.order_id": 749,
+                            "__main__.cancel_order.order_owner": 759,
+                            "__main__.cancel_order.pedersen_ptr": 756,
+                            "__main__.cancel_order.range_check_ptr": 757,
+                            "__main__.cancel_order.sender_address": 754,
+                            "__main__.cancel_order.syscall_ptr": 755
                         }
                     },
                     "hints": [],
@@ -48362,7 +48362,7 @@
                     "accessible_scopes": [
                         "__main__",
                         "__main__",
-                        "__main__.withdraw"
+                        "__main__.cancel_order"
                     ],
                     "flow_tracking_data": {
                         "ap_tracking": {
@@ -48370,14 +48370,14 @@
                             "offset": 115
                         },
                         "reference_ids": {
-                            "__main__.withdraw.order_core_instance": 758,
-                            "__main__.withdraw.order_id": 749,
-                            "__main__.withdraw.order_owner": 759,
-                            "__main__.withdraw.order_status": 760,
-                            "__main__.withdraw.pedersen_ptr": 756,
-                            "__main__.withdraw.range_check_ptr": 757,
-                            "__main__.withdraw.sender_address": 754,
-                            "__main__.withdraw.syscall_ptr": 755
+                            "__main__.cancel_order.order_core_instance": 758,
+                            "__main__.cancel_order.order_id": 749,
+                            "__main__.cancel_order.order_owner": 759,
+                            "__main__.cancel_order.order_status": 760,
+                            "__main__.cancel_order.pedersen_ptr": 756,
+                            "__main__.cancel_order.range_check_ptr": 757,
+                            "__main__.cancel_order.sender_address": 754,
+                            "__main__.cancel_order.syscall_ptr": 755
                         }
                     },
                     "hints": [],
@@ -48395,7 +48395,7 @@
                     "accessible_scopes": [
                         "__main__",
                         "__main__",
-                        "__main__.withdraw"
+                        "__main__.cancel_order"
                     ],
                     "flow_tracking_data": {
                         "ap_tracking": {
@@ -48403,16 +48403,16 @@
                             "offset": 115
                         },
                         "reference_ids": {
-                            "__main__.withdraw.amount": 761,
-                            "__main__.withdraw.order_core_instance": 758,
-                            "__main__.withdraw.order_id": 749,
-                            "__main__.withdraw.order_owner": 759,
-                            "__main__.withdraw.order_status": 760,
-                            "__main__.withdraw.pedersen_ptr": 756,
-                            "__main__.withdraw.range_check_ptr": 757,
-                            "__main__.withdraw.sender_address": 754,
-                            "__main__.withdraw.syscall_ptr": 755,
-                            "__main__.withdraw.token": 762
+                            "__main__.cancel_order.amount": 761,
+                            "__main__.cancel_order.order_core_instance": 758,
+                            "__main__.cancel_order.order_id": 749,
+                            "__main__.cancel_order.order_owner": 759,
+                            "__main__.cancel_order.order_status": 760,
+                            "__main__.cancel_order.pedersen_ptr": 756,
+                            "__main__.cancel_order.range_check_ptr": 757,
+                            "__main__.cancel_order.sender_address": 754,
+                            "__main__.cancel_order.syscall_ptr": 755,
+                            "__main__.cancel_order.token": 762
                         }
                     },
                     "hints": [],
@@ -48478,7 +48478,7 @@
                     "accessible_scopes": [
                         "__main__",
                         "__main__",
-                        "__main__.withdraw"
+                        "__main__.cancel_order"
                     ],
                     "flow_tracking_data": {
                         "ap_tracking": {
@@ -48486,16 +48486,16 @@
                             "offset": 116
                         },
                         "reference_ids": {
-                            "__main__.withdraw.amount": 761,
-                            "__main__.withdraw.order_core_instance": 758,
-                            "__main__.withdraw.order_id": 749,
-                            "__main__.withdraw.order_owner": 759,
-                            "__main__.withdraw.order_status": 760,
-                            "__main__.withdraw.pedersen_ptr": 756,
-                            "__main__.withdraw.range_check_ptr": 757,
-                            "__main__.withdraw.sender_address": 754,
-                            "__main__.withdraw.syscall_ptr": 755,
-                            "__main__.withdraw.token": 762
+                            "__main__.cancel_order.amount": 761,
+                            "__main__.cancel_order.order_core_instance": 758,
+                            "__main__.cancel_order.order_id": 749,
+                            "__main__.cancel_order.order_owner": 759,
+                            "__main__.cancel_order.order_status": 760,
+                            "__main__.cancel_order.pedersen_ptr": 756,
+                            "__main__.cancel_order.range_check_ptr": 757,
+                            "__main__.cancel_order.sender_address": 754,
+                            "__main__.cancel_order.syscall_ptr": 755,
+                            "__main__.cancel_order.token": 762
                         }
                     },
                     "hints": [],
@@ -48561,7 +48561,7 @@
                     "accessible_scopes": [
                         "__main__",
                         "__main__",
-                        "__main__.withdraw"
+                        "__main__.cancel_order"
                     ],
                     "flow_tracking_data": {
                         "ap_tracking": {
@@ -48569,16 +48569,16 @@
                             "offset": 117
                         },
                         "reference_ids": {
-                            "__main__.withdraw.amount": 761,
-                            "__main__.withdraw.order_core_instance": 758,
-                            "__main__.withdraw.order_id": 749,
-                            "__main__.withdraw.order_owner": 759,
-                            "__main__.withdraw.order_status": 760,
-                            "__main__.withdraw.pedersen_ptr": 756,
-                            "__main__.withdraw.range_check_ptr": 757,
-                            "__main__.withdraw.sender_address": 754,
-                            "__main__.withdraw.syscall_ptr": 755,
-                            "__main__.withdraw.token": 762
+                            "__main__.cancel_order.amount": 761,
+                            "__main__.cancel_order.order_core_instance": 758,
+                            "__main__.cancel_order.order_id": 749,
+                            "__main__.cancel_order.order_owner": 759,
+                            "__main__.cancel_order.order_status": 760,
+                            "__main__.cancel_order.pedersen_ptr": 756,
+                            "__main__.cancel_order.range_check_ptr": 757,
+                            "__main__.cancel_order.sender_address": 754,
+                            "__main__.cancel_order.syscall_ptr": 755,
+                            "__main__.cancel_order.token": 762
                         }
                     },
                     "hints": [],
@@ -48608,7 +48608,7 @@
                     "accessible_scopes": [
                         "__main__",
                         "__main__",
-                        "__main__.withdraw"
+                        "__main__.cancel_order"
                     ],
                     "flow_tracking_data": {
                         "ap_tracking": {
@@ -48616,16 +48616,16 @@
                             "offset": 118
                         },
                         "reference_ids": {
-                            "__main__.withdraw.amount": 761,
-                            "__main__.withdraw.order_core_instance": 758,
-                            "__main__.withdraw.order_id": 749,
-                            "__main__.withdraw.order_owner": 759,
-                            "__main__.withdraw.order_status": 760,
-                            "__main__.withdraw.pedersen_ptr": 756,
-                            "__main__.withdraw.range_check_ptr": 757,
-                            "__main__.withdraw.sender_address": 754,
-                            "__main__.withdraw.syscall_ptr": 755,
-                            "__main__.withdraw.token": 762
+                            "__main__.cancel_order.amount": 761,
+                            "__main__.cancel_order.order_core_instance": 758,
+                            "__main__.cancel_order.order_id": 749,
+                            "__main__.cancel_order.order_owner": 759,
+                            "__main__.cancel_order.order_status": 760,
+                            "__main__.cancel_order.pedersen_ptr": 756,
+                            "__main__.cancel_order.range_check_ptr": 757,
+                            "__main__.cancel_order.sender_address": 754,
+                            "__main__.cancel_order.syscall_ptr": 755,
+                            "__main__.cancel_order.token": 762
                         }
                     },
                     "hints": [],
@@ -48655,7 +48655,7 @@
                     "accessible_scopes": [
                         "__main__",
                         "__main__",
-                        "__main__.withdraw"
+                        "__main__.cancel_order"
                     ],
                     "flow_tracking_data": {
                         "ap_tracking": {
@@ -48663,16 +48663,16 @@
                             "offset": 119
                         },
                         "reference_ids": {
-                            "__main__.withdraw.amount": 761,
-                            "__main__.withdraw.order_core_instance": 758,
-                            "__main__.withdraw.order_id": 749,
-                            "__main__.withdraw.order_owner": 759,
-                            "__main__.withdraw.order_status": 760,
-                            "__main__.withdraw.pedersen_ptr": 756,
-                            "__main__.withdraw.range_check_ptr": 757,
-                            "__main__.withdraw.sender_address": 754,
-                            "__main__.withdraw.syscall_ptr": 755,
-                            "__main__.withdraw.token": 762
+                            "__main__.cancel_order.amount": 761,
+                            "__main__.cancel_order.order_core_instance": 758,
+                            "__main__.cancel_order.order_id": 749,
+                            "__main__.cancel_order.order_owner": 759,
+                            "__main__.cancel_order.order_status": 760,
+                            "__main__.cancel_order.pedersen_ptr": 756,
+                            "__main__.cancel_order.range_check_ptr": 757,
+                            "__main__.cancel_order.sender_address": 754,
+                            "__main__.cancel_order.syscall_ptr": 755,
+                            "__main__.cancel_order.token": 762
                         }
                     },
                     "hints": [],
@@ -48702,7 +48702,7 @@
                     "accessible_scopes": [
                         "__main__",
                         "__main__",
-                        "__main__.withdraw"
+                        "__main__.cancel_order"
                     ],
                     "flow_tracking_data": {
                         "ap_tracking": {
@@ -48710,16 +48710,16 @@
                             "offset": 120
                         },
                         "reference_ids": {
-                            "__main__.withdraw.amount": 761,
-                            "__main__.withdraw.order_core_instance": 758,
-                            "__main__.withdraw.order_id": 749,
-                            "__main__.withdraw.order_owner": 759,
-                            "__main__.withdraw.order_status": 760,
-                            "__main__.withdraw.pedersen_ptr": 756,
-                            "__main__.withdraw.range_check_ptr": 757,
-                            "__main__.withdraw.sender_address": 754,
-                            "__main__.withdraw.syscall_ptr": 755,
-                            "__main__.withdraw.token": 762
+                            "__main__.cancel_order.amount": 761,
+                            "__main__.cancel_order.order_core_instance": 758,
+                            "__main__.cancel_order.order_id": 749,
+                            "__main__.cancel_order.order_owner": 759,
+                            "__main__.cancel_order.order_status": 760,
+                            "__main__.cancel_order.pedersen_ptr": 756,
+                            "__main__.cancel_order.range_check_ptr": 757,
+                            "__main__.cancel_order.sender_address": 754,
+                            "__main__.cancel_order.syscall_ptr": 755,
+                            "__main__.cancel_order.token": 762
                         }
                     },
                     "hints": [],
@@ -48737,7 +48737,7 @@
                     "accessible_scopes": [
                         "__main__",
                         "__main__",
-                        "__main__.withdraw"
+                        "__main__.cancel_order"
                     ],
                     "flow_tracking_data": {
                         "ap_tracking": {
@@ -48745,16 +48745,16 @@
                             "offset": 121
                         },
                         "reference_ids": {
-                            "__main__.withdraw.amount": 761,
-                            "__main__.withdraw.order_core_instance": 758,
-                            "__main__.withdraw.order_id": 749,
-                            "__main__.withdraw.order_owner": 759,
-                            "__main__.withdraw.order_status": 760,
-                            "__main__.withdraw.pedersen_ptr": 756,
-                            "__main__.withdraw.range_check_ptr": 757,
-                            "__main__.withdraw.sender_address": 754,
-                            "__main__.withdraw.syscall_ptr": 755,
-                            "__main__.withdraw.token": 762
+                            "__main__.cancel_order.amount": 761,
+                            "__main__.cancel_order.order_core_instance": 758,
+                            "__main__.cancel_order.order_id": 749,
+                            "__main__.cancel_order.order_owner": 759,
+                            "__main__.cancel_order.order_status": 760,
+                            "__main__.cancel_order.pedersen_ptr": 756,
+                            "__main__.cancel_order.range_check_ptr": 757,
+                            "__main__.cancel_order.sender_address": 754,
+                            "__main__.cancel_order.syscall_ptr": 755,
+                            "__main__.cancel_order.token": 762
                         }
                     },
                     "hints": [],
@@ -48772,7 +48772,7 @@
                     "accessible_scopes": [
                         "__main__",
                         "__main__",
-                        "__main__.withdraw"
+                        "__main__.cancel_order"
                     ],
                     "flow_tracking_data": {
                         "ap_tracking": {
@@ -48780,19 +48780,19 @@
                             "offset": 143
                         },
                         "reference_ids": {
-                            "__main__.withdraw.amount": 761,
-                            "__main__.withdraw.order_core_instance": 758,
-                            "__main__.withdraw.order_core_instance_canceled": 767,
-                            "__main__.withdraw.order_id": 749,
-                            "__main__.withdraw.order_owner": 759,
-                            "__main__.withdraw.order_status": 760,
-                            "__main__.withdraw.pedersen_ptr": 756,
-                            "__main__.withdraw.pool_id": 765,
-                            "__main__.withdraw.price": 766,
-                            "__main__.withdraw.range_check_ptr": 764,
-                            "__main__.withdraw.sender_address": 754,
-                            "__main__.withdraw.syscall_ptr": 763,
-                            "__main__.withdraw.token": 762
+                            "__main__.cancel_order.amount": 761,
+                            "__main__.cancel_order.order_core_instance": 758,
+                            "__main__.cancel_order.order_core_instance_canceled": 767,
+                            "__main__.cancel_order.order_id": 749,
+                            "__main__.cancel_order.order_owner": 759,
+                            "__main__.cancel_order.order_status": 760,
+                            "__main__.cancel_order.pedersen_ptr": 756,
+                            "__main__.cancel_order.pool_id": 765,
+                            "__main__.cancel_order.price": 766,
+                            "__main__.cancel_order.range_check_ptr": 764,
+                            "__main__.cancel_order.sender_address": 754,
+                            "__main__.cancel_order.syscall_ptr": 763,
+                            "__main__.cancel_order.token": 762
                         }
                     },
                     "hints": [],
@@ -48818,7 +48818,7 @@
                                         },
                                         "parent_location": [
                                             {
-                                                "end_col": 34,
+                                                "end_col": 38,
                                                 "end_line": 133,
                                                 "input_file": {
                                                     "filename": "contracts/limit_orders.cairo"
@@ -48835,7 +48835,7 @@
                                                     },
                                                     "While trying to retrieve the implicit argument 'syscall_ptr' in:"
                                                 ],
-                                                "start_col": 15,
+                                                "start_col": 19,
                                                 "start_line": 133
                                             },
                                             "While expanding the reference 'syscall_ptr' in:"
@@ -48858,7 +48858,7 @@
                     "accessible_scopes": [
                         "__main__",
                         "__main__",
-                        "__main__.withdraw"
+                        "__main__.cancel_order"
                     ],
                     "flow_tracking_data": {
                         "ap_tracking": {
@@ -48866,19 +48866,19 @@
                             "offset": 144
                         },
                         "reference_ids": {
-                            "__main__.withdraw.amount": 761,
-                            "__main__.withdraw.order_core_instance": 758,
-                            "__main__.withdraw.order_core_instance_canceled": 767,
-                            "__main__.withdraw.order_id": 749,
-                            "__main__.withdraw.order_owner": 759,
-                            "__main__.withdraw.order_status": 760,
-                            "__main__.withdraw.pedersen_ptr": 756,
-                            "__main__.withdraw.pool_id": 765,
-                            "__main__.withdraw.price": 766,
-                            "__main__.withdraw.range_check_ptr": 764,
-                            "__main__.withdraw.sender_address": 754,
-                            "__main__.withdraw.syscall_ptr": 763,
-                            "__main__.withdraw.token": 762
+                            "__main__.cancel_order.amount": 761,
+                            "__main__.cancel_order.order_core_instance": 758,
+                            "__main__.cancel_order.order_core_instance_canceled": 767,
+                            "__main__.cancel_order.order_id": 749,
+                            "__main__.cancel_order.order_owner": 759,
+                            "__main__.cancel_order.order_status": 760,
+                            "__main__.cancel_order.pedersen_ptr": 756,
+                            "__main__.cancel_order.pool_id": 765,
+                            "__main__.cancel_order.price": 766,
+                            "__main__.cancel_order.range_check_ptr": 764,
+                            "__main__.cancel_order.sender_address": 754,
+                            "__main__.cancel_order.syscall_ptr": 763,
+                            "__main__.cancel_order.token": 762
                         }
                     },
                     "hints": [],
@@ -48897,7 +48897,7 @@
                                 },
                                 "parent_location": [
                                     {
-                                        "end_col": 63,
+                                        "end_col": 67,
                                         "end_line": 133,
                                         "input_file": {
                                             "filename": "contracts/limit_orders.cairo"
@@ -48914,7 +48914,7 @@
                                             },
                                             "While trying to retrieve the implicit argument 'pedersen_ptr' in:"
                                         ],
-                                        "start_col": 36,
+                                        "start_col": 40,
                                         "start_line": 133
                                     },
                                     "While expanding the reference 'pedersen_ptr' in:"
@@ -48932,7 +48932,7 @@
                     "accessible_scopes": [
                         "__main__",
                         "__main__",
-                        "__main__.withdraw"
+                        "__main__.cancel_order"
                     ],
                     "flow_tracking_data": {
                         "ap_tracking": {
@@ -48940,19 +48940,19 @@
                             "offset": 145
                         },
                         "reference_ids": {
-                            "__main__.withdraw.amount": 761,
-                            "__main__.withdraw.order_core_instance": 758,
-                            "__main__.withdraw.order_core_instance_canceled": 767,
-                            "__main__.withdraw.order_id": 749,
-                            "__main__.withdraw.order_owner": 759,
-                            "__main__.withdraw.order_status": 760,
-                            "__main__.withdraw.pedersen_ptr": 756,
-                            "__main__.withdraw.pool_id": 765,
-                            "__main__.withdraw.price": 766,
-                            "__main__.withdraw.range_check_ptr": 764,
-                            "__main__.withdraw.sender_address": 754,
-                            "__main__.withdraw.syscall_ptr": 763,
-                            "__main__.withdraw.token": 762
+                            "__main__.cancel_order.amount": 761,
+                            "__main__.cancel_order.order_core_instance": 758,
+                            "__main__.cancel_order.order_core_instance_canceled": 767,
+                            "__main__.cancel_order.order_id": 749,
+                            "__main__.cancel_order.order_owner": 759,
+                            "__main__.cancel_order.order_status": 760,
+                            "__main__.cancel_order.pedersen_ptr": 756,
+                            "__main__.cancel_order.pool_id": 765,
+                            "__main__.cancel_order.price": 766,
+                            "__main__.cancel_order.range_check_ptr": 764,
+                            "__main__.cancel_order.sender_address": 754,
+                            "__main__.cancel_order.syscall_ptr": 763,
+                            "__main__.cancel_order.token": 762
                         }
                     },
                     "hints": [],
@@ -48978,7 +48978,7 @@
                                         },
                                         "parent_location": [
                                             {
-                                                "end_col": 80,
+                                                "end_col": 84,
                                                 "end_line": 133,
                                                 "input_file": {
                                                     "filename": "contracts/limit_orders.cairo"
@@ -48995,7 +48995,7 @@
                                                     },
                                                     "While trying to retrieve the implicit argument 'range_check_ptr' in:"
                                                 ],
-                                                "start_col": 65,
+                                                "start_col": 69,
                                                 "start_line": 133
                                             },
                                             "While expanding the reference 'range_check_ptr' in:"
@@ -49018,7 +49018,7 @@
                     "accessible_scopes": [
                         "__main__",
                         "__main__",
-                        "__main__.withdraw"
+                        "__main__.cancel_order"
                     ],
                     "flow_tracking_data": {
                         "ap_tracking": {
@@ -49026,19 +49026,19 @@
                             "offset": 146
                         },
                         "reference_ids": {
-                            "__main__.withdraw.amount": 761,
-                            "__main__.withdraw.order_core_instance": 758,
-                            "__main__.withdraw.order_core_instance_canceled": 767,
-                            "__main__.withdraw.order_id": 749,
-                            "__main__.withdraw.order_owner": 759,
-                            "__main__.withdraw.order_status": 760,
-                            "__main__.withdraw.pedersen_ptr": 756,
-                            "__main__.withdraw.pool_id": 765,
-                            "__main__.withdraw.price": 766,
-                            "__main__.withdraw.range_check_ptr": 764,
-                            "__main__.withdraw.sender_address": 754,
-                            "__main__.withdraw.syscall_ptr": 763,
-                            "__main__.withdraw.token": 762
+                            "__main__.cancel_order.amount": 761,
+                            "__main__.cancel_order.order_core_instance": 758,
+                            "__main__.cancel_order.order_core_instance_canceled": 767,
+                            "__main__.cancel_order.order_id": 749,
+                            "__main__.cancel_order.order_owner": 759,
+                            "__main__.cancel_order.order_status": 760,
+                            "__main__.cancel_order.pedersen_ptr": 756,
+                            "__main__.cancel_order.pool_id": 765,
+                            "__main__.cancel_order.price": 766,
+                            "__main__.cancel_order.range_check_ptr": 764,
+                            "__main__.cancel_order.sender_address": 754,
+                            "__main__.cancel_order.syscall_ptr": 763,
+                            "__main__.cancel_order.token": 762
                         }
                     },
                     "hints": [],
@@ -49057,7 +49057,7 @@
                         "__main__",
                         "__main__",
                         "__wrappers__",
-                        "__wrappers__.withdraw"
+                        "__wrappers__.cancel_order"
                     ],
                     "flow_tracking_data": {
                         "ap_tracking": {
@@ -49065,12 +49065,12 @@
                             "offset": 0
                         },
                         "reference_ids": {
-                            "__wrappers__.withdraw.__calldata_actual_size": 774,
-                            "__wrappers__.withdraw.__calldata_arg_order_id": 772,
-                            "__wrappers__.withdraw.__calldata_ptr": 773,
-                            "__wrappers__.withdraw.pedersen_ptr": 769,
-                            "__wrappers__.withdraw.range_check_ptr": 770,
-                            "__wrappers__.withdraw.syscall_ptr": 768
+                            "__wrappers__.cancel_order.__calldata_actual_size": 774,
+                            "__wrappers__.cancel_order.__calldata_arg_order_id": 772,
+                            "__wrappers__.cancel_order.__calldata_ptr": 773,
+                            "__wrappers__.cancel_order.pedersen_ptr": 769,
+                            "__wrappers__.cancel_order.range_check_ptr": 770,
+                            "__wrappers__.cancel_order.syscall_ptr": 768
                         }
                     },
                     "hints": [],
@@ -49082,7 +49082,7 @@
                         },
                         "parent_location": [
                             {
-                                "end_col": 96,
+                                "end_col": 100,
                                 "end_line": 133,
                                 "input_file": {
                                     "filename": "contracts/limit_orders.cairo"
@@ -49096,7 +49096,7 @@
                                         },
                                         "parent_location": [
                                             {
-                                                "end_col": 14,
+                                                "end_col": 18,
                                                 "end_line": 133,
                                                 "input_file": {
                                                     "filename": "contracts/limit_orders.cairo"
@@ -49110,7 +49110,7 @@
                                                         },
                                                         "parent_location": [
                                                             {
-                                                                "end_col": 14,
+                                                                "end_col": 18,
                                                                 "end_line": 133,
                                                                 "input_file": {
                                                                     "filename": "contracts/limit_orders.cairo"
@@ -49135,7 +49135,7 @@
                                     },
                                     "While expanding the reference '__calldata_ptr' in:"
                                 ],
-                                "start_col": 82,
+                                "start_col": 86,
                                 "start_line": 133
                             },
                             "While handling calldata argument 'order_id'"
@@ -49149,7 +49149,7 @@
                         "__main__",
                         "__main__",
                         "__wrappers__",
-                        "__wrappers__.withdraw"
+                        "__wrappers__.cancel_order"
                     ],
                     "flow_tracking_data": {
                         "ap_tracking": {
@@ -49157,13 +49157,13 @@
                             "offset": 1
                         },
                         "reference_ids": {
-                            "__wrappers__.withdraw.__calldata_actual_size": 774,
-                            "__wrappers__.withdraw.__calldata_arg_order_id": 772,
-                            "__wrappers__.withdraw.__calldata_ptr": 773,
-                            "__wrappers__.withdraw.__temp58": 775,
-                            "__wrappers__.withdraw.pedersen_ptr": 769,
-                            "__wrappers__.withdraw.range_check_ptr": 770,
-                            "__wrappers__.withdraw.syscall_ptr": 768
+                            "__wrappers__.cancel_order.__calldata_actual_size": 774,
+                            "__wrappers__.cancel_order.__calldata_arg_order_id": 772,
+                            "__wrappers__.cancel_order.__calldata_ptr": 773,
+                            "__wrappers__.cancel_order.__temp58": 775,
+                            "__wrappers__.cancel_order.pedersen_ptr": 769,
+                            "__wrappers__.cancel_order.range_check_ptr": 770,
+                            "__wrappers__.cancel_order.syscall_ptr": 768
                         }
                     },
                     "hints": [],
@@ -49175,7 +49175,7 @@
                         },
                         "parent_location": [
                             {
-                                "end_col": 14,
+                                "end_col": 18,
                                 "end_line": 133,
                                 "input_file": {
                                     "filename": "contracts/limit_orders.cairo"
@@ -49194,7 +49194,7 @@
                         "__main__",
                         "__main__",
                         "__wrappers__",
-                        "__wrappers__.withdraw"
+                        "__wrappers__.cancel_order"
                     ],
                     "flow_tracking_data": {
                         "ap_tracking": {
@@ -49202,13 +49202,13 @@
                             "offset": 1
                         },
                         "reference_ids": {
-                            "__wrappers__.withdraw.__calldata_actual_size": 774,
-                            "__wrappers__.withdraw.__calldata_arg_order_id": 772,
-                            "__wrappers__.withdraw.__calldata_ptr": 773,
-                            "__wrappers__.withdraw.__temp58": 775,
-                            "__wrappers__.withdraw.pedersen_ptr": 769,
-                            "__wrappers__.withdraw.range_check_ptr": 770,
-                            "__wrappers__.withdraw.syscall_ptr": 768
+                            "__wrappers__.cancel_order.__calldata_actual_size": 774,
+                            "__wrappers__.cancel_order.__calldata_arg_order_id": 772,
+                            "__wrappers__.cancel_order.__calldata_ptr": 773,
+                            "__wrappers__.cancel_order.__temp58": 775,
+                            "__wrappers__.cancel_order.pedersen_ptr": 769,
+                            "__wrappers__.cancel_order.range_check_ptr": 770,
+                            "__wrappers__.cancel_order.syscall_ptr": 768
                         }
                     },
                     "hints": [],
@@ -49216,11 +49216,11 @@
                         "end_col": 64,
                         "end_line": 1,
                         "input_file": {
-                            "filename": "autogen/starknet/external/withdraw/c7060df96cb0acca1380ae43bf758cab727bfdf73cb5d34a93e24a9742817fda.cairo"
+                            "filename": "autogen/starknet/external/cancel_order/c7060df96cb0acca1380ae43bf758cab727bfdf73cb5d34a93e24a9742817fda.cairo"
                         },
                         "parent_location": [
                             {
-                                "end_col": 34,
+                                "end_col": 38,
                                 "end_line": 133,
                                 "input_file": {
                                     "filename": "contracts/limit_orders.cairo"
@@ -49230,11 +49230,11 @@
                                         "end_col": 56,
                                         "end_line": 1,
                                         "input_file": {
-                                            "filename": "autogen/starknet/external/withdraw/cfd82518e709bc152f35e3f0774c30086dbb577ee828c5e06bbe84a6f92c48a0.cairo"
+                                            "filename": "autogen/starknet/external/cancel_order/cfd82518e709bc152f35e3f0774c30086dbb577ee828c5e06bbe84a6f92c48a0.cairo"
                                         },
                                         "parent_location": [
                                             {
-                                                "end_col": 14,
+                                                "end_col": 18,
                                                 "end_line": 133,
                                                 "input_file": {
                                                     "filename": "contracts/limit_orders.cairo"
@@ -49249,7 +49249,7 @@
                                     },
                                     "While expanding the reference 'syscall_ptr' in:"
                                 ],
-                                "start_col": 15,
+                                "start_col": 19,
                                 "start_line": 133
                             },
                             "While constructing the external wrapper for:"
@@ -49263,7 +49263,7 @@
                         "__main__",
                         "__main__",
                         "__wrappers__",
-                        "__wrappers__.withdraw"
+                        "__wrappers__.cancel_order"
                     ],
                     "flow_tracking_data": {
                         "ap_tracking": {
@@ -49271,13 +49271,13 @@
                             "offset": 2
                         },
                         "reference_ids": {
-                            "__wrappers__.withdraw.__calldata_actual_size": 774,
-                            "__wrappers__.withdraw.__calldata_arg_order_id": 772,
-                            "__wrappers__.withdraw.__calldata_ptr": 773,
-                            "__wrappers__.withdraw.__temp58": 775,
-                            "__wrappers__.withdraw.pedersen_ptr": 769,
-                            "__wrappers__.withdraw.range_check_ptr": 770,
-                            "__wrappers__.withdraw.syscall_ptr": 768
+                            "__wrappers__.cancel_order.__calldata_actual_size": 774,
+                            "__wrappers__.cancel_order.__calldata_arg_order_id": 772,
+                            "__wrappers__.cancel_order.__calldata_ptr": 773,
+                            "__wrappers__.cancel_order.__temp58": 775,
+                            "__wrappers__.cancel_order.pedersen_ptr": 769,
+                            "__wrappers__.cancel_order.range_check_ptr": 770,
+                            "__wrappers__.cancel_order.syscall_ptr": 768
                         }
                     },
                     "hints": [],
@@ -49285,11 +49285,11 @@
                         "end_col": 110,
                         "end_line": 1,
                         "input_file": {
-                            "filename": "autogen/starknet/external/withdraw/424b26e79f70343cc02557f1fbd25745138efb26a3dc5c8b593ca765b73138b7.cairo"
+                            "filename": "autogen/starknet/external/cancel_order/424b26e79f70343cc02557f1fbd25745138efb26a3dc5c8b593ca765b73138b7.cairo"
                         },
                         "parent_location": [
                             {
-                                "end_col": 63,
+                                "end_col": 67,
                                 "end_line": 133,
                                 "input_file": {
                                     "filename": "contracts/limit_orders.cairo"
@@ -49299,11 +49299,11 @@
                                         "end_col": 83,
                                         "end_line": 1,
                                         "input_file": {
-                                            "filename": "autogen/starknet/external/withdraw/cfd82518e709bc152f35e3f0774c30086dbb577ee828c5e06bbe84a6f92c48a0.cairo"
+                                            "filename": "autogen/starknet/external/cancel_order/cfd82518e709bc152f35e3f0774c30086dbb577ee828c5e06bbe84a6f92c48a0.cairo"
                                         },
                                         "parent_location": [
                                             {
-                                                "end_col": 14,
+                                                "end_col": 18,
                                                 "end_line": 133,
                                                 "input_file": {
                                                     "filename": "contracts/limit_orders.cairo"
@@ -49318,7 +49318,7 @@
                                     },
                                     "While expanding the reference 'pedersen_ptr' in:"
                                 ],
-                                "start_col": 36,
+                                "start_col": 40,
                                 "start_line": 133
                             },
                             "While constructing the external wrapper for:"
@@ -49332,7 +49332,7 @@
                         "__main__",
                         "__main__",
                         "__wrappers__",
-                        "__wrappers__.withdraw"
+                        "__wrappers__.cancel_order"
                     ],
                     "flow_tracking_data": {
                         "ap_tracking": {
@@ -49340,13 +49340,13 @@
                             "offset": 3
                         },
                         "reference_ids": {
-                            "__wrappers__.withdraw.__calldata_actual_size": 774,
-                            "__wrappers__.withdraw.__calldata_arg_order_id": 772,
-                            "__wrappers__.withdraw.__calldata_ptr": 773,
-                            "__wrappers__.withdraw.__temp58": 775,
-                            "__wrappers__.withdraw.pedersen_ptr": 769,
-                            "__wrappers__.withdraw.range_check_ptr": 770,
-                            "__wrappers__.withdraw.syscall_ptr": 768
+                            "__wrappers__.cancel_order.__calldata_actual_size": 774,
+                            "__wrappers__.cancel_order.__calldata_arg_order_id": 772,
+                            "__wrappers__.cancel_order.__calldata_ptr": 773,
+                            "__wrappers__.cancel_order.__temp58": 775,
+                            "__wrappers__.cancel_order.pedersen_ptr": 769,
+                            "__wrappers__.cancel_order.range_check_ptr": 770,
+                            "__wrappers__.cancel_order.syscall_ptr": 768
                         }
                     },
                     "hints": [],
@@ -49354,11 +49354,11 @@
                         "end_col": 67,
                         "end_line": 1,
                         "input_file": {
-                            "filename": "autogen/starknet/external/withdraw/e651458745e7cd218121c342e0915890767e2f59ddc2e315b8844ad0f47d582e.cairo"
+                            "filename": "autogen/starknet/external/cancel_order/e651458745e7cd218121c342e0915890767e2f59ddc2e315b8844ad0f47d582e.cairo"
                         },
                         "parent_location": [
                             {
-                                "end_col": 80,
+                                "end_col": 84,
                                 "end_line": 133,
                                 "input_file": {
                                     "filename": "contracts/limit_orders.cairo"
@@ -49368,11 +49368,11 @@
                                         "end_col": 116,
                                         "end_line": 1,
                                         "input_file": {
-                                            "filename": "autogen/starknet/external/withdraw/cfd82518e709bc152f35e3f0774c30086dbb577ee828c5e06bbe84a6f92c48a0.cairo"
+                                            "filename": "autogen/starknet/external/cancel_order/cfd82518e709bc152f35e3f0774c30086dbb577ee828c5e06bbe84a6f92c48a0.cairo"
                                         },
                                         "parent_location": [
                                             {
-                                                "end_col": 14,
+                                                "end_col": 18,
                                                 "end_line": 133,
                                                 "input_file": {
                                                     "filename": "contracts/limit_orders.cairo"
@@ -49387,7 +49387,7 @@
                                     },
                                     "While expanding the reference 'range_check_ptr' in:"
                                 ],
-                                "start_col": 65,
+                                "start_col": 69,
                                 "start_line": 133
                             },
                             "While constructing the external wrapper for:"
@@ -49401,7 +49401,7 @@
                         "__main__",
                         "__main__",
                         "__wrappers__",
-                        "__wrappers__.withdraw"
+                        "__wrappers__.cancel_order"
                     ],
                     "flow_tracking_data": {
                         "ap_tracking": {
@@ -49409,13 +49409,13 @@
                             "offset": 4
                         },
                         "reference_ids": {
-                            "__wrappers__.withdraw.__calldata_actual_size": 774,
-                            "__wrappers__.withdraw.__calldata_arg_order_id": 772,
-                            "__wrappers__.withdraw.__calldata_ptr": 773,
-                            "__wrappers__.withdraw.__temp58": 775,
-                            "__wrappers__.withdraw.pedersen_ptr": 769,
-                            "__wrappers__.withdraw.range_check_ptr": 770,
-                            "__wrappers__.withdraw.syscall_ptr": 768
+                            "__wrappers__.cancel_order.__calldata_actual_size": 774,
+                            "__wrappers__.cancel_order.__calldata_arg_order_id": 772,
+                            "__wrappers__.cancel_order.__calldata_ptr": 773,
+                            "__wrappers__.cancel_order.__temp58": 775,
+                            "__wrappers__.cancel_order.pedersen_ptr": 769,
+                            "__wrappers__.cancel_order.range_check_ptr": 770,
+                            "__wrappers__.cancel_order.syscall_ptr": 768
                         }
                     },
                     "hints": [],
@@ -49427,7 +49427,7 @@
                         },
                         "parent_location": [
                             {
-                                "end_col": 96,
+                                "end_col": 100,
                                 "end_line": 133,
                                 "input_file": {
                                     "filename": "contracts/limit_orders.cairo"
@@ -49437,11 +49437,11 @@
                                         "end_col": 150,
                                         "end_line": 1,
                                         "input_file": {
-                                            "filename": "autogen/starknet/external/withdraw/cfd82518e709bc152f35e3f0774c30086dbb577ee828c5e06bbe84a6f92c48a0.cairo"
+                                            "filename": "autogen/starknet/external/cancel_order/cfd82518e709bc152f35e3f0774c30086dbb577ee828c5e06bbe84a6f92c48a0.cairo"
                                         },
                                         "parent_location": [
                                             {
-                                                "end_col": 14,
+                                                "end_col": 18,
                                                 "end_line": 133,
                                                 "input_file": {
                                                     "filename": "contracts/limit_orders.cairo"
@@ -49456,7 +49456,7 @@
                                     },
                                     "While expanding the reference '__calldata_arg_order_id' in:"
                                 ],
-                                "start_col": 82,
+                                "start_col": 86,
                                 "start_line": 133
                             },
                             "While handling calldata argument 'order_id'"
@@ -49470,7 +49470,7 @@
                         "__main__",
                         "__main__",
                         "__wrappers__",
-                        "__wrappers__.withdraw"
+                        "__wrappers__.cancel_order"
                     ],
                     "flow_tracking_data": {
                         "ap_tracking": {
@@ -49478,18 +49478,18 @@
                             "offset": 5
                         },
                         "reference_ids": {
-                            "__wrappers__.withdraw.__calldata_actual_size": 774,
-                            "__wrappers__.withdraw.__calldata_arg_order_id": 772,
-                            "__wrappers__.withdraw.__calldata_ptr": 773,
-                            "__wrappers__.withdraw.__temp58": 775,
-                            "__wrappers__.withdraw.pedersen_ptr": 769,
-                            "__wrappers__.withdraw.range_check_ptr": 770,
-                            "__wrappers__.withdraw.syscall_ptr": 768
+                            "__wrappers__.cancel_order.__calldata_actual_size": 774,
+                            "__wrappers__.cancel_order.__calldata_arg_order_id": 772,
+                            "__wrappers__.cancel_order.__calldata_ptr": 773,
+                            "__wrappers__.cancel_order.__temp58": 775,
+                            "__wrappers__.cancel_order.pedersen_ptr": 769,
+                            "__wrappers__.cancel_order.range_check_ptr": 770,
+                            "__wrappers__.cancel_order.syscall_ptr": 768
                         }
                     },
                     "hints": [],
                     "inst": {
-                        "end_col": 14,
+                        "end_col": 18,
                         "end_line": 133,
                         "input_file": {
                             "filename": "contracts/limit_orders.cairo"
@@ -49503,7 +49503,7 @@
                         "__main__",
                         "__main__",
                         "__wrappers__",
-                        "__wrappers__.withdraw"
+                        "__wrappers__.cancel_order"
                     ],
                     "flow_tracking_data": {
                         "ap_tracking": {
@@ -49511,14 +49511,14 @@
                             "offset": 153
                         },
                         "reference_ids": {
-                            "__wrappers__.withdraw.__calldata_actual_size": 774,
-                            "__wrappers__.withdraw.__calldata_arg_order_id": 772,
-                            "__wrappers__.withdraw.__calldata_ptr": 773,
-                            "__wrappers__.withdraw.__temp58": 775,
-                            "__wrappers__.withdraw.pedersen_ptr": 777,
-                            "__wrappers__.withdraw.range_check_ptr": 778,
-                            "__wrappers__.withdraw.ret_struct": 779,
-                            "__wrappers__.withdraw.syscall_ptr": 776
+                            "__wrappers__.cancel_order.__calldata_actual_size": 774,
+                            "__wrappers__.cancel_order.__calldata_arg_order_id": 772,
+                            "__wrappers__.cancel_order.__calldata_ptr": 773,
+                            "__wrappers__.cancel_order.__temp58": 775,
+                            "__wrappers__.cancel_order.pedersen_ptr": 777,
+                            "__wrappers__.cancel_order.range_check_ptr": 778,
+                            "__wrappers__.cancel_order.ret_struct": 779,
+                            "__wrappers__.cancel_order.syscall_ptr": 776
                         }
                     },
                     "hints": [
@@ -49527,11 +49527,11 @@
                                 "end_col": 34,
                                 "end_line": 2,
                                 "input_file": {
-                                    "filename": "autogen/starknet/external/withdraw/cfd82518e709bc152f35e3f0774c30086dbb577ee828c5e06bbe84a6f92c48a0.cairo"
+                                    "filename": "autogen/starknet/external/cancel_order/cfd82518e709bc152f35e3f0774c30086dbb577ee828c5e06bbe84a6f92c48a0.cairo"
                                 },
                                 "parent_location": [
                                     {
-                                        "end_col": 14,
+                                        "end_col": 18,
                                         "end_line": 133,
                                         "input_file": {
                                             "filename": "contracts/limit_orders.cairo"
@@ -49551,11 +49551,11 @@
                         "end_col": 24,
                         "end_line": 3,
                         "input_file": {
-                            "filename": "autogen/starknet/external/withdraw/cfd82518e709bc152f35e3f0774c30086dbb577ee828c5e06bbe84a6f92c48a0.cairo"
+                            "filename": "autogen/starknet/external/cancel_order/cfd82518e709bc152f35e3f0774c30086dbb577ee828c5e06bbe84a6f92c48a0.cairo"
                         },
                         "parent_location": [
                             {
-                                "end_col": 14,
+                                "end_col": 18,
                                 "end_line": 133,
                                 "input_file": {
                                     "filename": "contracts/limit_orders.cairo"
@@ -49574,7 +49574,7 @@
                         "__main__",
                         "__main__",
                         "__wrappers__",
-                        "__wrappers__.withdraw"
+                        "__wrappers__.cancel_order"
                     ],
                     "flow_tracking_data": {
                         "ap_tracking": {
@@ -49582,16 +49582,16 @@
                             "offset": 154
                         },
                         "reference_ids": {
-                            "__wrappers__.withdraw.__calldata_actual_size": 774,
-                            "__wrappers__.withdraw.__calldata_arg_order_id": 772,
-                            "__wrappers__.withdraw.__calldata_ptr": 773,
-                            "__wrappers__.withdraw.__temp58": 775,
-                            "__wrappers__.withdraw.pedersen_ptr": 777,
-                            "__wrappers__.withdraw.range_check_ptr": 778,
-                            "__wrappers__.withdraw.ret_struct": 779,
-                            "__wrappers__.withdraw.retdata": 780,
-                            "__wrappers__.withdraw.retdata_size": 781,
-                            "__wrappers__.withdraw.syscall_ptr": 776
+                            "__wrappers__.cancel_order.__calldata_actual_size": 774,
+                            "__wrappers__.cancel_order.__calldata_arg_order_id": 772,
+                            "__wrappers__.cancel_order.__calldata_ptr": 773,
+                            "__wrappers__.cancel_order.__temp58": 775,
+                            "__wrappers__.cancel_order.pedersen_ptr": 777,
+                            "__wrappers__.cancel_order.range_check_ptr": 778,
+                            "__wrappers__.cancel_order.ret_struct": 779,
+                            "__wrappers__.cancel_order.retdata": 780,
+                            "__wrappers__.cancel_order.retdata_size": 781,
+                            "__wrappers__.cancel_order.syscall_ptr": 776
                         }
                     },
                     "hints": [],
@@ -49599,11 +49599,11 @@
                         "end_col": 56,
                         "end_line": 1,
                         "input_file": {
-                            "filename": "autogen/starknet/external/withdraw/cfd82518e709bc152f35e3f0774c30086dbb577ee828c5e06bbe84a6f92c48a0.cairo"
+                            "filename": "autogen/starknet/external/cancel_order/cfd82518e709bc152f35e3f0774c30086dbb577ee828c5e06bbe84a6f92c48a0.cairo"
                         },
                         "parent_location": [
                             {
-                                "end_col": 14,
+                                "end_col": 18,
                                 "end_line": 133,
                                 "input_file": {
                                     "filename": "contracts/limit_orders.cairo"
@@ -49613,11 +49613,11 @@
                                         "end_col": 20,
                                         "end_line": 1,
                                         "input_file": {
-                                            "filename": "autogen/starknet/external/withdraw/4ba2b119ceb30fe10f4cca3c9d73ef620c0fb5eece91b99a99d71217bba1001c.cairo"
+                                            "filename": "autogen/starknet/external/cancel_order/4ba2b119ceb30fe10f4cca3c9d73ef620c0fb5eece91b99a99d71217bba1001c.cairo"
                                         },
                                         "parent_location": [
                                             {
-                                                "end_col": 14,
+                                                "end_col": 18,
                                                 "end_line": 133,
                                                 "input_file": {
                                                     "filename": "contracts/limit_orders.cairo"
@@ -49646,7 +49646,7 @@
                         "__main__",
                         "__main__",
                         "__wrappers__",
-                        "__wrappers__.withdraw"
+                        "__wrappers__.cancel_order"
                     ],
                     "flow_tracking_data": {
                         "ap_tracking": {
@@ -49654,16 +49654,16 @@
                             "offset": 155
                         },
                         "reference_ids": {
-                            "__wrappers__.withdraw.__calldata_actual_size": 774,
-                            "__wrappers__.withdraw.__calldata_arg_order_id": 772,
-                            "__wrappers__.withdraw.__calldata_ptr": 773,
-                            "__wrappers__.withdraw.__temp58": 775,
-                            "__wrappers__.withdraw.pedersen_ptr": 777,
-                            "__wrappers__.withdraw.range_check_ptr": 778,
-                            "__wrappers__.withdraw.ret_struct": 779,
-                            "__wrappers__.withdraw.retdata": 780,
-                            "__wrappers__.withdraw.retdata_size": 781,
-                            "__wrappers__.withdraw.syscall_ptr": 776
+                            "__wrappers__.cancel_order.__calldata_actual_size": 774,
+                            "__wrappers__.cancel_order.__calldata_arg_order_id": 772,
+                            "__wrappers__.cancel_order.__calldata_ptr": 773,
+                            "__wrappers__.cancel_order.__temp58": 775,
+                            "__wrappers__.cancel_order.pedersen_ptr": 777,
+                            "__wrappers__.cancel_order.range_check_ptr": 778,
+                            "__wrappers__.cancel_order.ret_struct": 779,
+                            "__wrappers__.cancel_order.retdata": 780,
+                            "__wrappers__.cancel_order.retdata_size": 781,
+                            "__wrappers__.cancel_order.syscall_ptr": 776
                         }
                     },
                     "hints": [],
@@ -49671,11 +49671,11 @@
                         "end_col": 83,
                         "end_line": 1,
                         "input_file": {
-                            "filename": "autogen/starknet/external/withdraw/cfd82518e709bc152f35e3f0774c30086dbb577ee828c5e06bbe84a6f92c48a0.cairo"
+                            "filename": "autogen/starknet/external/cancel_order/cfd82518e709bc152f35e3f0774c30086dbb577ee828c5e06bbe84a6f92c48a0.cairo"
                         },
                         "parent_location": [
                             {
-                                "end_col": 14,
+                                "end_col": 18,
                                 "end_line": 133,
                                 "input_file": {
                                     "filename": "contracts/limit_orders.cairo"
@@ -49685,11 +49685,11 @@
                                         "end_col": 33,
                                         "end_line": 1,
                                         "input_file": {
-                                            "filename": "autogen/starknet/external/withdraw/4ba2b119ceb30fe10f4cca3c9d73ef620c0fb5eece91b99a99d71217bba1001c.cairo"
+                                            "filename": "autogen/starknet/external/cancel_order/4ba2b119ceb30fe10f4cca3c9d73ef620c0fb5eece91b99a99d71217bba1001c.cairo"
                                         },
                                         "parent_location": [
                                             {
-                                                "end_col": 14,
+                                                "end_col": 18,
                                                 "end_line": 133,
                                                 "input_file": {
                                                     "filename": "contracts/limit_orders.cairo"
@@ -49718,7 +49718,7 @@
                         "__main__",
                         "__main__",
                         "__wrappers__",
-                        "__wrappers__.withdraw"
+                        "__wrappers__.cancel_order"
                     ],
                     "flow_tracking_data": {
                         "ap_tracking": {
@@ -49726,16 +49726,16 @@
                             "offset": 156
                         },
                         "reference_ids": {
-                            "__wrappers__.withdraw.__calldata_actual_size": 774,
-                            "__wrappers__.withdraw.__calldata_arg_order_id": 772,
-                            "__wrappers__.withdraw.__calldata_ptr": 773,
-                            "__wrappers__.withdraw.__temp58": 775,
-                            "__wrappers__.withdraw.pedersen_ptr": 777,
-                            "__wrappers__.withdraw.range_check_ptr": 778,
-                            "__wrappers__.withdraw.ret_struct": 779,
-                            "__wrappers__.withdraw.retdata": 780,
-                            "__wrappers__.withdraw.retdata_size": 781,
-                            "__wrappers__.withdraw.syscall_ptr": 776
+                            "__wrappers__.cancel_order.__calldata_actual_size": 774,
+                            "__wrappers__.cancel_order.__calldata_arg_order_id": 772,
+                            "__wrappers__.cancel_order.__calldata_ptr": 773,
+                            "__wrappers__.cancel_order.__temp58": 775,
+                            "__wrappers__.cancel_order.pedersen_ptr": 777,
+                            "__wrappers__.cancel_order.range_check_ptr": 778,
+                            "__wrappers__.cancel_order.ret_struct": 779,
+                            "__wrappers__.cancel_order.retdata": 780,
+                            "__wrappers__.cancel_order.retdata_size": 781,
+                            "__wrappers__.cancel_order.syscall_ptr": 776
                         }
                     },
                     "hints": [],
@@ -49743,11 +49743,11 @@
                         "end_col": 116,
                         "end_line": 1,
                         "input_file": {
-                            "filename": "autogen/starknet/external/withdraw/cfd82518e709bc152f35e3f0774c30086dbb577ee828c5e06bbe84a6f92c48a0.cairo"
+                            "filename": "autogen/starknet/external/cancel_order/cfd82518e709bc152f35e3f0774c30086dbb577ee828c5e06bbe84a6f92c48a0.cairo"
                         },
                         "parent_location": [
                             {
-                                "end_col": 14,
+                                "end_col": 18,
                                 "end_line": 133,
                                 "input_file": {
                                     "filename": "contracts/limit_orders.cairo"
@@ -49757,11 +49757,11 @@
                                         "end_col": 49,
                                         "end_line": 1,
                                         "input_file": {
-                                            "filename": "autogen/starknet/external/withdraw/4ba2b119ceb30fe10f4cca3c9d73ef620c0fb5eece91b99a99d71217bba1001c.cairo"
+                                            "filename": "autogen/starknet/external/cancel_order/4ba2b119ceb30fe10f4cca3c9d73ef620c0fb5eece91b99a99d71217bba1001c.cairo"
                                         },
                                         "parent_location": [
                                             {
-                                                "end_col": 14,
+                                                "end_col": 18,
                                                 "end_line": 133,
                                                 "input_file": {
                                                     "filename": "contracts/limit_orders.cairo"
@@ -49790,7 +49790,7 @@
                         "__main__",
                         "__main__",
                         "__wrappers__",
-                        "__wrappers__.withdraw"
+                        "__wrappers__.cancel_order"
                     ],
                     "flow_tracking_data": {
                         "ap_tracking": {
@@ -49798,16 +49798,16 @@
                             "offset": 157
                         },
                         "reference_ids": {
-                            "__wrappers__.withdraw.__calldata_actual_size": 774,
-                            "__wrappers__.withdraw.__calldata_arg_order_id": 772,
-                            "__wrappers__.withdraw.__calldata_ptr": 773,
-                            "__wrappers__.withdraw.__temp58": 775,
-                            "__wrappers__.withdraw.pedersen_ptr": 777,
-                            "__wrappers__.withdraw.range_check_ptr": 778,
-                            "__wrappers__.withdraw.ret_struct": 779,
-                            "__wrappers__.withdraw.retdata": 780,
-                            "__wrappers__.withdraw.retdata_size": 781,
-                            "__wrappers__.withdraw.syscall_ptr": 776
+                            "__wrappers__.cancel_order.__calldata_actual_size": 774,
+                            "__wrappers__.cancel_order.__calldata_arg_order_id": 772,
+                            "__wrappers__.cancel_order.__calldata_ptr": 773,
+                            "__wrappers__.cancel_order.__temp58": 775,
+                            "__wrappers__.cancel_order.pedersen_ptr": 777,
+                            "__wrappers__.cancel_order.range_check_ptr": 778,
+                            "__wrappers__.cancel_order.ret_struct": 779,
+                            "__wrappers__.cancel_order.retdata": 780,
+                            "__wrappers__.cancel_order.retdata_size": 781,
+                            "__wrappers__.cancel_order.syscall_ptr": 776
                         }
                     },
                     "hints": [],
@@ -49815,11 +49815,11 @@
                         "end_col": 21,
                         "end_line": 4,
                         "input_file": {
-                            "filename": "autogen/starknet/external/withdraw/cfd82518e709bc152f35e3f0774c30086dbb577ee828c5e06bbe84a6f92c48a0.cairo"
+                            "filename": "autogen/starknet/external/cancel_order/cfd82518e709bc152f35e3f0774c30086dbb577ee828c5e06bbe84a6f92c48a0.cairo"
                         },
                         "parent_location": [
                             {
-                                "end_col": 14,
+                                "end_col": 18,
                                 "end_line": 133,
                                 "input_file": {
                                     "filename": "contracts/limit_orders.cairo"
@@ -49829,11 +49829,11 @@
                                         "end_col": 62,
                                         "end_line": 1,
                                         "input_file": {
-                                            "filename": "autogen/starknet/external/withdraw/4ba2b119ceb30fe10f4cca3c9d73ef620c0fb5eece91b99a99d71217bba1001c.cairo"
+                                            "filename": "autogen/starknet/external/cancel_order/4ba2b119ceb30fe10f4cca3c9d73ef620c0fb5eece91b99a99d71217bba1001c.cairo"
                                         },
                                         "parent_location": [
                                             {
-                                                "end_col": 14,
+                                                "end_col": 18,
                                                 "end_line": 133,
                                                 "input_file": {
                                                     "filename": "contracts/limit_orders.cairo"
@@ -49862,7 +49862,7 @@
                         "__main__",
                         "__main__",
                         "__wrappers__",
-                        "__wrappers__.withdraw"
+                        "__wrappers__.cancel_order"
                     ],
                     "flow_tracking_data": {
                         "ap_tracking": {
@@ -49870,16 +49870,16 @@
                             "offset": 158
                         },
                         "reference_ids": {
-                            "__wrappers__.withdraw.__calldata_actual_size": 774,
-                            "__wrappers__.withdraw.__calldata_arg_order_id": 772,
-                            "__wrappers__.withdraw.__calldata_ptr": 773,
-                            "__wrappers__.withdraw.__temp58": 775,
-                            "__wrappers__.withdraw.pedersen_ptr": 777,
-                            "__wrappers__.withdraw.range_check_ptr": 778,
-                            "__wrappers__.withdraw.ret_struct": 779,
-                            "__wrappers__.withdraw.retdata": 780,
-                            "__wrappers__.withdraw.retdata_size": 781,
-                            "__wrappers__.withdraw.syscall_ptr": 776
+                            "__wrappers__.cancel_order.__calldata_actual_size": 774,
+                            "__wrappers__.cancel_order.__calldata_arg_order_id": 772,
+                            "__wrappers__.cancel_order.__calldata_ptr": 773,
+                            "__wrappers__.cancel_order.__temp58": 775,
+                            "__wrappers__.cancel_order.pedersen_ptr": 777,
+                            "__wrappers__.cancel_order.range_check_ptr": 778,
+                            "__wrappers__.cancel_order.ret_struct": 779,
+                            "__wrappers__.cancel_order.retdata": 780,
+                            "__wrappers__.cancel_order.retdata_size": 781,
+                            "__wrappers__.cancel_order.syscall_ptr": 776
                         }
                     },
                     "hints": [],
@@ -49887,11 +49887,11 @@
                         "end_col": 16,
                         "end_line": 3,
                         "input_file": {
-                            "filename": "autogen/starknet/external/withdraw/cfd82518e709bc152f35e3f0774c30086dbb577ee828c5e06bbe84a6f92c48a0.cairo"
+                            "filename": "autogen/starknet/external/cancel_order/cfd82518e709bc152f35e3f0774c30086dbb577ee828c5e06bbe84a6f92c48a0.cairo"
                         },
                         "parent_location": [
                             {
-                                "end_col": 14,
+                                "end_col": 18,
                                 "end_line": 133,
                                 "input_file": {
                                     "filename": "contracts/limit_orders.cairo"
@@ -49901,11 +49901,11 @@
                                         "end_col": 70,
                                         "end_line": 1,
                                         "input_file": {
-                                            "filename": "autogen/starknet/external/withdraw/4ba2b119ceb30fe10f4cca3c9d73ef620c0fb5eece91b99a99d71217bba1001c.cairo"
+                                            "filename": "autogen/starknet/external/cancel_order/4ba2b119ceb30fe10f4cca3c9d73ef620c0fb5eece91b99a99d71217bba1001c.cairo"
                                         },
                                         "parent_location": [
                                             {
-                                                "end_col": 14,
+                                                "end_col": 18,
                                                 "end_line": 133,
                                                 "input_file": {
                                                     "filename": "contracts/limit_orders.cairo"
@@ -49934,7 +49934,7 @@
                         "__main__",
                         "__main__",
                         "__wrappers__",
-                        "__wrappers__.withdraw"
+                        "__wrappers__.cancel_order"
                     ],
                     "flow_tracking_data": {
                         "ap_tracking": {
@@ -49942,16 +49942,16 @@
                             "offset": 159
                         },
                         "reference_ids": {
-                            "__wrappers__.withdraw.__calldata_actual_size": 774,
-                            "__wrappers__.withdraw.__calldata_arg_order_id": 772,
-                            "__wrappers__.withdraw.__calldata_ptr": 773,
-                            "__wrappers__.withdraw.__temp58": 775,
-                            "__wrappers__.withdraw.pedersen_ptr": 777,
-                            "__wrappers__.withdraw.range_check_ptr": 778,
-                            "__wrappers__.withdraw.ret_struct": 779,
-                            "__wrappers__.withdraw.retdata": 780,
-                            "__wrappers__.withdraw.retdata_size": 781,
-                            "__wrappers__.withdraw.syscall_ptr": 776
+                            "__wrappers__.cancel_order.__calldata_actual_size": 774,
+                            "__wrappers__.cancel_order.__calldata_arg_order_id": 772,
+                            "__wrappers__.cancel_order.__calldata_ptr": 773,
+                            "__wrappers__.cancel_order.__temp58": 775,
+                            "__wrappers__.cancel_order.pedersen_ptr": 777,
+                            "__wrappers__.cancel_order.range_check_ptr": 778,
+                            "__wrappers__.cancel_order.ret_struct": 779,
+                            "__wrappers__.cancel_order.retdata": 780,
+                            "__wrappers__.cancel_order.retdata_size": 781,
+                            "__wrappers__.cancel_order.syscall_ptr": 776
                         }
                     },
                     "hints": [],
@@ -49959,11 +49959,11 @@
                         "end_col": 71,
                         "end_line": 1,
                         "input_file": {
-                            "filename": "autogen/starknet/external/withdraw/4ba2b119ceb30fe10f4cca3c9d73ef620c0fb5eece91b99a99d71217bba1001c.cairo"
+                            "filename": "autogen/starknet/external/cancel_order/4ba2b119ceb30fe10f4cca3c9d73ef620c0fb5eece91b99a99d71217bba1001c.cairo"
                         },
                         "parent_location": [
                             {
-                                "end_col": 14,
+                                "end_col": 18,
                                 "end_line": 133,
                                 "input_file": {
                                     "filename": "contracts/limit_orders.cairo"
@@ -50481,7 +50481,7 @@
                         "__main__",
                         "__main__",
                         "__wrappers__",
-                        "__wrappers__.withdraw"
+                        "__wrappers__.cancel_order"
                     ],
                     "code": "memory[ap] = segments.add()",
                     "flow_tracking_data": {
@@ -50490,14 +50490,14 @@
                             "offset": 153
                         },
                         "reference_ids": {
-                            "__wrappers__.withdraw.__calldata_actual_size": 774,
-                            "__wrappers__.withdraw.__calldata_arg_order_id": 772,
-                            "__wrappers__.withdraw.__calldata_ptr": 773,
-                            "__wrappers__.withdraw.__temp58": 775,
-                            "__wrappers__.withdraw.pedersen_ptr": 777,
-                            "__wrappers__.withdraw.range_check_ptr": 778,
-                            "__wrappers__.withdraw.ret_struct": 779,
-                            "__wrappers__.withdraw.syscall_ptr": 776
+                            "__wrappers__.cancel_order.__calldata_actual_size": 774,
+                            "__wrappers__.cancel_order.__calldata_arg_order_id": 772,
+                            "__wrappers__.cancel_order.__calldata_ptr": 773,
+                            "__wrappers__.cancel_order.__temp58": 775,
+                            "__wrappers__.cancel_order.pedersen_ptr": 777,
+                            "__wrappers__.cancel_order.range_check_ptr": 778,
+                            "__wrappers__.cancel_order.ret_struct": 779,
+                            "__wrappers__.cancel_order.syscall_ptr": 776
                         }
                     }
                 }
@@ -50982,6 +50982,296 @@
             "__main__.assert_not_zero": {
                 "destination": "starkware.cairo.common.math.assert_not_zero",
                 "type": "alias"
+            },
+            "__main__.cancel_order": {
+                "decorators": [
+                    "external"
+                ],
+                "pc": 1235,
+                "type": "function"
+            },
+            "__main__.cancel_order.Args": {
+                "full_name": "__main__.cancel_order.Args",
+                "members": {
+                    "order_id": {
+                        "cairo_type": "felt",
+                        "offset": 0
+                    }
+                },
+                "size": 1,
+                "type": "struct"
+            },
+            "__main__.cancel_order.ImplicitArgs": {
+                "full_name": "__main__.cancel_order.ImplicitArgs",
+                "members": {
+                    "pedersen_ptr": {
+                        "cairo_type": "starkware.cairo.common.cairo_builtins.HashBuiltin*",
+                        "offset": 1
+                    },
+                    "range_check_ptr": {
+                        "cairo_type": "felt",
+                        "offset": 2
+                    },
+                    "syscall_ptr": {
+                        "cairo_type": "felt*",
+                        "offset": 0
+                    }
+                },
+                "size": 3,
+                "type": "struct"
+            },
+            "__main__.cancel_order.Return": {
+                "full_name": "__main__.cancel_order.Return",
+                "members": {},
+                "size": 0,
+                "type": "struct"
+            },
+            "__main__.cancel_order.SIZEOF_LOCALS": {
+                "type": "const",
+                "value": 0
+            },
+            "__main__.cancel_order.amount": {
+                "cairo_type": "felt",
+                "full_name": "__main__.cancel_order.amount",
+                "references": [
+                    {
+                        "ap_tracking_data": {
+                            "group": 70,
+                            "offset": 115
+                        },
+                        "pc": 1247,
+                        "value": "[cast(ap + (-4), felt*)]"
+                    }
+                ],
+                "type": "reference"
+            },
+            "__main__.cancel_order.order_core_instance": {
+                "cairo_type": "__main__.order_core",
+                "full_name": "__main__.cancel_order.order_core_instance",
+                "references": [
+                    {
+                        "ap_tracking_data": {
+                            "group": 70,
+                            "offset": 115
+                        },
+                        "pc": 1244,
+                        "value": "[cast(ap + (-7), __main__.order_core*)]"
+                    }
+                ],
+                "type": "reference"
+            },
+            "__main__.cancel_order.order_core_instance_canceled": {
+                "cairo_type": "__main__.order_core",
+                "full_name": "__main__.cancel_order.order_core_instance_canceled",
+                "references": [
+                    {
+                        "ap_tracking_data": {
+                            "group": 70,
+                            "offset": 143
+                        },
+                        "pc": 1256,
+                        "value": "cast(([fp + (-3)], [ap + (-34)], [ap + (-33)], [ap + (-32)], [ap + (-31)], 2, [ap + (-29)]), __main__.order_core)"
+                    }
+                ],
+                "type": "reference"
+            },
+            "__main__.cancel_order.order_id": {
+                "cairo_type": "felt",
+                "full_name": "__main__.cancel_order.order_id",
+                "references": [
+                    {
+                        "ap_tracking_data": {
+                            "group": 70,
+                            "offset": 0
+                        },
+                        "pc": 1235,
+                        "value": "[cast(fp + (-3), felt*)]"
+                    }
+                ],
+                "type": "reference"
+            },
+            "__main__.cancel_order.order_owner": {
+                "cairo_type": "felt",
+                "full_name": "__main__.cancel_order.order_owner",
+                "references": [
+                    {
+                        "ap_tracking_data": {
+                            "group": 70,
+                            "offset": 115
+                        },
+                        "pc": 1244,
+                        "value": "[cast(ap + (-1), felt*)]"
+                    }
+                ],
+                "type": "reference"
+            },
+            "__main__.cancel_order.order_status": {
+                "cairo_type": "felt",
+                "full_name": "__main__.cancel_order.order_status",
+                "references": [
+                    {
+                        "ap_tracking_data": {
+                            "group": 70,
+                            "offset": 115
+                        },
+                        "pc": 1245,
+                        "value": "[cast(ap + (-2), felt*)]"
+                    }
+                ],
+                "type": "reference"
+            },
+            "__main__.cancel_order.pedersen_ptr": {
+                "cairo_type": "starkware.cairo.common.cairo_builtins.HashBuiltin*",
+                "full_name": "__main__.cancel_order.pedersen_ptr",
+                "references": [
+                    {
+                        "ap_tracking_data": {
+                            "group": 70,
+                            "offset": 0
+                        },
+                        "pc": 1235,
+                        "value": "[cast(fp + (-5), starkware.cairo.common.cairo_builtins.HashBuiltin**)]"
+                    },
+                    {
+                        "ap_tracking_data": {
+                            "group": 70,
+                            "offset": 115
+                        },
+                        "pc": 1244,
+                        "value": "[cast(ap + (-9), starkware.cairo.common.cairo_builtins.HashBuiltin**)]"
+                    }
+                ],
+                "type": "reference"
+            },
+            "__main__.cancel_order.pool_id": {
+                "cairo_type": "felt",
+                "full_name": "__main__.cancel_order.pool_id",
+                "references": [
+                    {
+                        "ap_tracking_data": {
+                            "group": 70,
+                            "offset": 143
+                        },
+                        "pc": 1256,
+                        "value": "[cast(ap + (-34), felt*)]"
+                    }
+                ],
+                "type": "reference"
+            },
+            "__main__.cancel_order.price": {
+                "cairo_type": "felt",
+                "full_name": "__main__.cancel_order.price",
+                "references": [
+                    {
+                        "ap_tracking_data": {
+                            "group": 70,
+                            "offset": 143
+                        },
+                        "pc": 1256,
+                        "value": "[cast(ap + (-33), felt*)]"
+                    }
+                ],
+                "type": "reference"
+            },
+            "__main__.cancel_order.range_check_ptr": {
+                "cairo_type": "felt",
+                "full_name": "__main__.cancel_order.range_check_ptr",
+                "references": [
+                    {
+                        "ap_tracking_data": {
+                            "group": 70,
+                            "offset": 0
+                        },
+                        "pc": 1235,
+                        "value": "[cast(fp + (-4), felt*)]"
+                    },
+                    {
+                        "ap_tracking_data": {
+                            "group": 70,
+                            "offset": 115
+                        },
+                        "pc": 1244,
+                        "value": "[cast(ap + (-8), felt*)]"
+                    },
+                    {
+                        "ap_tracking_data": {
+                            "group": 70,
+                            "offset": 143
+                        },
+                        "pc": 1256,
+                        "value": "[cast(ap + (-2), felt*)]"
+                    }
+                ],
+                "type": "reference"
+            },
+            "__main__.cancel_order.sender_address": {
+                "cairo_type": "felt",
+                "full_name": "__main__.cancel_order.sender_address",
+                "references": [
+                    {
+                        "ap_tracking_data": {
+                            "group": 70,
+                            "offset": 6
+                        },
+                        "pc": 1238,
+                        "value": "[cast(ap + (-1), felt*)]"
+                    }
+                ],
+                "type": "reference"
+            },
+            "__main__.cancel_order.syscall_ptr": {
+                "cairo_type": "felt*",
+                "full_name": "__main__.cancel_order.syscall_ptr",
+                "references": [
+                    {
+                        "ap_tracking_data": {
+                            "group": 70,
+                            "offset": 0
+                        },
+                        "pc": 1235,
+                        "value": "[cast(fp + (-6), felt**)]"
+                    },
+                    {
+                        "ap_tracking_data": {
+                            "group": 70,
+                            "offset": 6
+                        },
+                        "pc": 1238,
+                        "value": "[cast(ap + (-2), felt**)]"
+                    },
+                    {
+                        "ap_tracking_data": {
+                            "group": 70,
+                            "offset": 115
+                        },
+                        "pc": 1244,
+                        "value": "[cast(ap + (-10), felt**)]"
+                    },
+                    {
+                        "ap_tracking_data": {
+                            "group": 70,
+                            "offset": 143
+                        },
+                        "pc": 1256,
+                        "value": "[cast(ap + (-3), felt**)]"
+                    }
+                ],
+                "type": "reference"
+            },
+            "__main__.cancel_order.token": {
+                "cairo_type": "felt",
+                "full_name": "__main__.cancel_order.token",
+                "references": [
+                    {
+                        "ap_tracking_data": {
+                            "group": 70,
+                            "offset": 115
+                        },
+                        "pc": 1247,
+                        "value": "[cast(ap + (-3), felt*)]"
+                    }
+                ],
+                "type": "reference"
             },
             "__main__.constructor": {
                 "decorators": [
@@ -55960,26 +56250,27 @@
                 "destination": "starkware.cairo.common.math.unsigned_div_rem",
                 "type": "alias"
             },
-            "__main__.withdraw": {
+            "__wrappers__.cancel_order": {
                 "decorators": [
                     "external"
                 ],
-                "pc": 1235,
+                "pc": 1260,
                 "type": "function"
             },
-            "__main__.withdraw.Args": {
-                "full_name": "__main__.withdraw.Args",
-                "members": {
-                    "order_id": {
-                        "cairo_type": "felt",
-                        "offset": 0
-                    }
-                },
-                "size": 1,
+            "__wrappers__.cancel_order.Args": {
+                "full_name": "__wrappers__.cancel_order.Args",
+                "members": {},
+                "size": 0,
                 "type": "struct"
             },
-            "__main__.withdraw.ImplicitArgs": {
-                "full_name": "__main__.withdraw.ImplicitArgs",
+            "__wrappers__.cancel_order.ImplicitArgs": {
+                "full_name": "__wrappers__.cancel_order.ImplicitArgs",
+                "members": {},
+                "size": 0,
+                "type": "struct"
+            },
+            "__wrappers__.cancel_order.Return": {
+                "full_name": "__wrappers__.cancel_order.Return",
                 "members": {
                     "pedersen_ptr": {
                         "cairo_type": "starkware.cairo.common.cairo_builtins.HashBuiltin*",
@@ -55989,266 +56280,215 @@
                         "cairo_type": "felt",
                         "offset": 2
                     },
+                    "retdata": {
+                        "cairo_type": "felt*",
+                        "offset": 4
+                    },
+                    "size": {
+                        "cairo_type": "felt",
+                        "offset": 3
+                    },
                     "syscall_ptr": {
                         "cairo_type": "felt*",
                         "offset": 0
                     }
                 },
-                "size": 3,
+                "size": 5,
                 "type": "struct"
             },
-            "__main__.withdraw.Return": {
-                "full_name": "__main__.withdraw.Return",
-                "members": {},
-                "size": 0,
-                "type": "struct"
-            },
-            "__main__.withdraw.SIZEOF_LOCALS": {
+            "__wrappers__.cancel_order.SIZEOF_LOCALS": {
                 "type": "const",
                 "value": 0
             },
-            "__main__.withdraw.amount": {
+            "__wrappers__.cancel_order.__calldata_actual_size": {
                 "cairo_type": "felt",
-                "full_name": "__main__.withdraw.amount",
+                "full_name": "__wrappers__.cancel_order.__calldata_actual_size",
                 "references": [
                     {
                         "ap_tracking_data": {
-                            "group": 70,
-                            "offset": 115
-                        },
-                        "pc": 1247,
-                        "value": "[cast(ap + (-4), felt*)]"
-                    }
-                ],
-                "type": "reference"
-            },
-            "__main__.withdraw.order_core_instance": {
-                "cairo_type": "__main__.order_core",
-                "full_name": "__main__.withdraw.order_core_instance",
-                "references": [
-                    {
-                        "ap_tracking_data": {
-                            "group": 70,
-                            "offset": 115
-                        },
-                        "pc": 1244,
-                        "value": "[cast(ap + (-7), __main__.order_core*)]"
-                    }
-                ],
-                "type": "reference"
-            },
-            "__main__.withdraw.order_core_instance_canceled": {
-                "cairo_type": "__main__.order_core",
-                "full_name": "__main__.withdraw.order_core_instance_canceled",
-                "references": [
-                    {
-                        "ap_tracking_data": {
-                            "group": 70,
-                            "offset": 143
-                        },
-                        "pc": 1256,
-                        "value": "cast(([fp + (-3)], [ap + (-34)], [ap + (-33)], [ap + (-32)], [ap + (-31)], 2, [ap + (-29)]), __main__.order_core)"
-                    }
-                ],
-                "type": "reference"
-            },
-            "__main__.withdraw.order_id": {
-                "cairo_type": "felt",
-                "full_name": "__main__.withdraw.order_id",
-                "references": [
-                    {
-                        "ap_tracking_data": {
-                            "group": 70,
+                            "group": 71,
                             "offset": 0
                         },
-                        "pc": 1235,
-                        "value": "[cast(fp + (-3), felt*)]"
+                        "pc": 1260,
+                        "value": "cast([fp + (-3)] + 1 - [fp + (-3)], felt)"
                     }
                 ],
                 "type": "reference"
             },
-            "__main__.withdraw.order_owner": {
+            "__wrappers__.cancel_order.__calldata_arg_order_id": {
                 "cairo_type": "felt",
-                "full_name": "__main__.withdraw.order_owner",
+                "full_name": "__wrappers__.cancel_order.__calldata_arg_order_id",
                 "references": [
                     {
                         "ap_tracking_data": {
-                            "group": 70,
-                            "offset": 115
-                        },
-                        "pc": 1244,
-                        "value": "[cast(ap + (-1), felt*)]"
-                    }
-                ],
-                "type": "reference"
-            },
-            "__main__.withdraw.order_status": {
-                "cairo_type": "felt",
-                "full_name": "__main__.withdraw.order_status",
-                "references": [
-                    {
-                        "ap_tracking_data": {
-                            "group": 70,
-                            "offset": 115
-                        },
-                        "pc": 1245,
-                        "value": "[cast(ap + (-2), felt*)]"
-                    }
-                ],
-                "type": "reference"
-            },
-            "__main__.withdraw.pedersen_ptr": {
-                "cairo_type": "starkware.cairo.common.cairo_builtins.HashBuiltin*",
-                "full_name": "__main__.withdraw.pedersen_ptr",
-                "references": [
-                    {
-                        "ap_tracking_data": {
-                            "group": 70,
+                            "group": 71,
                             "offset": 0
                         },
-                        "pc": 1235,
-                        "value": "[cast(fp + (-5), starkware.cairo.common.cairo_builtins.HashBuiltin**)]"
-                    },
-                    {
-                        "ap_tracking_data": {
-                            "group": 70,
-                            "offset": 115
-                        },
-                        "pc": 1244,
-                        "value": "[cast(ap + (-9), starkware.cairo.common.cairo_builtins.HashBuiltin**)]"
+                        "pc": 1260,
+                        "value": "[cast([fp + (-3)], felt*)]"
                     }
                 ],
                 "type": "reference"
             },
-            "__main__.withdraw.pool_id": {
-                "cairo_type": "felt",
-                "full_name": "__main__.withdraw.pool_id",
-                "references": [
-                    {
-                        "ap_tracking_data": {
-                            "group": 70,
-                            "offset": 143
-                        },
-                        "pc": 1256,
-                        "value": "[cast(ap + (-34), felt*)]"
-                    }
-                ],
-                "type": "reference"
-            },
-            "__main__.withdraw.price": {
-                "cairo_type": "felt",
-                "full_name": "__main__.withdraw.price",
-                "references": [
-                    {
-                        "ap_tracking_data": {
-                            "group": 70,
-                            "offset": 143
-                        },
-                        "pc": 1256,
-                        "value": "[cast(ap + (-33), felt*)]"
-                    }
-                ],
-                "type": "reference"
-            },
-            "__main__.withdraw.range_check_ptr": {
-                "cairo_type": "felt",
-                "full_name": "__main__.withdraw.range_check_ptr",
-                "references": [
-                    {
-                        "ap_tracking_data": {
-                            "group": 70,
-                            "offset": 0
-                        },
-                        "pc": 1235,
-                        "value": "[cast(fp + (-4), felt*)]"
-                    },
-                    {
-                        "ap_tracking_data": {
-                            "group": 70,
-                            "offset": 115
-                        },
-                        "pc": 1244,
-                        "value": "[cast(ap + (-8), felt*)]"
-                    },
-                    {
-                        "ap_tracking_data": {
-                            "group": 70,
-                            "offset": 143
-                        },
-                        "pc": 1256,
-                        "value": "[cast(ap + (-2), felt*)]"
-                    }
-                ],
-                "type": "reference"
-            },
-            "__main__.withdraw.sender_address": {
-                "cairo_type": "felt",
-                "full_name": "__main__.withdraw.sender_address",
-                "references": [
-                    {
-                        "ap_tracking_data": {
-                            "group": 70,
-                            "offset": 6
-                        },
-                        "pc": 1238,
-                        "value": "[cast(ap + (-1), felt*)]"
-                    }
-                ],
-                "type": "reference"
-            },
-            "__main__.withdraw.syscall_ptr": {
+            "__wrappers__.cancel_order.__calldata_ptr": {
                 "cairo_type": "felt*",
-                "full_name": "__main__.withdraw.syscall_ptr",
+                "full_name": "__wrappers__.cancel_order.__calldata_ptr",
                 "references": [
                     {
                         "ap_tracking_data": {
-                            "group": 70,
+                            "group": 71,
                             "offset": 0
                         },
-                        "pc": 1235,
-                        "value": "[cast(fp + (-6), felt**)]"
+                        "pc": 1260,
+                        "value": "[cast(fp + (-3), felt**)]"
                     },
                     {
                         "ap_tracking_data": {
-                            "group": 70,
-                            "offset": 6
+                            "group": 71,
+                            "offset": 0
                         },
-                        "pc": 1238,
-                        "value": "[cast(ap + (-2), felt**)]"
+                        "pc": 1260,
+                        "value": "cast([fp + (-3)] + 1, felt*)"
+                    }
+                ],
+                "type": "reference"
+            },
+            "__wrappers__.cancel_order.__temp58": {
+                "cairo_type": "felt",
+                "full_name": "__wrappers__.cancel_order.__temp58",
+                "references": [
+                    {
+                        "ap_tracking_data": {
+                            "group": 71,
+                            "offset": 1
+                        },
+                        "pc": 1262,
+                        "value": "[cast(ap + (-1), felt*)]"
+                    }
+                ],
+                "type": "reference"
+            },
+            "__wrappers__.cancel_order.__wrapped_func": {
+                "destination": "__main__.cancel_order",
+                "type": "alias"
+            },
+            "__wrappers__.cancel_order.pedersen_ptr": {
+                "cairo_type": "starkware.cairo.common.cairo_builtins.HashBuiltin*",
+                "full_name": "__wrappers__.cancel_order.pedersen_ptr",
+                "references": [
+                    {
+                        "ap_tracking_data": {
+                            "group": 71,
+                            "offset": 0
+                        },
+                        "pc": 1260,
+                        "value": "[cast([fp + (-5)] + 1, starkware.cairo.common.cairo_builtins.HashBuiltin**)]"
                     },
                     {
                         "ap_tracking_data": {
-                            "group": 70,
-                            "offset": 115
+                            "group": 71,
+                            "offset": 153
                         },
-                        "pc": 1244,
-                        "value": "[cast(ap + (-10), felt**)]"
+                        "pc": 1269,
+                        "value": "[cast(ap + (-2), starkware.cairo.common.cairo_builtins.HashBuiltin**)]"
+                    }
+                ],
+                "type": "reference"
+            },
+            "__wrappers__.cancel_order.range_check_ptr": {
+                "cairo_type": "felt",
+                "full_name": "__wrappers__.cancel_order.range_check_ptr",
+                "references": [
+                    {
+                        "ap_tracking_data": {
+                            "group": 71,
+                            "offset": 0
+                        },
+                        "pc": 1260,
+                        "value": "[cast([fp + (-5)] + 2, felt*)]"
                     },
                     {
                         "ap_tracking_data": {
-                            "group": 70,
-                            "offset": 143
+                            "group": 71,
+                            "offset": 153
                         },
-                        "pc": 1256,
+                        "pc": 1269,
+                        "value": "[cast(ap + (-1), felt*)]"
+                    }
+                ],
+                "type": "reference"
+            },
+            "__wrappers__.cancel_order.ret_struct": {
+                "cairo_type": "__main__.cancel_order.Return",
+                "full_name": "__wrappers__.cancel_order.ret_struct",
+                "references": [
+                    {
+                        "ap_tracking_data": {
+                            "group": 71,
+                            "offset": 153
+                        },
+                        "pc": 1269,
+                        "value": "[cast(ap + 0, __main__.cancel_order.Return*)]"
+                    }
+                ],
+                "type": "reference"
+            },
+            "__wrappers__.cancel_order.retdata": {
+                "cairo_type": "felt*",
+                "full_name": "__wrappers__.cancel_order.retdata",
+                "references": [
+                    {
+                        "ap_tracking_data": {
+                            "group": 71,
+                            "offset": 154
+                        },
+                        "pc": 1271,
+                        "value": "[cast(ap + (-1), felt**)]"
+                    }
+                ],
+                "type": "reference"
+            },
+            "__wrappers__.cancel_order.retdata_size": {
+                "cairo_type": "felt",
+                "full_name": "__wrappers__.cancel_order.retdata_size",
+                "references": [
+                    {
+                        "ap_tracking_data": {
+                            "group": 71,
+                            "offset": 154
+                        },
+                        "pc": 1271,
+                        "value": "cast(0, felt)"
+                    }
+                ],
+                "type": "reference"
+            },
+            "__wrappers__.cancel_order.syscall_ptr": {
+                "cairo_type": "felt*",
+                "full_name": "__wrappers__.cancel_order.syscall_ptr",
+                "references": [
+                    {
+                        "ap_tracking_data": {
+                            "group": 71,
+                            "offset": 0
+                        },
+                        "pc": 1260,
+                        "value": "[cast([fp + (-5)], felt**)]"
+                    },
+                    {
+                        "ap_tracking_data": {
+                            "group": 71,
+                            "offset": 153
+                        },
+                        "pc": 1269,
                         "value": "[cast(ap + (-3), felt**)]"
                     }
                 ],
                 "type": "reference"
             },
-            "__main__.withdraw.token": {
-                "cairo_type": "felt",
-                "full_name": "__main__.withdraw.token",
-                "references": [
-                    {
-                        "ap_tracking_data": {
-                            "group": 70,
-                            "offset": 115
-                        },
-                        "pc": 1247,
-                        "value": "[cast(ap + (-3), felt*)]"
-                    }
-                ],
-                "type": "reference"
+            "__wrappers__.cancel_order_encode_return.memcpy": {
+                "destination": "starkware.cairo.common.memcpy.memcpy",
+                "type": "alias"
             },
             "__wrappers__.constructor": {
                 "decorators": [
@@ -57775,246 +58015,6 @@
                     }
                 ],
                 "type": "reference"
-            },
-            "__wrappers__.withdraw": {
-                "decorators": [
-                    "external"
-                ],
-                "pc": 1260,
-                "type": "function"
-            },
-            "__wrappers__.withdraw.Args": {
-                "full_name": "__wrappers__.withdraw.Args",
-                "members": {},
-                "size": 0,
-                "type": "struct"
-            },
-            "__wrappers__.withdraw.ImplicitArgs": {
-                "full_name": "__wrappers__.withdraw.ImplicitArgs",
-                "members": {},
-                "size": 0,
-                "type": "struct"
-            },
-            "__wrappers__.withdraw.Return": {
-                "full_name": "__wrappers__.withdraw.Return",
-                "members": {
-                    "pedersen_ptr": {
-                        "cairo_type": "starkware.cairo.common.cairo_builtins.HashBuiltin*",
-                        "offset": 1
-                    },
-                    "range_check_ptr": {
-                        "cairo_type": "felt",
-                        "offset": 2
-                    },
-                    "retdata": {
-                        "cairo_type": "felt*",
-                        "offset": 4
-                    },
-                    "size": {
-                        "cairo_type": "felt",
-                        "offset": 3
-                    },
-                    "syscall_ptr": {
-                        "cairo_type": "felt*",
-                        "offset": 0
-                    }
-                },
-                "size": 5,
-                "type": "struct"
-            },
-            "__wrappers__.withdraw.SIZEOF_LOCALS": {
-                "type": "const",
-                "value": 0
-            },
-            "__wrappers__.withdraw.__calldata_actual_size": {
-                "cairo_type": "felt",
-                "full_name": "__wrappers__.withdraw.__calldata_actual_size",
-                "references": [
-                    {
-                        "ap_tracking_data": {
-                            "group": 71,
-                            "offset": 0
-                        },
-                        "pc": 1260,
-                        "value": "cast([fp + (-3)] + 1 - [fp + (-3)], felt)"
-                    }
-                ],
-                "type": "reference"
-            },
-            "__wrappers__.withdraw.__calldata_arg_order_id": {
-                "cairo_type": "felt",
-                "full_name": "__wrappers__.withdraw.__calldata_arg_order_id",
-                "references": [
-                    {
-                        "ap_tracking_data": {
-                            "group": 71,
-                            "offset": 0
-                        },
-                        "pc": 1260,
-                        "value": "[cast([fp + (-3)], felt*)]"
-                    }
-                ],
-                "type": "reference"
-            },
-            "__wrappers__.withdraw.__calldata_ptr": {
-                "cairo_type": "felt*",
-                "full_name": "__wrappers__.withdraw.__calldata_ptr",
-                "references": [
-                    {
-                        "ap_tracking_data": {
-                            "group": 71,
-                            "offset": 0
-                        },
-                        "pc": 1260,
-                        "value": "[cast(fp + (-3), felt**)]"
-                    },
-                    {
-                        "ap_tracking_data": {
-                            "group": 71,
-                            "offset": 0
-                        },
-                        "pc": 1260,
-                        "value": "cast([fp + (-3)] + 1, felt*)"
-                    }
-                ],
-                "type": "reference"
-            },
-            "__wrappers__.withdraw.__temp58": {
-                "cairo_type": "felt",
-                "full_name": "__wrappers__.withdraw.__temp58",
-                "references": [
-                    {
-                        "ap_tracking_data": {
-                            "group": 71,
-                            "offset": 1
-                        },
-                        "pc": 1262,
-                        "value": "[cast(ap + (-1), felt*)]"
-                    }
-                ],
-                "type": "reference"
-            },
-            "__wrappers__.withdraw.__wrapped_func": {
-                "destination": "__main__.withdraw",
-                "type": "alias"
-            },
-            "__wrappers__.withdraw.pedersen_ptr": {
-                "cairo_type": "starkware.cairo.common.cairo_builtins.HashBuiltin*",
-                "full_name": "__wrappers__.withdraw.pedersen_ptr",
-                "references": [
-                    {
-                        "ap_tracking_data": {
-                            "group": 71,
-                            "offset": 0
-                        },
-                        "pc": 1260,
-                        "value": "[cast([fp + (-5)] + 1, starkware.cairo.common.cairo_builtins.HashBuiltin**)]"
-                    },
-                    {
-                        "ap_tracking_data": {
-                            "group": 71,
-                            "offset": 153
-                        },
-                        "pc": 1269,
-                        "value": "[cast(ap + (-2), starkware.cairo.common.cairo_builtins.HashBuiltin**)]"
-                    }
-                ],
-                "type": "reference"
-            },
-            "__wrappers__.withdraw.range_check_ptr": {
-                "cairo_type": "felt",
-                "full_name": "__wrappers__.withdraw.range_check_ptr",
-                "references": [
-                    {
-                        "ap_tracking_data": {
-                            "group": 71,
-                            "offset": 0
-                        },
-                        "pc": 1260,
-                        "value": "[cast([fp + (-5)] + 2, felt*)]"
-                    },
-                    {
-                        "ap_tracking_data": {
-                            "group": 71,
-                            "offset": 153
-                        },
-                        "pc": 1269,
-                        "value": "[cast(ap + (-1), felt*)]"
-                    }
-                ],
-                "type": "reference"
-            },
-            "__wrappers__.withdraw.ret_struct": {
-                "cairo_type": "__main__.withdraw.Return",
-                "full_name": "__wrappers__.withdraw.ret_struct",
-                "references": [
-                    {
-                        "ap_tracking_data": {
-                            "group": 71,
-                            "offset": 153
-                        },
-                        "pc": 1269,
-                        "value": "[cast(ap + 0, __main__.withdraw.Return*)]"
-                    }
-                ],
-                "type": "reference"
-            },
-            "__wrappers__.withdraw.retdata": {
-                "cairo_type": "felt*",
-                "full_name": "__wrappers__.withdraw.retdata",
-                "references": [
-                    {
-                        "ap_tracking_data": {
-                            "group": 71,
-                            "offset": 154
-                        },
-                        "pc": 1271,
-                        "value": "[cast(ap + (-1), felt**)]"
-                    }
-                ],
-                "type": "reference"
-            },
-            "__wrappers__.withdraw.retdata_size": {
-                "cairo_type": "felt",
-                "full_name": "__wrappers__.withdraw.retdata_size",
-                "references": [
-                    {
-                        "ap_tracking_data": {
-                            "group": 71,
-                            "offset": 154
-                        },
-                        "pc": 1271,
-                        "value": "cast(0, felt)"
-                    }
-                ],
-                "type": "reference"
-            },
-            "__wrappers__.withdraw.syscall_ptr": {
-                "cairo_type": "felt*",
-                "full_name": "__wrappers__.withdraw.syscall_ptr",
-                "references": [
-                    {
-                        "ap_tracking_data": {
-                            "group": 71,
-                            "offset": 0
-                        },
-                        "pc": 1260,
-                        "value": "[cast([fp + (-5)], felt**)]"
-                    },
-                    {
-                        "ap_tracking_data": {
-                            "group": 71,
-                            "offset": 153
-                        },
-                        "pc": 1269,
-                        "value": "[cast(ap + (-3), felt**)]"
-                    }
-                ],
-                "type": "reference"
-            },
-            "__wrappers__.withdraw_encode_return.memcpy": {
-                "destination": "starkware.cairo.common.memcpy.memcpy",
-                "type": "alias"
             },
             "contracts.Iamm.Iamm": {
                 "type": "namespace"
@@ -71027,7 +71027,7 @@
                         "offset": 153
                     },
                     "pc": 1269,
-                    "value": "[cast(ap + 0, __main__.withdraw.Return*)]"
+                    "value": "[cast(ap + 0, __main__.cancel_order.Return*)]"
                 },
                 {
                     "ap_tracking_data": {
