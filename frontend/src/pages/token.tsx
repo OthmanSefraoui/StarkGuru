@@ -1,5 +1,6 @@
 import {
   Avatar,
+  Button,
   HStack,
   NumberInput,
   NumberInputField,
@@ -59,84 +60,86 @@ import {
 //   );
 // }
 
-// function UserBalanceB() {
-//   const { account } = useStarknet();
-//   const { contract } = useTokenBContract();
+function UserBalanceB() {
+  const { account } = useStarknet();
+  const { contract } = useTokenBContract();
 
-//   const { data, loading, error } = useStarknetCall({
-//     contract,
-//     method: 'balanceOf',
-//     args: account ? [account] : undefined,
-//   });
+  const { data, loading, error } = useStarknetCall({
+    contract,
+    method: 'balanceOf',
+    args: account ? [account] : undefined,
+  });
 
-//   const content = useMemo(() => {
-//     if (loading || !data?.length) {
-//       return <div>Loading balance</div>;
-//     }
+  const content = useMemo(() => {
+    if (loading || !data?.length) {
+      return <div>Loading balance</div>;
+    }
 
-//     if (error) {
-//       return <div>Error: {error}</div>;
-//     }
+    if (error) {
+      return <div>Error: {error}</div>;
+    }
 
-//     const balance = uint256ToBN(data[0]);
-//     return <div>{balance.toString(10)}</div>;
-//   }, [data, loading, error]);
+    const balance = uint256ToBN(data[0]);
+    return <div>{balance.toString(10)}</div>;
+  }, [data, loading, error]);
 
-//   return (
-//     <div>
-//       <h2>User balance Token B</h2>
-//       {content}
-//     </div>
-//   );
-// }
+  return (
+    <div>
+      <h2>User balance Token B</h2>
+      {content}
+    </div>
+  );
+}
 
-// function FaucetA() {
-//   const { contract } = useTokenAContract();
+function FaucetA() {
+  const { contract } = useTokenAContract();
 
-//   const { loading, error, reset, invoke } = useStarknetInvoke({
-//     contract,
-//     method: 'faucet',
-//   });
+  const { loading, error, reset, invoke } = useStarknetInvoke({
+    contract,
+    method: 'faucet',
+  });
 
-//   const onFaucetA = useCallback(() => {
-//     reset();
-//     invoke({ args: [] });
-//   }, []);
+  const onFaucetA = useCallback(() => {
+    reset();
+    invoke({ args: [] });
+  }, []);
 
-//   return (
-//     <div>
-//       <h2>Faucet A</h2>
-//       <button onClick={onFaucetA}>
-//         {loading ? 'Waiting for wallet' : 'Faucet A'}
-//       </button>
-//       {error && <p>Error: {error}</p>}
-//     </div>
-//   );
-// }
+  return (
+    <Button colorScheme="red" onClick={onFaucetA}>
+      {loading ? 'Waiting for wallet' : 'Get some tokens A'}
+    </Button>
+    // <button onClick={onFaucetA}>
+    //   {loading ? 'Waiting for wallet' : 'Get some tokens A'}
+    // </button>
+    // {error && <p>Error: {error}</p>}
+  );
+}
 
-// function FaucetB() {
-//   const { contract } = useTokenBContract();
+function FaucetB() {
+  const { contract } = useTokenBContract();
 
-//   const { loading, error, reset, invoke } = useStarknetInvoke({
-//     contract,
-//     method: 'faucet',
-//   });
+  const { loading, error, reset, invoke } = useStarknetInvoke({
+    contract,
+    method: 'faucet',
+  });
 
-//   const onFaucetB = useCallback(() => {
-//     reset();
-//     invoke({ args: [] });
-//   }, []);
+  const onFaucetB = useCallback(() => {
+    reset();
+    invoke({ args: [] });
+  }, []);
 
-//   return (
-//     <div>
-//       <h2>Faucet B</h2>
-//       <button onClick={onFaucetB}>
-//         {loading ? 'Waiting for wallet' : 'Faucet B'}
-//       </button>
-//       {error && <p>Error: {error}</p>}
-//     </div>
-//   );
-// }
+  return (
+    <div>
+      <Button colorScheme="blue" onClick={onFaucetB}>
+        {loading ? 'Waiting for wallet' : 'Get some tokens B'}
+      </Button>
+      {/* <button onClick={onFaucetB}>
+        {loading ? 'Waiting for wallet' : 'Faucet B'}
+      </button>
+      {error && <p>Error: {error}</p>} */}
+    </div>
+  );
+}
 
 function SwapTokens() {
   const { account } = useStarknet();
@@ -219,6 +222,12 @@ function SwapTokens() {
           <TagLabel>ETH</TagLabel>
         </Tag>
         <TokenBBalance />
+      </HStack>
+      <HStack>
+        <FaucetA></FaucetA>
+      </HStack>
+      <HStack>
+        <FaucetB></FaucetB>
       </HStack>
     </Stack>
     // <div>
