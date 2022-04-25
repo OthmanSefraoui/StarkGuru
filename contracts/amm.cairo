@@ -72,6 +72,17 @@ func get_number_of_pools{syscall_ptr : felt*, pedersen_ptr : HashBuiltin*, range
     return(number_of_pools)
 end
 
+@view
+func get_pair{syscall_ptr : felt*, pedersen_ptr : HashBuiltin*, range_check_ptr}(pool_id: felt, token_a: felt) -> (token_b: felt):
+    let (pool_core_instance) = pools_storage.read(pool_id)
+    if token_a == pool_core_instance.token_a:
+        tempvar token_b = pool_core_instance.token_b
+    else:
+        tempvar token_b = pool_core_instance.token_a
+    end
+    return(token_b)
+end
+
 ######### Constructor
 
 @constructor
@@ -96,7 +107,7 @@ func create_pool{syscall_ptr : felt*, pedersen_ptr : HashBuiltin*, range_check_p
 end
 
 @external
-func swap{syscall_ptr : felt*, pedersen_ptr : HashBuiltin*, range_check_ptr}(pool_id: felt, token_amount: felt, token_address: felt):
+func swap{syscall_ptr : felt*, pedersen_ptr : HashBuiltin*, range_check_ptr}(pool_id: felt, token_amount: felt, token_address: felt) -> (amount: felt):
     let (sender_address) = get_caller_address()
     let (user_balance_256) = IERC20.balanceOf(contract_address = token_address, account= sender_address)
     let user_balance = user_balance_256.low
@@ -117,7 +128,7 @@ func swap{syscall_ptr : felt*, pedersen_ptr : HashBuiltin*, range_check_ptr}(poo
     let (old_balance_b) = tokens_balances.read(pool_id, token_b)
     tokens_balances.write(pool_id, token_address, token_amount + old_balance_a)
     tokens_balances.write(pool_id, token_b, b + old_balance_b)
-    return()
+    return(b)
 end
 
 @external

@@ -21,9 +21,13 @@ namespace Iamm:
     func create_pool(token_a: felt, token_b: felt):
     end
 
-    func swap(pool_id: felt, token_amount: felt, token_address: felt):
+    func swap(pool_id: felt, token_amount: felt, token_address: felt) -> (amount: felt):
     end
 
     func provide_liquidity(pool_id: felt, token_a_amount: felt, token_b_amount: felt):
     end
+
+    func get_pair(pool_id: felt, token_a: felt) -> (token_b: felt):
+    end
+
 end
