@@ -1,0 +1,116 @@
+[
+    {
+        "inputs": [
+            {
+                "name": "pool_id",
+                "type": "felt"
+            }
+        ],
+        "name": "get_token_a",
+        "outputs": [
+            {
+                "name": "token_a",
+                "type": "felt"
+            }
+        ],
+        "stateMutability": "view",
+        "type": "function"
+    },
+    {
+        "inputs": [
+            {
+                "name": "pool_id",
+                "type": "felt"
+            }
+        ],
+        "name": "get_token_b",
+        "outputs": [
+            {
+                "name": "token_b",
+                "type": "felt"
+            }
+        ],
+        "stateMutability": "view",
+        "type": "function"
+    },
+    {
+        "inputs": [
+            {
+                "name": "pool_id",
+                "type": "felt"
+            },
+            {
+                "name": "token",
+                "type": "felt"
+            }
+        ],
+        "name": "get_balance_token",
+        "outputs": [
+            {
+                "name": "balance",
+                "type": "felt"
+            }
+        ],
+        "stateMutability": "view",
+        "type": "function"
+    },
+    {
+        "inputs": [],
+        "name": "constructor",
+        "outputs": [],
+        "type": "constructor"
+    },
+    {
+        "inputs": [
+            {
+                "name": "token_a",
+                "type": "felt"
+            },
+            {
+                "name": "token_b",
+                "type": "felt"
+            }
+        ],
+        "name": "create_pool",
+        "outputs": [],
+        "type": "function"
+    },
+    {
+        "inputs": [
+            {
+                "name": "pool_id",
+                "type": "felt"
+            },
+            {
+                "name": "token_amount",
+                "type": "felt"
+            },
+            {
+                "name": "token_address",
+                "type": "felt"
+            }
+        ],
+        "name": "swap",
+        "outputs": [],
+        "type": "function"
+    },
+    {
+        "inputs": [
+            {
+                "name": "pool_id",
+                "type": "felt"
+            },
+            {
+                "name": "token_a_amount",
+                "type": "felt"
+            },
+            {
+                "name": "token_b_amount",
+                "type": "felt"
+            }
+        ],
+        "name": "provide_liquidity",
+        "outputs": [],
+        "type": "function"
+    }
+]
