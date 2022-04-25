@@ -25,6 +25,7 @@ import {
 import SwapTokens from 'Components/swapTokens';
 import { useStarknet, InjectedConnector } from '@starknet-react/core';
 import { MdAccountBalanceWallet } from 'react-icons/md';
+import { SP } from 'next/dist/shared/lib/utils';
 
 const Home: NextPage = () => {
   const { account, connect } = useStarknet();
