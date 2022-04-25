@@ -62,7 +62,7 @@ func get_price{syscall_ptr : felt*, pedersen_ptr : HashBuiltin*, range_check_ptr
         tempvar token_b = pool_core_instance.token_a
     end
     let (token_b_balance) = tokens_balances.read(pool_id, token_b)
-    let (b, _) = unsigned_div_rem(token_b_balance , token_a_balance + 1)
+    let (b, _) = unsigned_div_rem(token_b_balance * 1000000000000000000 , token_a_balance + 1)
     return(b)
 end
 
