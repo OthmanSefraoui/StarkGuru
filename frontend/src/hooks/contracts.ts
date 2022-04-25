@@ -3,6 +3,7 @@ import { Abi } from 'starknet';
 
 import Erc20Abi from '~/../../contracts/artifacts/abis/dummy_token.json';
 import AMMAbi from '~/../../contracts/artifacts/abis/amm.json';
+import LimitOrderAbi from '~/../../contracts/artifacts/abis/limit_orders.json';
 
 export function useTokenAContract() {
   return useContract({
@@ -24,6 +25,14 @@ export function useAMMContract() {
   return useContract({
     abi: AMMAbi as Abi,
     address:
-      '0x0648b65197c3c393867f0c53e11aeb8b89735532ba09abbd09005c6ea515ab33',
+      '0x06d997027507576cc87b10c2ed414aba776c891b57313d64afa69f12d1fa1f42',
+  });
+}
+
+export function useLimitOrderContract() {
+  return useContract({
+    abi: LimitOrderAbi as Abi,
+    address:
+      '0x0475d0afcd9b763234e1cabb8830dc8af3eca774966c1054dce8a31d3b124a8c',
   });
 }

@@ -9,8 +9,6 @@ const TokenAPrice = () => {
   const { contract } = useAMMContract();
   const tokenAAddress = useTokenAContract().contract?.address;
 
-  console.log(tokenAAddress);
-
   const { data, loading, error } = useStarknetCall({
     contract,
     method: 'get_price',

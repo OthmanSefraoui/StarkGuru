@@ -30,6 +30,7 @@ import {
   useTokenBContract,
   useAMMContract,
 } from '~/hooks/contracts';
+import TokenService, { TOKEN } from '~/services/token-service';
 
 // function UserBalance() {
 //   const { account } = useStarknet();
@@ -200,6 +201,9 @@ function SwapTokens() {
     if (loading) return true;
     return !account || !!amountError;
   }, [loading, account, amountError]);
+
+  const price = TokenService.getUserBalance(TOKEN.A);
+  console.log('price :' + JSON.stringify(price.data));
 
   return (
     <Stack>
