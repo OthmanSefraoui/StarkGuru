@@ -39,10 +39,23 @@ end
 
 ######### Getters
 
+@view
 func get_price{syscall_ptr : felt*, pedersen_ptr : HashBuiltin*, range_check_ptr}(order_id: felt) -> (price: felt):
     let (order_core) = orders_storage.read(order_id)
     let price = order_core.price
     return(price)
+end
+
+@view
+func get_order{syscall_ptr : felt*, pedersen_ptr : HashBuiltin*, range_check_ptr}(order_id: felt) -> (order: order_core):
+    let (order_core_instance) = orders_storage.read(order_id)
+    return(order_core_instance)
+end
+
+@view
+func get_number_of_orders{syscall_ptr : felt*, pedersen_ptr : HashBuiltin*, range_check_ptr}() -> (get_number_of_orders: felt):
+    let (number_of_orders) = orders_length_storage.read()
+    return(number_of_orders)
 end
 
 ######### Constructor
@@ -91,7 +104,3 @@ func execute_order{syscall_ptr : felt*, pedersen_ptr : HashBuiltin*, range_check
     IERC20.transfer(contract_address = token, recipient= order_owner, amount= Uint256(amount, 0))
     return()
 end
-
-
-
-
