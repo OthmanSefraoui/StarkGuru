@@ -38,6 +38,18 @@ end
 func amm_contract_address() -> (amm_contract: felt):
 end
 
+@storage_var
+func orders_indexed_storage(price_entry: felt, index: felt) -> (order_id: felt):
+end
+
+@storage_var
+func last_index_executed_storage(price_entry: felt) -> (last_index_executed: felt):
+end
+
+@storage_var
+func last_index_storage(price_entry: felt) -> (last_index: felt):
+end
+
 ######### Getters
 
 @view
@@ -82,6 +94,11 @@ func create_order{syscall_ptr : felt*, pedersen_ptr : HashBuiltin*, range_check_
     let order_core_instance = order_core(order_id= order_id, pool_id = pool_id, price = price, amount = amount, token = token, order_type = order_type, executed = 0, order_owner = sender_address)
     orders_storage.write(order_id, order_core_instance)
     orders_length_storage.write(order_id)
+    let (price_rounded,_) = unsigned_div_rem(price * 10, 1000000000000000000)
+    let (last_index) = last_index_storage.read(price_rounded)
+    let new_index = last_index + 1
+    orders_indexed_storage.write(price_rounded, new_index, order_id)
+    last_index_storage.write(price_rounded, new_index)
     order_created.emit(order_id, pool_id, price, amount, token, order_type)
     return()
 end
@@ -100,6 +117,10 @@ func execute_order{syscall_ptr : felt*, pedersen_ptr : HashBuiltin*, range_check
     let amount = order_core_instance.amount
     let order_type = order_core_instance.order_type
     let order_owner = order_core_instance.order_owner
+    let (price_rounded,_) = unsigned_div_rem(price * 10, 1000000000000000000)
+    let (last_index_executed) = last_index_executed_storage.read(price_rounded)
+    let (expected_order_id) = orders_indexed_storage.read(price_rounded, last_index_executed + 1)
+    assert order_id = expected_order_id
     let (current_price) = Iamm.get_price(contract_address = amm_contract, pool_id= pool_id, token= token)
     let (slippage_cost,_) = unsigned_div_rem(price * 1000000000000000000, 100000000000000000000)
     let upper_bound = price + slippage_cost
@@ -113,5 +134,6 @@ func execute_order{syscall_ptr : felt*, pedersen_ptr : HashBuiltin*, range_check
     IERC20.transfer(contract_address = token_received, recipient= sender_address, amount= Uint256(executor_bonus, 0))
     let order_core_instance_executed = order_core(order_id= order_id, pool_id = pool_id, price = price, amount = amount, token = token, order_type = order_type, executed = 1, order_owner = order_owner)
     orders_storage.write(order_id, order_core_instance_executed)
+    last_index_executed_storage.write(price_rounded, last_index_executed + 1)
     return()
 end
