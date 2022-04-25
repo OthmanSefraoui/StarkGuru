@@ -108,7 +108,7 @@ function FaucetA() {
 
   return (
     <Button colorScheme="red" onClick={onFaucetA}>
-      {loading ? 'Waiting for wallet' : 'Get some tokens JA'}
+      {loading ? 'Waiting for wallet' : 'Get some tokens A'}
     </Button>
     // <button onClick={onFaucetA}>
     //   {loading ? 'Waiting for wallet' : 'Get some tokens A'}
