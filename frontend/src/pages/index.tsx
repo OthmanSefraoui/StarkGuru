@@ -12,6 +12,7 @@ import SwapTokens from 'Components/swapTokens'
 import { useStarknet, InjectedConnector } from '@starknet-react/core'
 import { MdAccountBalanceWallet } from "react-icons/md"
 
+
 const Home: NextPage = () => {
   const { contract: counter } = useCounterContract()
 
@@ -44,16 +45,11 @@ const Home: NextPage = () => {
       </Heading>
       <Divider />
 
-    {account != null ?
-        <p>Account: {account}</p> :
-        <Button size={"lg"} rightIcon={<MdAccountBalanceWallet />} onClick={() => connect(new InjectedConnector())}>Connect</Button>
-  //         <Button rightIcon={<MdCall />} colorScheme='blue' variant='outline'>
-  //   Call us
-  // </Button>
-        
-    }
-
-
+      {account == null ?
+      <Container centerContent p={8}>
+        <Button colorScheme={"orange"} padding={8} size={"lg"} rightIcon={<MdAccountBalanceWallet />} onClick={() => connect(new InjectedConnector())}>Connect with Argent X</Button>
+          </Container> :
+        <Stack>
       <Tabs size={"lg"}>
         <TabList>
           <Tab>Swap</Tab>
@@ -80,6 +76,8 @@ const Home: NextPage = () => {
       <Button colorScheme='teal' size='md'>
         Swap Tokens
       </Button>
+        </Stack>
+      }
     </Container>
   )
 }
