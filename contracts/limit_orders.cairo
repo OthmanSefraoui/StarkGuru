@@ -207,5 +207,6 @@ func cancel_order{syscall_ptr : felt*, pedersen_ptr : HashBuiltin*, range_check_
         order_status=2,
         order_owner=order_owner,
     )
+    orders_storage.write(order_id, order_core_instance_canceled)
     return ()
 end
