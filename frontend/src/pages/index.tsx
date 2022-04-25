@@ -7,6 +7,8 @@ import { IncrementCounter } from '~/components/IncrementCounter'
 import { TransactionList } from '~/components/TransactionList'
 import { useCounterContract } from '~/hooks/counter'
 import { Container, Heading, Text, Button, NumberInput, NumberInputField, HStack, Select } from '@chakra-ui/react'
+import { Tabs, TabList, TabPanels, Tab, TabPanel, Stack } from '@chakra-ui/react'
+import SwapTokens from 'Components/swapTokens'
 
 const Home: NextPage = () => {
   const { contract: counter } = useCounterContract()
@@ -25,33 +27,34 @@ const Home: NextPage = () => {
   }, [counterResult])
 
   return (
-    <Container>
+    <Container maxW="container.sm">
       <Heading>
         Stark Guru
       </Heading>
       <ConnectWallet />
-      <Heading>Swap</Heading>
-      <HStack>
-        <NumberInput defaultValue={0.0}>
-          <NumberInputField />
-        </NumberInput>
-        <Select placeholder='Select option'>
-          <option value='option1'>ETH</option>
-          <option value='option2'>DAI</option>
-          <option value='option3'>USDC</option>
-        </Select>
-      </HStack>
-      <HStack>
-        <NumberInput defaultValue={0.0}>
-          <NumberInputField />
-        </NumberInput>
-        <Select placeholder='Select option'>
-          <option value='option1'>ETH</option>
-          <option value='option2'>DAI</option>
-          <option value='option3'>USDC</option>
-        </Select>
-      </HStack>
+      <Tabs size={"lg"}>
+        <TabList>
+          <Tab>Swap</Tab>
+          <Tab>Limit</Tab>
+        </TabList>
 
+        <TabPanels>
+          <TabPanel>
+            <SwapTokens />
+          </TabPanel>
+          <TabPanel>
+            <Stack>
+            <SwapTokens />
+            <Text>Limit Price USD</Text>
+            <HStack>
+              <NumberInput defaultValue={0.0}>
+                <NumberInputField />
+              </NumberInput>
+            </HStack>
+            </Stack>
+          </TabPanel>
+        </TabPanels>
+      </Tabs>
       <Button colorScheme='teal' size='md'>
         Swap Tokens
       </Button>
