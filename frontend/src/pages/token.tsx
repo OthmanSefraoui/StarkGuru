@@ -16,7 +16,9 @@ import {
   useStarknetInvoke,
 } from '@starknet-react/core';
 import TokenABalance from 'Components/tokenABalance';
+import TokenAPrice from 'Components/tokenAPrice';
 import TokenBBalance from 'Components/tokenBBalance';
+import TokenBPrice from 'Components/tokenBPrice';
 import type { NextPage } from 'next';
 import { useCallback, useMemo, useState } from 'react';
 import { toBN } from 'starknet/dist/utils/number';
@@ -106,7 +108,7 @@ function FaucetA() {
 
   return (
     <Button colorScheme="red" onClick={onFaucetA}>
-      {loading ? 'Waiting for wallet' : 'Get some tokens A'}
+      {loading ? 'Waiting for wallet' : 'Get some tokens JA'}
     </Button>
     // <button onClick={onFaucetA}>
     //   {loading ? 'Waiting for wallet' : 'Get some tokens A'}
@@ -211,6 +213,7 @@ function SwapTokens() {
           <TagLabel>USDC</TagLabel>
         </Tag>
         <TokenABalance />
+        <TokenAPrice />
       </HStack>
       <Text>You sell</Text>
       <HStack>
@@ -222,6 +225,7 @@ function SwapTokens() {
           <TagLabel>ETH</TagLabel>
         </Tag>
         <TokenBBalance />
+        <TokenBPrice />
       </HStack>
       <HStack>
         <FaucetA></FaucetA>
@@ -270,14 +274,8 @@ const TokenPage: NextPage = () => {
   return (
     <div>
       <p>Connected: {account}</p>
-      {/* <UserBalance /> */}
-      {/* <UserBalanceB /> */}
-      {/* <FaucetA /> */}
-      {/* <FaucetB /> */}
-
       <h2>SWAP</h2>
       <SwapTokens></SwapTokens>
-
       {/* <TransactionList /> */}
     </div>
   );
