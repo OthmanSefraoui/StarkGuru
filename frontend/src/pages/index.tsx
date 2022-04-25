@@ -6,6 +6,7 @@ import { ConnectWallet } from '~/components/ConnectWallet'
 import { IncrementCounter } from '~/components/IncrementCounter'
 import { TransactionList } from '~/components/TransactionList'
 import { useCounterContract } from '~/hooks/counter'
+import { Container, Heading, Text, Button, NumberInput, NumberInputField, HStack, Select } from '@chakra-ui/react'
 
 const Home: NextPage = () => {
   const { contract: counter } = useCounterContract()
@@ -24,16 +25,37 @@ const Home: NextPage = () => {
   }, [counterResult])
 
   return (
-    <div>
-      <h2>Wallet</h2>
+    <Container>
+      <Heading>
+        Stark Guru
+      </Heading>
       <ConnectWallet />
-      <h2>Counter Contract</h2>
-      <p>Address: {counter?.address}</p>
-      <p>Value: {counterValue}</p>
-      <IncrementCounter />
-      <h2>Recent Transactions</h2>
-      <TransactionList />
-    </div>
+      <Heading>Swap</Heading>
+      <HStack>
+        <NumberInput defaultValue={0.0}>
+          <NumberInputField />
+        </NumberInput>
+        <Select placeholder='Select option'>
+          <option value='option1'>ETH</option>
+          <option value='option2'>DAI</option>
+          <option value='option3'>USDC</option>
+        </Select>
+      </HStack>
+      <HStack>
+        <NumberInput defaultValue={0.0}>
+          <NumberInputField />
+        </NumberInput>
+        <Select placeholder='Select option'>
+          <option value='option1'>ETH</option>
+          <option value='option2'>DAI</option>
+          <option value='option3'>USDC</option>
+        </Select>
+      </HStack>
+
+      <Button colorScheme='teal' size='md'>
+        Swap Tokens
+      </Button>
+    </Container>
   )
 }
 
