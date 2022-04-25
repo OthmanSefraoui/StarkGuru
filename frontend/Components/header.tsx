@@ -6,7 +6,8 @@ import {
     Tag,
     TagLabel,
     Spacer,
-    Avatar
+    Avatar, 
+    Heading
 } from "@chakra-ui/react";
 
 
@@ -24,16 +25,19 @@ const Header = () => {
         >
             <VStack align="start" spacing={0}>
                 <HStack justify="space-between" w="100%" h={16}>
+                    <Heading size={"md"} paddingLeft={8}>
+                        Stark Guru
+                    </Heading>
                     <Spacer />
                     <HStack ml={-4} spacing={2} paddingRight={8}>
                         <Spacer />
+                        <Tag size={'lg'} key={'lg'} variant='outline' colorScheme='white'>
+                            <TagLabel>StarkNet</TagLabel>
+                        </Tag>
                         <Avatar
                             src='/StarkNet-Icon.png'
                             size='sm'
                         />
-                        <Tag size={'lg'} key={'lg'} variant='outline' colorScheme='white'>
-                            <TagLabel>StarkNet</TagLabel>
-                        </Tag>
                     </HStack>
                 </HStack>
             </VStack>
