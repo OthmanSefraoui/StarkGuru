@@ -44,13 +44,17 @@ const Home: NextPage = () => {
   const [limit, setLimit] = useState('');
   const [showLimit, setShowLimit] = useState(false);
 
+  function swapTokens() {
+    //TODO
+  }
 
-  var limitOrders = []
-
-  function handleClick() {
+  function putLimitOrder() {
     setShowLimit(true)
   }
 
+  function cancelCurrentOrder() {
+    //TODO
+  }
 
   //Price A
   const { contract } = useAMMContract();
@@ -122,7 +126,6 @@ const Home: NextPage = () => {
 
               <TabPanels>
                 <TabPanel>
-                  //SwapToken
                   <Stack>
                     <Text>You sell</Text>
                     <HStack>
@@ -163,10 +166,12 @@ const Home: NextPage = () => {
                       <Spacer />
                       <TokenBBalance />
                     </HStack>
+                    <Button onClick={swapTokens} colorScheme='teal' size="lg">
+                      Swap Tokens
+                    </Button>
                   </Stack>
                 </TabPanel>
                 <TabPanel>
-                  //Limit
                   <Stack>
                     <Stack>
                       <Text>You sell</Text>
@@ -225,69 +230,75 @@ const Home: NextPage = () => {
                         <TagLabel>ETH</TagLabel>
                       </Tag>
                     </HStack>
+                    <Button onClick={putLimitOrder} colorScheme='teal' size="lg">
+                      Put Limit Order
+                    </Button>
                   </Stack>
                 </TabPanel>
               </TabPanels>
             </Tabs>
-            <Button onClick={handleClick} colorScheme='teal' size="lg">
-              Swap Tokens
-            </Button>
             <Divider />
             {showLimit && (
               <Stack>
                 <Heading pt={8} size="md">Current Limit Order</Heading>
 
-            <Box
-              p={6}
-              w={'full'}
-              bg={'white'}
-              boxShadow={"md"}
-              rounded={'md'}
-              pos={'relative'}
-              zIndex={1}>
-              <Stack>
-                <HStack>
-                  <Text>You sell: {sell}</Text>
-                  <Tag size='lg' colorScheme='teal' borderRadius='full'>
-                    <Avatar
-                      src='/ether.png'
-                      size='xs'
-                      name='eth'
-                      ml={-1}
-                      mr={2}
-                    />
-                    <TagLabel>ETH</TagLabel>
-                  </Tag>
-                </HStack>
-                <HStack>
+                <Box
+                  p={6}
+                  w={'full'}
+                  bg={'white'}
+                  boxShadow={"md"}
+                  rounded={'md'}
+                  pos={'relative'}
+                  zIndex={1}>
+                  <Stack>
+                    <HStack>
+                      <Text>You sell: {sell}</Text>
+                      <Tag size='lg' colorScheme='teal' borderRadius='full'>
+                        <Avatar
+                          src='/ether.png'
+                          size='xs'
+                          name='eth'
+                          ml={-1}
+                          mr={2}
+                        />
+                        <TagLabel>ETH</TagLabel>
+                      </Tag>
+                    </HStack>
+                    <HStack>
                       <Text>You buy: {(sell * priceA) / priceB}</Text>
-                  <Tag size='lg' colorScheme='teal' borderRadius='full'>
-                    <Avatar
-                      src='/StarkNet-Icon.png'
-                      size='xs'
-                      name='stark'
-                      ml={-1}
-                      mr={2}
-                    />
-                    <TagLabel>STARK</TagLabel>
-                  </Tag>
-                </HStack>
-                <HStack>
-                  <Text>Limit Price: {limit}</Text>
-                  <Tag size='lg' colorScheme='teal' borderRadius='full'>
-                    <Avatar
-                      src='/ether.png'
-                      size='xs'
-                      name='eth'
-                      ml={-1}
-                      mr={2}
-                    />
-                    <TagLabel>ETH</TagLabel>
-                  </Tag>
-                </HStack>
+                      <Tag size='lg' colorScheme='teal' borderRadius='full'>
+                        <Avatar
+                          src='/StarkNet-Icon.png'
+                          size='xs'
+                          name='stark'
+                          ml={-1}
+                          mr={2}
+                        />
+                        <TagLabel>STARK</TagLabel>
+                      </Tag>
+                    </HStack>
+                    <HStack>
+                      <Text>Limit Price: {limit}</Text>
+                      <Tag size='lg' colorScheme='teal' borderRadius='full'>
+                        <Avatar
+                          src='/ether.png'
+                          size='xs'
+                          name='eth'
+                          ml={-1}
+                          mr={2}
+                        />
+                        <TagLabel>ETH</TagLabel>
+                      </Tag>
+                    </HStack>
+                    <HStack>
+                      <Spacer/>
+                      <Button onClick={cancelCurrentOrder} colorScheme='teal' size="lg">
+                        Cancel Order
+                      </Button>
+                    </HStack>
+                  </Stack>
+                </Box>
               </Stack>
-            </Box>
-                </Stack>
             )}
           </Stack>
         </Box>
