@@ -17,8 +17,7 @@ struct order_core :
     member price: felt
     member amount: felt
     member token: felt
-    member order_type: felt
-    member executed: felt
+    member order_status: felt
     member order_owner: felt
 end
 
@@ -27,7 +26,7 @@ func orders_storage(order_id: felt) -> (order: order_core):
 end
 
 @event
-func order_created(order_id: felt, pool_id: felt, price: felt, amount: felt, token: felt, order_type: felt):
+func order_created(order_id: felt, pool_id: felt, price: felt, amount: felt, token: felt):
 end
 
 @storage_var
@@ -53,13 +52,6 @@ end
 ######### Getters
 
 @view
-func get_price{syscall_ptr : felt*, pedersen_ptr : HashBuiltin*, range_check_ptr}(order_id: felt) -> (price: felt):
-    let (order_core) = orders_storage.read(order_id)
-    let price = order_core.price
-    return(price)
-end
-
-@view
 func get_order{syscall_ptr : felt*, pedersen_ptr : HashBuiltin*, range_check_ptr}(order_id: felt) -> (order: order_core):
     let (order_core_instance) = orders_storage.read(order_id)
     return(order_core_instance)
@@ -82,7 +74,7 @@ end
 ######### External functions
 
 @external
-func create_order{syscall_ptr : felt*, pedersen_ptr : HashBuiltin*, range_check_ptr}(pool_id: felt,price: felt, amount: felt, token: felt, order_type: felt):
+func create_order{syscall_ptr : felt*, pedersen_ptr : HashBuiltin*, range_check_ptr}(pool_id: felt,price: felt, amount: felt, token: felt):
     let (sender_address) = get_caller_address()
     let (contract_address) = get_contract_address()
     let (user_balance_256) = IERC20.balanceOf(contract_address = token, account= sender_address)
@@ -91,7 +83,7 @@ func create_order{syscall_ptr : felt*, pedersen_ptr : HashBuiltin*, range_check_
     let order_id = orders_length + 1
     assert_le(amount, user_balance)
     IERC20.transferFrom(contract_address = token, sender = sender_address, recipient = contract_address, amount = Uint256(amount,0))
-    let order_core_instance = order_core(order_id= order_id, pool_id = pool_id, price = price, amount = amount, token = token, order_type = order_type, executed = 0, order_owner = sender_address)
+    let order_core_instance = order_core(order_id= order_id, pool_id = pool_id, price = price, amount = amount, token = token, order_status = 0, order_owner = sender_address)
     orders_storage.write(order_id, order_core_instance)
     orders_length_storage.write(order_id)
     let (price_rounded,_) = unsigned_div_rem(price * 10, 1000000000000000000)
@@ -99,7 +91,7 @@ func create_order{syscall_ptr : felt*, pedersen_ptr : HashBuiltin*, range_check_
     let new_index = last_index + 1
     orders_indexed_storage.write(price_rounded, new_index, order_id)
     last_index_storage.write(price_rounded, new_index)
-    order_created.emit(order_id, pool_id, price, amount, token, order_type)
+    order_created.emit(order_id, pool_id, price, amount, token)
     return()
 end
 
@@ -108,14 +100,13 @@ func execute_order{syscall_ptr : felt*, pedersen_ptr : HashBuiltin*, range_check
     let (sender_address) = get_caller_address()
     assert_not_zero(order_id)
     let (order_core_instance) = orders_storage.read(order_id)
-    let executed = order_core_instance.executed
-    assert executed = 0
+    let order_status = order_core_instance.order_status
+    assert order_status = 0
     let (amm_contract) = amm_contract_address.read()
     let token = order_core_instance.token
     let pool_id = order_core_instance.pool_id
     let price = order_core_instance.price
     let amount = order_core_instance.amount
-    let order_type = order_core_instance.order_type
     let order_owner = order_core_instance.order_owner
     let (price_rounded,_) = unsigned_div_rem(price * 10, 1000000000000000000)
     let (last_index_executed) = last_index_executed_storage.read(price_rounded)
@@ -132,8 +123,25 @@ func execute_order{syscall_ptr : felt*, pedersen_ptr : HashBuiltin*, range_check
     let (executor_bonus,_) = unsigned_div_rem(amount_token_received, 1000)
     IERC20.transfer(contract_address = token_received, recipient= order_owner, amount= Uint256(amount_token_received - executor_bonus, 0))
     IERC20.transfer(contract_address = token_received, recipient= sender_address, amount= Uint256(executor_bonus, 0))
-    let order_core_instance_executed = order_core(order_id= order_id, pool_id = pool_id, price = price, amount = amount, token = token, order_type = order_type, executed = 1, order_owner = order_owner)
+    let order_core_instance_executed = order_core(order_id= order_id, pool_id = pool_id, price = price, amount = amount, token = token, order_status = 1, order_owner = order_owner)
     orders_storage.write(order_id, order_core_instance_executed)
     last_index_executed_storage.write(price_rounded, last_index_executed + 1)
+    return()
+end
+
+@external
+func withdraw{syscall_ptr : felt*, pedersen_ptr : HashBuiltin*, range_check_ptr}(order_id: felt):
+    let (sender_address) = get_caller_address()
+    let (order_core_instance) = orders_storage.read(order_id)
+    let order_owner = order_core_instance.order_owner
+    assert sender_address = order_owner
+    let order_status = order_core_instance.order_status
+    assert order_status = 0
+    let amount = order_core_instance.amount
+    let token = order_core_instance.token
+    IERC20.transfer(contract_address = token, recipient= sender_address, amount= Uint256(amount, 0))
+    let pool_id = order_core_instance.pool_id
+    let price = order_core_instance.price
+    let order_core_instance_canceled = order_core(order_id= order_id, pool_id = pool_id, price = price, amount = amount, token = token, order_status = 2, order_owner = order_owner)
     return()
 end
