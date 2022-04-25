@@ -22,7 +22,7 @@ const TokenABalance = () => {
       return <div>Error: {error}</div>;
     }
 
-    const balance = uint256ToBN(data[0]);
+    const balance = uint256ToBN(data[0])/1000000000000000000;
     return <span>{balance.toString(10)}</span>;
   }, [data, loading, error]);
 
