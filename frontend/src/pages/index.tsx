@@ -6,9 +6,11 @@ import { ConnectWallet } from '~/components/ConnectWallet'
 import { IncrementCounter } from '~/components/IncrementCounter'
 import { TransactionList } from '~/components/TransactionList'
 import { useCounterContract } from '~/hooks/counter'
-import { Container, Heading, Text, Button, NumberInput, NumberInputField, HStack, Select } from '@chakra-ui/react'
+import { Container, Heading, Text, Button, NumberInput, NumberInputField, HStack, Select, Divider } from '@chakra-ui/react'
 import { Tabs, TabList, TabPanels, Tab, TabPanel, Stack } from '@chakra-ui/react'
 import SwapTokens from 'Components/swapTokens'
+import { useStarknet, InjectedConnector } from '@starknet-react/core'
+import { MdAccountBalanceWallet } from "react-icons/md"
 
 const Home: NextPage = () => {
   const { contract: counter } = useCounterContract()
@@ -26,12 +28,32 @@ const Home: NextPage = () => {
     }
   }, [counterResult])
 
+  const { account, connect } = useStarknet()
+
+  // if (account) {
+  //   return <p>Account: {account}</p>
+  // }
+
+  // return 
+
   return (
     <Container maxW="container.sm">
+
       <Heading>
         Stark Guru
       </Heading>
-      <ConnectWallet />
+      <Divider />
+
+    {account != null ?
+        <p>Account: {account}</p> :
+        <Button size={"lg"} rightIcon={<MdAccountBalanceWallet />} onClick={() => connect(new InjectedConnector())}>Connect</Button>
+  //         <Button rightIcon={<MdCall />} colorScheme='blue' variant='outline'>
+  //   Call us
+  // </Button>
+        
+    }
+
+
       <Tabs size={"lg"}>
         <TabList>
           <Tab>Swap</Tab>
