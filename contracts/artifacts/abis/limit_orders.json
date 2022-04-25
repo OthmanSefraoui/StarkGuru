@@ -27,23 +27,18 @@
                 "type": "felt"
             },
             {
-                "name": "order_type",
+                "name": "order_status",
                 "offset": 5,
                 "type": "felt"
             },
             {
-                "name": "executed",
-                "offset": 6,
-                "type": "felt"
-            },
-            {
                 "name": "order_owner",
-                "offset": 7,
+                "offset": 6,
                 "type": "felt"
             }
         ],
         "name": "order_core",
-        "size": 8,
+        "size": 7,
         "type": "struct"
     },
     {
@@ -67,32 +62,11 @@
             {
                 "name": "token",
                 "type": "felt"
-            },
-            {
-                "name": "order_type",
-                "type": "felt"
             }
         ],
         "keys": [],
         "name": "order_created",
         "type": "event"
-    },
-    {
-        "inputs": [
-            {
-                "name": "order_id",
-                "type": "felt"
-            }
-        ],
-        "name": "get_price",
-        "outputs": [
-            {
-                "name": "price",
-                "type": "felt"
-            }
-        ],
-        "stateMutability": "view",
-        "type": "function"
     },
     {
         "inputs": [
@@ -151,10 +125,6 @@
             {
                 "name": "token",
                 "type": "felt"
-            },
-            {
-                "name": "order_type",
-                "type": "felt"
             }
         ],
         "name": "create_order",
@@ -169,6 +139,17 @@
             }
         ],
         "name": "execute_order",
+        "outputs": [],
+        "type": "function"
+    },
+    {
+        "inputs": [
+            {
+                "name": "order_id",
+                "type": "felt"
+            }
+        ],
+        "name": "withdraw",
         "outputs": [],
         "type": "function"
     }
