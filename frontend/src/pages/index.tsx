@@ -238,8 +238,8 @@ const Home: NextPage = () => {
                       variant="subtle"
                       colorScheme="teal"
                     >
-                      <TagLeftIcon boxSize="12px" as={MdInfoOutline} />
-                      <TagLabel>1 STARK = {priceB / priceA} ETH</TagLabel>
+                      <TagLeftIcon as={MdInfoOutline} />
+                      <TagLabel>1 ETH = {priceA / priceB} STARK</TagLabel>
                     </Tag>
                     <Button
                       hidden={approved}
@@ -313,8 +313,8 @@ const Home: NextPage = () => {
                       variant="subtle"
                       colorScheme="teal"
                     >
-                      <TagLeftIcon boxSize="12px" as={MdInfoOutline} />
-                      <TagLabel>1 STARK = {priceB / priceA} ETH</TagLabel>
+                      <TagLeftIcon as={MdInfoOutline} />
+                      <TagLabel>1 ETH = {priceA / priceB} STARK</TagLabel>
                     </Tag>
                     <Text>Limit Price</Text>
                     <HStack>
