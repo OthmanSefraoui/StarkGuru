@@ -38,6 +38,7 @@ import { useStarknetCall } from '@starknet-react/core';
 import { bnToUint256, uint256ToBN } from 'starknet/dist/utils/uint256';
 import {
   useAMMContract,
+  useLimitOrderContract,
   useTokenAContract,
   useTokenBContract,
 } from '~/hooks/contracts';
@@ -48,12 +49,13 @@ const Home: NextPage = () => {
 
   //Limit
   //Test
-  const [sell, setSell] = React.useState(0);
-  const [limit, setLimit] = useState(0);
+  const [sell, setSell] = React.useState('');
+  const [limitPrice, setLimit] = useState('');
   const [showLimit, setShowLimit] = useState(false);
   const [showSwap, setShowSwap] = useState(false);
 
   const amm = useAMMContract();
+  const limitOrder = useLimitOrderContract();
   const tokenA = useTokenAContract();
   const tokenB = useTokenBContract();
 
@@ -67,31 +69,43 @@ const Home: NextPage = () => {
     method: 'swap',
   });
 
+  const putLimitOrder = useStarknetInvoke({
+    contract: limitOrder.contract,
+    method: 'create_order',
+  });
+
   const tokenAddressAsString: string = hexToDecimalString(
     tokenA.contract?.address || ''
   );
 
-  const onApproveTx = useCallback(() => {
+  const onApproveTx = () => {
     approveTx.reset();
     const spender = amm.contract?.address;
-    // const amount = bnToUint256(Number.parseInt(sell) * 1000000000000000000);
-    const amount = bnToUint256('10000000000000000000');
+    const felt = Number.parseInt(sell) * 1000000000000000000;
+    const amount = bnToUint256(felt.toString());
     approveTx.invoke({ args: [spender, amount] });
     setShowSwap(true);
-  }, []);
+  };
 
-  const onSwapTokens = useCallback(() => {
+  const onSwapTokens = () => {
     swap.reset();
-    const poolNb = 1;
-    const amount = '10000000000000000000';
+    const poolId = 1;
+    const felt = Number.parseInt(sell) * 1000000000000000000;
+    const amount = felt.toString();
     const token = tokenAddressAsString;
-    swap.invoke({ args: [poolNb, amount, token] });
+    swap.invoke({ args: [poolId, amount, token] });
     setShowSwap(false);
-  }, []);
+  };
 
-  function putLimitOrder() {
-    setShowLimit(true);
-  }
+  const onPutLimitOrder = () => {
+    swap.reset();
+    const poolId = 1;
+    const price = (Number.parseInt(limitPrice) * 1000000000000000000).toString;
+    const amount = (Number.parseInt(sell) * 1000000000000000000).toString;
+    const token = tokenAddressAsString;
+    swap.invoke({ args: [poolId, price, amount, token] });
+    setShowSwap(false);
+  };
 
   function cancelCurrentOrder() {
     //TODO
@@ -300,7 +314,16 @@ const Home: NextPage = () => {
                       </Tag>
                     </HStack>
                     <Button
-                      onClick={putLimitOrder}
+                      hidden={showSwap}
+                      onClick={onApproveTx}
+                      colorScheme="teal"
+                      size="lg"
+                    >
+                      Approve
+                    </Button>
+                    <Button
+                      onClick={onPutLimitOrder}
+                      hidden={!showLimit || approveTx.loading}
                       colorScheme="teal"
                       size="lg"
                     >
@@ -354,7 +377,7 @@ const Home: NextPage = () => {
                       </Tag>
                     </HStack>
                     <HStack>
-                      <Text>Limit Price: {limit}</Text>
+                      <Text>Limit Price: {limitPrice}</Text>
                       <Tag size="lg" colorScheme="teal" borderRadius="full">
                         <Avatar
                           src="/ether.png"
