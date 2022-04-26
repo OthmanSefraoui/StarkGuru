@@ -48,7 +48,7 @@ const Home: NextPage = () => {
 
   //Limit
   //Test
-  const [sell, setSell] = React.useState('');
+  const [sell, setSell] = React.useState(0);
   const [limit, setLimit] = useState('');
   const [showLimit, setShowLimit] = useState(false);
   const [showSwap, setShowSwap] = useState(false);
