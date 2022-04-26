@@ -25,7 +25,7 @@ export function useAMMContract() {
   return useContract({
     abi: AMMAbi as Abi,
     address:
-      '0x06d997027507576cc87b10c2ed414aba776c891b57313d64afa69f12d1fa1f42',
+      '0x01427bbdec8eb19861e7a989f15af200405fc9264ad655fa57f145a51922d54f',
   });
 }
 
