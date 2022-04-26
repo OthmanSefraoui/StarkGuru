@@ -9,7 +9,7 @@ import {
   HStack,
   Divider,
   Spacer,
-  TagLeftIcon
+  TagLeftIcon,
 } from '@chakra-ui/react';
 import {
   Tabs,
@@ -28,7 +28,7 @@ import {
   InjectedConnector,
   useStarknetInvoke,
 } from '@starknet-react/core';
-import { MdAccountBalanceWallet, MdInfoOutline  } from 'react-icons/md';
+import { MdAccountBalanceWallet, MdInfoOutline } from 'react-icons/md';
 import { SP } from 'next/dist/shared/lib/utils';
 import { useCallback, useState } from 'react';
 // import { Tag, Avatar, Text, TagLabel, NumberInput, NumberInputField, HStack, Stack, Spacer } from '@chakra-ui/react'
@@ -99,12 +99,14 @@ const Home: NextPage = () => {
   };
 
   const onPutLimitOrder = () => {
-    swap.reset();
+    putLimitOrder.reset();
     const poolId = 1;
-    const price = (Number.parseInt(limitPrice) * 1000000000000000000).toString;
-    const amount = (Number.parseInt(sell) * 1000000000000000000).toString;
+    const price = (
+      Number.parseInt(limitPrice) * 1000000000000000000
+    ).toString();
+    const amount = (Number.parseInt(sell) * 1000000000000000000).toString();
     const token = tokenAddressAsString;
-    swap.invoke({ args: [poolId, price, amount, token] });
+    putLimitOrder.invoke({ args: [poolId, price, amount, token] });
     setApproved(false);
   };
 
@@ -230,10 +232,15 @@ const Home: NextPage = () => {
                       <Spacer />
                       <TokenBBalance />
                     </HStack>
-                      <Tag size={"lg"} key={"1"} variant='subtle' colorScheme='teal'>
-                        <TagLeftIcon boxSize='12px' as={MdInfoOutline} />
-                        <TagLabel>1 STARK = {priceB / priceA} ETH</TagLabel>
-                      </Tag>
+                    <Tag
+                      size={'lg'}
+                      key={'1'}
+                      variant="subtle"
+                      colorScheme="teal"
+                    >
+                      <TagLeftIcon boxSize="12px" as={MdInfoOutline} />
+                      <TagLabel>1 STARK = {priceB / priceA} ETH</TagLabel>
+                    </Tag>
                     <Button
                       hidden={approved}
                       onClick={onApproveTx}
@@ -300,10 +307,15 @@ const Home: NextPage = () => {
                         <TokenBBalance />
                       </HStack>
                     </Stack>
-                      <Tag size={"lg"} key={"1"} variant='subtle' colorScheme='teal'>
-                        <TagLeftIcon boxSize='12px' as={MdInfoOutline} />
-                        <TagLabel>1 STARK = {priceB / priceA} ETH</TagLabel>
-                      </Tag>
+                    <Tag
+                      size={'lg'}
+                      key={'1'}
+                      variant="subtle"
+                      colorScheme="teal"
+                    >
+                      <TagLeftIcon boxSize="12px" as={MdInfoOutline} />
+                      <TagLabel>1 STARK = {priceB / priceA} ETH</TagLabel>
+                    </Tag>
                     <Text>Limit Price</Text>
                     <HStack>
                       <NumberInput defaultValue={0.0} size="lg" width={400}>
@@ -313,7 +325,7 @@ const Home: NextPage = () => {
                       </NumberInput>
                       <Tag size="lg" colorScheme="teal" borderRadius="full">
                         <Avatar
-                            src="/StarkNet-Icon.png"
+                          src="/StarkNet-Icon.png"
                           size="xs"
                           name="stark"
                           ml={-1}
@@ -338,6 +350,7 @@ const Home: NextPage = () => {
                     >
                       Put Limit Order
                     </Button>
+                    {putLimitOrder.error && <p>Error: {putLimitOrder.error}</p>}
                   </Stack>
                 </TabPanel>
               </TabPanels>
