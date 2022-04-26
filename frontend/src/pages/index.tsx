@@ -52,7 +52,7 @@ const Home: NextPage = () => {
   const [sell, setSell] = React.useState('');
   const [limitPrice, setLimit] = useState('');
   const [showLimit, setShowLimit] = useState(false);
-  const [showSwap, setShowSwap] = useState(false);
+  const [approved, setApproved] = useState(false);
 
   const amm = useAMMContract();
   const limitOrder = useLimitOrderContract();
@@ -84,7 +84,7 @@ const Home: NextPage = () => {
     const felt = Number.parseInt(sell) * 1000000000000000000;
     const amount = bnToUint256(felt.toString());
     approveTx.invoke({ args: [spender, amount] });
-    setShowSwap(true);
+    setApproved(true);
   };
 
   const onSwapTokens = () => {
@@ -94,7 +94,7 @@ const Home: NextPage = () => {
     const amount = felt.toString();
     const token = tokenAddressAsString;
     swap.invoke({ args: [poolId, amount, token] });
-    setShowSwap(false);
+    setApproved(false);
   };
 
   const onPutLimitOrder = () => {
@@ -104,7 +104,7 @@ const Home: NextPage = () => {
     const amount = (Number.parseInt(sell) * 1000000000000000000).toString;
     const token = tokenAddressAsString;
     swap.invoke({ args: [poolId, price, amount, token] });
-    setShowSwap(false);
+    setApproved(false);
   };
 
   function cancelCurrentOrder() {
@@ -205,7 +205,6 @@ const Home: NextPage = () => {
                       </Tag>
                     </HStack>
                     <HStack>
-                      <Text color='gray.500'>${priceA}</Text>
                       <Spacer />
                       <TokenABalance />
                     </HStack>
@@ -227,12 +226,11 @@ const Home: NextPage = () => {
                       </Tag>
                     </HStack>
                     <HStack>
-                      <Text color='gray.500'>${priceB}</Text>
                       <Spacer />
                       <TokenBBalance />
                     </HStack>
                     <Button
-                      hidden={showSwap}
+                      hidden={approved}
                       onClick={onApproveTx}
                       colorScheme="teal"
                       size="lg"
@@ -241,7 +239,7 @@ const Home: NextPage = () => {
                     </Button>
                     <Button
                       onClick={onSwapTokens}
-                      hidden={!showSwap || approveTx.loading}
+                      hidden={!approved}
                       colorScheme="teal"
                       size="lg"
                     >
@@ -272,7 +270,6 @@ const Home: NextPage = () => {
                         </Tag>
                       </HStack>
                       <HStack>
-                        <Text color='gray.500'>${priceA}</Text>
                         <Spacer />
                         <TokenABalance />
                       </HStack>
@@ -294,7 +291,6 @@ const Home: NextPage = () => {
                         </Tag>
                       </HStack>
                       <HStack>
-                        <Text color='gray.500'>${priceB}</Text>
                         <Spacer />
                         <TokenBBalance />
                       </HStack>
@@ -308,17 +304,17 @@ const Home: NextPage = () => {
                       </NumberInput>
                       <Tag size="lg" colorScheme="teal" borderRadius="full">
                         <Avatar
-                          src="/StarkNet-Icon.png"
+                          src="/ether.png"
                           size="xs"
-                          name="stark"
+                          name="eth"
                           ml={-1}
                           mr={2}
                         />
-                        <TagLabel>STARK</TagLabel>
+                        <TagLabel>ETH</TagLabel>
                       </Tag>
                     </HStack>
                     <Button
-                      hidden={showSwap}
+                      hidden={approved}
                       onClick={onApproveTx}
                       colorScheme="teal"
                       size="lg"
@@ -327,7 +323,7 @@ const Home: NextPage = () => {
                     </Button>
                     <Button
                       onClick={onPutLimitOrder}
-                      hidden={!showLimit || approveTx.loading}
+                      hidden={!approved}
                       colorScheme="teal"
                       size="lg"
                     >
@@ -384,13 +380,13 @@ const Home: NextPage = () => {
                       <Text>Limit Price: {limitPrice}</Text>
                       <Tag size="lg" colorScheme="teal" borderRadius="full">
                         <Avatar
-                            src="/StarkNet-Icon.png"
+                          src="/ether.png"
                           size="xs"
-                          name="stark"
+                          name="eth"
                           ml={-1}
                           mr={2}
                         />
-                        <TagLabel>STARK</TagLabel>
+                        <TagLabel>ETH</TagLabel>
                       </Tag>
                     </HStack>
                     <HStack>
