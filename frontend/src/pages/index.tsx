@@ -9,6 +9,7 @@ import {
   HStack,
   Divider,
   Spacer,
+  TagLeftIcon
 } from '@chakra-ui/react';
 import {
   Tabs,
@@ -27,7 +28,7 @@ import {
   InjectedConnector,
   useStarknetInvoke,
 } from '@starknet-react/core';
-import { MdAccountBalanceWallet } from 'react-icons/md';
+import { MdAccountBalanceWallet, MdInfoOutline  } from 'react-icons/md';
 import { SP } from 'next/dist/shared/lib/utils';
 import { useCallback, useState } from 'react';
 // import { Tag, Avatar, Text, TagLabel, NumberInput, NumberInputField, HStack, Stack, Spacer } from '@chakra-ui/react'
@@ -231,6 +232,10 @@ const Home: NextPage = () => {
                       <Spacer />
                       <TokenBBalance />
                     </HStack>
+                      <Tag size={"lg"} key={"1"} variant='subtle' colorScheme='teal'>
+                        <TagLeftIcon boxSize='12px' as={MdInfoOutline} />
+                        <TagLabel>1 STARK = {priceB / priceA} ETH</TagLabel>
+                      </Tag>
                     <Button
                       hidden={showSwap}
                       onClick={onApproveTx}
@@ -299,6 +304,10 @@ const Home: NextPage = () => {
                         <TokenBBalance />
                       </HStack>
                     </Stack>
+                      <Tag size={"lg"} key={"1"} variant='subtle' colorScheme='teal'>
+                        <TagLeftIcon boxSize='12px' as={MdInfoOutline} />
+                        <TagLabel>1 STARK = {priceB / priceA} ETH</TagLabel>
+                      </Tag>
                     <Text>Limit Price</Text>
                     <HStack>
                       <NumberInput defaultValue={0.0} size="lg" width={400}>
