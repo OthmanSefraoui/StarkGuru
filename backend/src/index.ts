@@ -1,10 +1,10 @@
 import { CronJob } from 'cron';
-import log4js from 'log4js';
+import * as log4js from 'log4js';
 
 import Starknet from './lib/Starknet';
 
-const config = require('./config.json');
-const { privateKey } = require('./privateKey.json');
+const config = require('../config.json');
+const { privateKey } = require('../privateKey.json');
 
 const logger = log4js.getLogger();
 logger.level = 'info';
