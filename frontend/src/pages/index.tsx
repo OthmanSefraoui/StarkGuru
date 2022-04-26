@@ -205,6 +205,7 @@ const Home: NextPage = () => {
                       </Tag>
                     </HStack>
                     <HStack>
+                      <Text color='gray.500'>${priceA}</Text>
                       <Spacer />
                       <TokenABalance />
                     </HStack>
@@ -226,6 +227,7 @@ const Home: NextPage = () => {
                       </Tag>
                     </HStack>
                     <HStack>
+                      <Text color='gray.500'>${priceB}</Text>
                       <Spacer />
                       <TokenBBalance />
                     </HStack>
@@ -270,6 +272,7 @@ const Home: NextPage = () => {
                         </Tag>
                       </HStack>
                       <HStack>
+                        <Text color='gray.500'>${priceA}</Text>
                         <Spacer />
                         <TokenABalance />
                       </HStack>
