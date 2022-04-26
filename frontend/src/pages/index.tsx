@@ -46,6 +46,7 @@ const Home: NextPage = () => {
   const { account, connect } = useStarknet();
 
   //Limit
+  //Test
   const [sell, setSell] = React.useState('');
   const [limit, setLimit] = useState('');
   const [showLimit, setShowLimit] = useState(false);
@@ -58,6 +59,8 @@ const Home: NextPage = () => {
     contract: ammContract,
     method: 'swap',
   });
+
+  console.log("tokenAAddress");
 
   const onSwapTokens = useCallback(() => {
     reset();

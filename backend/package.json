@@ -24,6 +24,7 @@
   "dependencies": {
     "bn.js": "^5.2.0",
     "cron": "^1.8.2",
+    "log4js": "^6.4.6",
     "starknet": "^3.10.1"
   }
 }

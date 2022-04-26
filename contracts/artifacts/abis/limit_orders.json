@@ -149,7 +149,7 @@
                 "type": "felt"
             }
         ],
-        "name": "withdraw",
+        "name": "cancel_order",
         "outputs": [],
         "type": "function"
     }
