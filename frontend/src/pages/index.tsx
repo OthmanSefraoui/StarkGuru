@@ -157,7 +157,7 @@ const Home: NextPage = () => {
       {account == null ? (
         <Container centerContent p={8}>
           <Button
-            colorScheme={'orange'}
+            colorScheme={'teal'}
             padding={8}
             size={'lg'}
             rightIcon={<MdAccountBalanceWallet />}
