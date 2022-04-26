@@ -47,6 +47,7 @@ import { hexToDecimalString } from 'starknet/dist/utils/number';
 
 const Home: NextPage = () => {
   const { account, connect } = useStarknet();
+  const POOL_ID = 1;
 
   //Limit
   //Test
@@ -88,9 +89,18 @@ const Home: NextPage = () => {
     setApproved(true);
   };
 
+  const onApproveLimitOrderTx = () => {
+    approveTx.reset();
+    const spender = limitOrder.contract?.address;
+    const felt = Number.parseInt(sell) * 1000000000000000000;
+    const amount = bnToUint256(felt.toString());
+    approveTx.invoke({ args: [spender, amount] });
+    setApproved(true);
+  };
+
   const onSwapTokens = () => {
     swap.reset();
-    const poolId = 1;
+    const poolId = POOL_ID;
     const felt = Number.parseInt(sell) * 1000000000000000000;
     const amount = felt.toString();
     const token = tokenAddressAsString;
@@ -100,14 +110,15 @@ const Home: NextPage = () => {
 
   const onPutLimitOrder = () => {
     putLimitOrder.reset();
-    const poolId = 1;
+    const poolId = POOL_ID;
     const price = (
-      Number.parseInt(limitPrice) * 1000000000000000000
+      Number.parseFloat(limitPrice) * 1000000000000000000
     ).toString();
     const amount = (Number.parseInt(sell) * 1000000000000000000).toString();
     const token = tokenAddressAsString;
     putLimitOrder.invoke({ args: [poolId, price, amount, token] });
     setApproved(false);
+    setShowLimit(true);
   };
 
   function cancelCurrentOrder() {
@@ -118,7 +129,7 @@ const Home: NextPage = () => {
   const resp1 = useStarknetCall({
     contract: amm.contract,
     method: 'get_price',
-    args: [1, tokenA.contract?.address],
+    args: [POOL_ID, tokenA.contract?.address],
   });
 
   const priceA = useMemo(() => {
@@ -138,7 +149,7 @@ const Home: NextPage = () => {
   const resp2 = useStarknetCall({
     contract: amm.contract,
     method: 'get_price',
-    args: [1, tokenB.contract?.address],
+    args: [POOL_ID, tokenB.contract?.address],
   });
 
   const priceB = useMemo(() => {
@@ -336,7 +347,7 @@ const Home: NextPage = () => {
                     </HStack>
                     <Button
                       hidden={approved}
-                      onClick={onApproveTx}
+                      onClick={onApproveLimitOrderTx}
                       colorScheme="teal"
                       size="lg"
                     >
@@ -402,9 +413,9 @@ const Home: NextPage = () => {
                       <Text>Limit Price: {limitPrice}</Text>
                       <Tag size="lg" colorScheme="teal" borderRadius="full">
                         <Avatar
-                          src="/ether.png"
+                          src="/StarkNet-Icon.png"
                           size="xs"
-                          name="eth"
+                          name="stark"
                           ml={-1}
                           mr={2}
                         />
