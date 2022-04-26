@@ -1,5 +1,3 @@
-import fs from 'fs';
-
 import { CronJob } from 'cron';
 import log4js from 'log4js';
 

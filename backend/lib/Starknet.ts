@@ -1,18 +1,17 @@
 import BN from 'bn.js';
+import log4js from 'log4js';
 import { ec, Provider, Signer, Contract, Account } from 'starknet';
 
 const compiledAmm = require('../../contracts/artifacts/amm.json');
 const compiledOrders = require('../../contracts/artifacts/limit_orders.json');
 
 export default class Starknet {
-  provider: Provider;
-  signer: Signer;
-  account: Account;
+  logger: log4js.Logger;
   orders: any[];
   lastOrderFetched: number;
+  provider: Provider;
   ammContract: Contract;
   ordersContract: Contract;
-  logger: any;
 
   constructor(nodeUrl: string, logger: any, config: any, privateKey: string) {
     const { accountAddress, ammAddress, ordersAddress } = config;
@@ -28,14 +27,14 @@ export default class Starknet {
     });
 
     const recover = ec.ec.keyFromPrivate(privateKey);
-    this.signer = new Signer(recover);
-    this.account = new Account(this.provider, accountAddress, this.signer);
+    const signer = new Signer(recover);
+    const account = new Account(this.provider, accountAddress, signer);
 
-    this.ammContract = new Contract(compiledAmm.abi, ammAddress, this.account);
+    this.ammContract = new Contract(compiledAmm.abi, ammAddress, account);
     this.ordersContract = new Contract(
       compiledOrders.abi,
       ordersAddress,
-      this.account,
+      account,
     );
   }
 
