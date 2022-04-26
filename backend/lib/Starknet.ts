@@ -1,15 +1,8 @@
 import BN from 'bn.js';
 import { ec, Provider, Signer, Contract, Account } from 'starknet';
 
-const privKey =
-  '242ae51856e2ddcf0b24d471f6277947439fa57babf41f246cc76b0ab5a98e';
 const compiledAmm = require('../../contracts/artifacts/amm.json');
 const compiledOrders = require('../../contracts/artifacts/limit_orders.json');
-const {
-  account: accountAddress,
-  amm: ammAddress,
-  orders: ordersAddress,
-} = require('../address.json');
 
 export default class Starknet {
   provider: Provider;
@@ -21,7 +14,9 @@ export default class Starknet {
   ordersContract: Contract;
   logger: any;
 
-  constructor(nodeUrl: string, logger: any) {
+  constructor(nodeUrl: string, logger: any, config: any, privateKey: string) {
+    const { accountAddress, ammAddress, ordersAddress } = config;
+
     this.logger = logger;
     this.orders = [];
     this.lastOrderFetched = 0;
@@ -32,7 +27,7 @@ export default class Starknet {
       gatewayUrl: 'gateway',
     });
 
-    const recover = ec.ec.keyFromPrivate(privKey);
+    const recover = ec.ec.keyFromPrivate(privateKey);
     this.signer = new Signer(recover);
     this.account = new Account(this.provider, accountAddress, this.signer);
 

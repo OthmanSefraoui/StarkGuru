@@ -2,12 +2,21 @@ import fs from 'fs';
 
 import { CronJob } from 'cron';
 import log4js from 'log4js';
-const logger = log4js.getLogger();
-logger.level = 'info';
 
 import Starknet from './lib/Starknet';
 
-const starknet = new Starknet('https://hackathon-3.starknet.io', logger);
+const config = require('./config.json');
+const { privateKey } = require('./privateKey.json');
+
+const logger = log4js.getLogger();
+logger.level = 'info';
+
+const starknet = new Starknet(
+  'https://hackathon-3.starknet.io',
+  logger,
+  config,
+  privateKey,
+);
 
 let collecting = false;
 
