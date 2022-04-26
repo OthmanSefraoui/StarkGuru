@@ -25,7 +25,7 @@ export function useAMMContract() {
   return useContract({
     abi: AMMAbi as Abi,
     address:
-      '0x01427bbdec8eb19861e7a989f15af200405fc9264ad655fa57f145a51922d54f',
+      '0x059a88de6e471b106cde978478817f432ffb475876dbdff0a36f134f9dc8f19b',
   });
 }
 
@@ -33,6 +33,6 @@ export function useLimitOrderContract() {
   return useContract({
     abi: LimitOrderAbi as Abi,
     address:
-      '0x042a56ea3d20ed1441bfc8de850144cfa048bb03c36e1885efa06e2b7319048f',
+      '0x0411e15f2ac7d0b9505e6437a0d315a8aac2f23127d6a0f4df9e3c0a7dd411dc',
   });
 }
