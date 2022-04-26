@@ -33,6 +33,6 @@ export function useLimitOrderContract() {
   return useContract({
     abi: LimitOrderAbi as Abi,
     address:
-      '0x0475d0afcd9b763234e1cabb8830dc8af3eca774966c1054dce8a31d3b124a8c',
+      '0x042a56ea3d20ed1441bfc8de850144cfa048bb03c36e1885efa06e2b7319048f',
   });
 }
