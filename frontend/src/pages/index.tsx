@@ -41,6 +41,7 @@ import {
   useTokenAContract,
   useTokenBContract,
 } from '~/hooks/contracts';
+import { hexToDecimalString } from 'starknet/dist/utils/number';
 
 const Home: NextPage = () => {
   const { account, connect } = useStarknet();
@@ -50,24 +51,42 @@ const Home: NextPage = () => {
   const [sell, setSell] = React.useState('');
   const [limit, setLimit] = useState('');
   const [showLimit, setShowLimit] = useState(false);
+  const [showSwap, setShowSwap] = useState(false);
 
-  const ammContract = useAMMContract().contract;
-  const tokenAAddress = useTokenAContract().contract?.address;
-  const tokenBAddress = useTokenBContract().contract?.address;
+  const amm = useAMMContract();
+  const tokenA = useTokenAContract();
+  const tokenB = useTokenBContract();
 
-  const { loading, error, reset, invoke } = useStarknetInvoke({
-    contract: ammContract,
+  const approveTx = useStarknetInvoke({
+    contract: useTokenAContract().contract,
+    method: 'approve',
+  });
+
+  const swap = useStarknetInvoke({
+    contract: amm.contract,
     method: 'swap',
   });
 
-  console.log("tokenAAddress");
+  const tokenAddressAsString: string = hexToDecimalString(
+    tokenA.contract?.address || ''
+  );
+
+  const onApproveTx = useCallback(() => {
+    approveTx.reset();
+    const spender = amm.contract?.address;
+    // const amount = bnToUint256(Number.parseInt(sell) * 1000000000000000000);
+    const amount = bnToUint256('10000000000000000000');
+    approveTx.invoke({ args: [spender, amount] });
+    setShowSwap(true);
+  }, []);
 
   const onSwapTokens = useCallback(() => {
-    reset();
+    swap.reset();
     const poolNb = 1;
-    const token = tokenAAddress;
-    const amountToUint = bnToUint256(sell);
-    invoke({ args: [poolNb, token, amountToUint] });
+    const amount = '10000000000000000000';
+    const token = tokenAddressAsString;
+    swap.invoke({ args: [poolNb, amount, token] });
+    setShowSwap(false);
   }, []);
 
   function putLimitOrder() {
@@ -80,9 +99,9 @@ const Home: NextPage = () => {
 
   //Price A
   const resp1 = useStarknetCall({
-    contract: ammContract,
+    contract: amm.contract,
     method: 'get_price',
-    args: [1, tokenAAddress],
+    args: [1, tokenA.contract?.address],
   });
 
   const priceA = useMemo(() => {
@@ -100,9 +119,9 @@ const Home: NextPage = () => {
 
   //Price B
   const resp2 = useStarknetCall({
-    contract: ammContract,
+    contract: amm.contract,
     method: 'get_price',
-    args: [1, tokenBAddress],
+    args: [1, tokenB.contract?.address],
   });
 
   const priceB = useMemo(() => {
@@ -196,9 +215,23 @@ const Home: NextPage = () => {
                       <Spacer />
                       <TokenBBalance />
                     </HStack>
-                    <Button onClick={onSwapTokens} colorScheme="teal" size="lg">
+                    <Button
+                      hidden={showSwap}
+                      onClick={onApproveTx}
+                      colorScheme="teal"
+                      size="lg"
+                    >
+                      Approve
+                    </Button>
+                    <Button
+                      onClick={onSwapTokens}
+                      hidden={!showSwap || approveTx.loading}
+                      colorScheme="teal"
+                      size="lg"
+                    >
                       Swap Tokens
                     </Button>
+                    {swap.error && <p>Error: {swap.error}</p>}
                   </Stack>
                 </TabPanel>
                 <TabPanel>
