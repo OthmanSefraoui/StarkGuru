@@ -313,13 +313,13 @@ const Home: NextPage = () => {
                       </NumberInput>
                       <Tag size="lg" colorScheme="teal" borderRadius="full">
                         <Avatar
-                          src="/ether.png"
+                            src="/StarkNet-Icon.png"
                           size="xs"
-                          name="eth"
+                          name="stark"
                           ml={-1}
                           mr={2}
                         />
-                        <TagLabel>ETH</TagLabel>
+                        <TagLabel>STARK</TagLabel>
                       </Tag>
                     </HStack>
                     <Button
