@@ -3,13 +3,9 @@ import fs from 'fs';
 import { CronJob } from 'cron';
 import log4js from 'log4js';
 const logger = log4js.getLogger();
-logger.level = 'debug';
+logger.level = 'info';
 
 import Starknet from './lib/Starknet';
-
-// const keyPair = JSON.parse(
-//   fs.readFileSync('./key-pair.json').toString('ascii'),
-// );
 
 const starknet = new Starknet('https://hackathon-3.starknet.io', logger);
 
@@ -21,7 +17,7 @@ const job = new CronJob(
     if (collecting) return;
     collecting = true;
     try {
-      // await starknet.checkStatuses();
+      await starknet.checkStatuses();
       await starknet.collectOrders();
       await starknet.checkPrices();
     } catch (err) {

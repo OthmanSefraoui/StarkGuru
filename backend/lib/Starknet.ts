@@ -1,6 +1,5 @@
-import fs from 'fs';
 import BN from 'bn.js';
-import { ec, Provider, Signer, Contract, Account, number } from 'starknet';
+import { ec, Provider, Signer, Contract, Account } from 'starknet';
 
 const privKey =
   '242ae51856e2ddcf0b24d471f6277947439fa57babf41f246cc76b0ab5a98e';
@@ -26,6 +25,7 @@ export default class Starknet {
     this.logger = logger;
     this.orders = [];
     this.lastOrderFetched = 0;
+
     this.provider = new Provider({
       baseUrl: nodeUrl,
       feederGatewayUrl: 'feeder_gateway',
@@ -33,7 +33,6 @@ export default class Starknet {
     });
 
     const recover = ec.ec.keyFromPrivate(privKey);
-
     this.signer = new Signer(recover);
     this.account = new Account(this.provider, accountAddress, this.signer);
 
@@ -58,9 +57,9 @@ export default class Starknet {
       i += 1
     ) {
       const order = await this.ordersContract.get_order(i);
-      if (order[0].executed.eq(new BN(0))) {
+      if (order[0].order_status.eq(new BN(0))) {
         this.orders.push(order[0]);
-        console.log(`Order ${i} added in the pool`);
+        this.logger.info(`Order ${i} added in the pool`);
       }
     }
 
@@ -73,21 +72,21 @@ export default class Starknet {
       const order = await this.ordersContract.get_order(
         this.orders[i].order_id,
       );
-      this.logger.debug(order[0]);
 
-      if (!order[0].status.eq(new BN(0))) {
-        this.logger.info(`remove order ${order[0].order_id}`);
+      if (!order[0].order_status.eq(new BN(0))) {
+        this.logger.info(`Remove order ${order[0].order_id} from pool`);
+        this.orders.splice(i, 1);
       }
     }
   }
 
   async checkPrices() {
     for (let i = 0; i < this.orders.length; i += 1) {
-      await this.checkPrice(this.orders[i], i);
+      await this.checkPrice(this.orders[i]);
     }
   }
 
-  async checkPrice(order: any, position: number) {
+  async checkPrice(order: any) {
     this.logger.info(
       `Checking the price for order ${order.order_id.toString()}`,
     );
@@ -99,7 +98,6 @@ export default class Starknet {
 
     if (price[0].lte(upperBound) && price[0].gte(lowerBound)) {
       await this.executeOrder(order.order_id);
-      this.orders.splice(position, 1);
     }
   }
 
