@@ -3,8 +3,8 @@ import * as log4js from 'log4js';
 
 import Starknet from './lib/Starknet';
 
-const config = require('../config.json');
-const { privateKey } = require('../privateKey.json');
+import config from './config.json';
+import { privateKey } from './privateKey.json';
 
 const logger = log4js.getLogger();
 logger.level = 'info';

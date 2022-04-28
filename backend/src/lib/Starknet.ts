@@ -1,12 +1,12 @@
 import { BN } from 'bn.js';
-import * as log4js from 'log4js';
+import { Logger } from 'log4js';
 import { ec, Provider, Signer, Contract, Account } from 'starknet';
 
 const compiledAmm = require('../../../contracts/artifacts/amm.json');
 const compiledOrders = require('../../../contracts/artifacts/limit_orders.json');
 
 export default class Starknet {
-  logger: log4js.Logger;
+  logger: Logger;
   orders: any[];
   lastOrderFetched: number;
   provider: Provider;

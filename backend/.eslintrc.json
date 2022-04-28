@@ -12,6 +12,7 @@
   "plugins": ["@typescript-eslint"],
   "rules": {
     "lines-between-class-members": 0,
-    "no-await-in-loop": 0
+    "no-await-in-loop": 0,
+    "newline-after-import": 0
   }
 }
