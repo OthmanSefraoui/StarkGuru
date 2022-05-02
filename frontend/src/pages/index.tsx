@@ -29,14 +29,12 @@ import {
   useStarknetInvoke,
 } from '@starknet-react/core';
 import { MdAccountBalanceWallet, MdInfoOutline } from 'react-icons/md';
-import { SP } from 'next/dist/shared/lib/utils';
-import { useCallback, useState } from 'react';
+import { useState } from 'react';
 // import { Tag, Avatar, Text, TagLabel, NumberInput, NumberInputField, HStack, Stack, Spacer } from '@chakra-ui/react'
 import TokenABalance from 'Components/tokenABalance';
 import TokenBBalance from 'Components/tokenBBalance';
 import React, { useMemo } from 'react';
 import { useStarknetCall } from '@starknet-react/core';
-import { bnToUint256, uint256ToBN } from 'starknet/dist/utils/uint256';
 import {
   useAMMContract,
   useLimitOrderContract,
@@ -44,126 +42,169 @@ import {
   useTokenBContract,
 } from '~/hooks/contracts';
 import { hexToDecimalString } from 'starknet/dist/utils/number';
+import { Call } from 'starknet';
 
 const Home: NextPage = () => {
-  const { account, connect } = useStarknet();
+  const { account, connect, connectors } = useStarknet();
   const POOL_ID = 1;
 
   //Limit
   //Test
-  const [sell, setSell] = React.useState('');
+  const [sell, setSell] = useState('');
   const [limitPrice, setLimit] = useState('');
+  const [error, setError] = useState('');
   const [showLimit, setShowLimit] = useState(false);
-  const [approved, setApproved] = useState(false);
+  const userOrders: any[] = [];
 
   const amm = useAMMContract();
   const limitOrder = useLimitOrderContract();
   const tokenA = useTokenAContract();
   const tokenB = useTokenBContract();
 
-  const approveTx = useStarknetInvoke({
-    contract: useTokenAContract().contract,
-    method: 'approve',
-  });
+  const approveAndSwap = (withLimit?: boolean) => {
+    const account_ = connectors[0].account();
+    account_.then((account) => {
+      try {
+        const poolId = POOL_ID;
+        const amount =
+          sell == '' ? 0 : Number.parseFloat(sell) * 1000000000000000000;
+        const token: string = hexToDecimalString(
+          tokenA.contract?.address || ''
+        );
 
-  const swap = useStarknetInvoke({
-    contract: amm.contract,
-    method: 'swap',
-  });
+        let spender;
+        let swapCall: Call;
+        if (withLimit) {
+          spender = limitOrder.contract?.address;
+          const price = (
+            Number.parseFloat(limitPrice) * 1000000000000000000
+          ).toString();
+          swapCall = {
+            contractAddress: limitOrder.contract?.address || '',
+            entrypoint: 'create_order',
+            calldata: [poolId, price, amount.toString(), token],
+          };
+        } else {
+          spender = amm.contract?.address;
+          swapCall = {
+            contractAddress: amm.contract?.address || '',
+            entrypoint: 'swap',
+            calldata: [poolId, amount.toString(), token],
+          };
+        }
 
-  const putLimitOrder = useStarknetInvoke({
+        account
+          .execute([
+            {
+              contractAddress: tokenA.contract?.address || '',
+              entrypoint: 'approve',
+              calldata: [spender, amount.toString(), '0'],
+            },
+            swapCall,
+          ])
+          .then((resp) => {
+            if (withLimit) {
+              setShowLimit(true);
+            }
+          });
+      } catch (error: any) {
+        setError(error);
+      }
+    });
+  };
+
+  const onSwap = () => {
+    approveAndSwap();
+  };
+
+  const onPlaceOrderLimit = () => {
+    approveAndSwap(true);
+  };
+
+  // Cancel Order
+  const cancelOrder = useStarknetInvoke({
     contract: limitOrder.contract,
-    method: 'create_order',
+    method: 'cancel_order',
   });
 
-  const tokenAddressAsString: string = hexToDecimalString(
-    tokenA.contract?.address || ''
-  );
-
-  const onApproveTx = () => {
-    approveTx.reset();
-    const spender = amm.contract?.address;
-    const felt = Number.parseInt(sell) * 1000000000000000000;
-    const amount = bnToUint256(felt.toString());
-    approveTx.invoke({ args: [spender, amount] });
-    setApproved(true);
+  const onCancelOrder = () => {
+    cancelOrder.reset();
+    const order_id = '';
+    cancelOrder.invoke({ args: [order_id] });
   };
 
-  const onApproveLimitOrderTx = () => {
-    approveTx.reset();
-    const spender = limitOrder.contract?.address;
-    const felt = Number.parseInt(sell) * 1000000000000000000;
-    const amount = bnToUint256(felt.toString());
-    approveTx.invoke({ args: [spender, amount] });
-    setApproved(true);
-  };
-
-  const onSwapTokens = () => {
-    swap.reset();
-    const poolId = POOL_ID;
-    const felt = Number.parseInt(sell) * 1000000000000000000;
-    const amount = felt.toString();
-    const token = tokenAddressAsString;
-    swap.invoke({ args: [poolId, amount, token] });
-    setApproved(false);
-  };
-
-  const onPutLimitOrder = () => {
-    putLimitOrder.reset();
-    const poolId = POOL_ID;
-    const price = (
-      Number.parseFloat(limitPrice) * 1000000000000000000
-    ).toString();
-    const amount = (Number.parseInt(sell) * 1000000000000000000).toString();
-    const token = tokenAddressAsString;
-    putLimitOrder.invoke({ args: [poolId, price, amount, token] });
-    setApproved(false);
-    setShowLimit(true);
-  };
-
-  function cancelCurrentOrder() {
-    //TODO
-  }
-
-  //Price A
-  const resp1 = useStarknetCall({
+  // Price A
+  const tokenAPrice = useStarknetCall({
     contract: amm.contract,
     method: 'get_price',
     args: [POOL_ID, tokenA.contract?.address],
   });
 
   const priceA = useMemo(() => {
-    if (resp1.loading || !resp1.data?.length) {
-      return <div>Loading price</div>;
+    if (tokenAPrice.loading || !tokenAPrice.data?.length || tokenAPrice.error) {
+      return 0;
     }
 
-    if (resp1.error) {
-      return <div>Error: {resp1.error}</div>;
-    }
-
-    const price = resp1.data[0] / 1000000000000000000;
-    return price;
-  }, [resp1.data, resp1.loading, resp1.error]);
+    return tokenAPrice.data[0] / 1000000000000000000;
+  }, [tokenAPrice.data, tokenAPrice.loading, tokenAPrice.error]);
 
   //Price B
-  const resp2 = useStarknetCall({
+  const tokenBPrice = useStarknetCall({
     contract: amm.contract,
     method: 'get_price',
     args: [POOL_ID, tokenB.contract?.address],
   });
 
   const priceB = useMemo(() => {
-    if (resp2.loading || !resp2.data?.length) {
-      return <div>Loading price</div>;
+    if (tokenBPrice.loading || !tokenBPrice.data?.length || tokenBPrice.error) {
+      return 0;
     }
 
-    if (resp2.error) {
-      return <div>Error: {resp1.error}</div>;
+    return tokenBPrice.data[0] / 1000000000000000000;
+  }, [tokenBPrice.data, tokenBPrice.loading, tokenBPrice.error]);
+
+  const nbOrders = useStarknetCall({
+    contract: limitOrder.contract,
+    method: 'get_number_of_orders',
+    args: [],
+  });
+
+  const [orderId, setOrderId] = useState(0);
+
+  const order = useStarknetCall({
+    contract: limitOrder.contract,
+    method: 'get_order',
+    args: [orderId],
+  });
+
+  const getOrder = useMemo(() => {
+    if (order.loading || !order.data?.length || order.error) {
+      return 0;
     }
 
-    const price = resp2.data[0] / 1000000000000000000;
-    return price;
-  }, [resp2.data, resp2.loading, resp2.error]);
+    console.log('orderId:', orderId, 'order: ', order.data[0]);
+
+    return order.data[0];
+  }, [order.data, order.loading, order.error]);
+
+  const getOrders = useMemo(() => {
+    if (nbOrders.loading || !nbOrders.data?.length || nbOrders.error) {
+      return [];
+    }
+
+    const orders = [];
+
+    for (let i = 0; i < nbOrders.data[0].words; i++) {
+      setOrderId(i);
+      const order = getOrder;
+
+      orders.push(order);
+    }
+
+    userOrders.push(...orders);
+
+    return userOrders;
+  }, [nbOrders.data, nbOrders.loading, nbOrders.error]);
 
   return (
     <Container maxW="container.sm">
@@ -222,10 +263,25 @@ const Home: NextPage = () => {
                       <Spacer />
                       <TokenABalance />
                     </HStack>
+                    <HStack>
+                      <Text>
+                        {/* {userOrders.map((order) => {
+                          return order;
+                        })} */}
+                        Orders:{' '}
+                        {getOrders.map((order) => {
+                          return JSON.stringify(order);
+                        })}
+                      </Text>
+                    </HStack>
                     <Text>You buy</Text>
                     <HStack>
                       <Text size="xl" width={400}>
-                        {(sell * priceA) / priceB}
+                        {tokenAPrice.loading || tokenBPrice.loading
+                          ? 'Loading...'
+                          : (sell == ''
+                              ? 0
+                              : Number.parseFloat(sell) * priceA) / priceB}
                       </Text>
 
                       <Tag size="lg" colorScheme="teal" borderRadius="full">
@@ -252,23 +308,10 @@ const Home: NextPage = () => {
                       <TagLeftIcon as={MdInfoOutline} />
                       <TagLabel>1 ETH = {priceA / priceB} STARK</TagLabel>
                     </Tag>
-                    <Button
-                      hidden={approved}
-                      onClick={onApproveTx}
-                      colorScheme="teal"
-                      size="lg"
-                    >
-                      Approve
-                    </Button>
-                    <Button
-                      onClick={onSwapTokens}
-                      hidden={!approved}
-                      colorScheme="teal"
-                      size="lg"
-                    >
+                    <Button onClick={onSwap} colorScheme="teal" size="lg">
                       Swap Tokens
                     </Button>
-                    {swap.error && <p>Error: {swap.error}</p>}
+                    {error && <p>Error: {error}</p>}
                   </Stack>
                 </TabPanel>
                 <TabPanel>
@@ -299,7 +342,8 @@ const Home: NextPage = () => {
                       <Text>You buy</Text>
                       <HStack>
                         <Text size="xl" width={400}>
-                          {(sell * priceA) / priceB}
+                          {(sell == '' ? 0 : Number.parseFloat(sell) * priceA) /
+                            priceB}
                         </Text>
 
                         <Tag size="lg" colorScheme="teal" borderRadius="full">
@@ -346,22 +390,13 @@ const Home: NextPage = () => {
                       </Tag>
                     </HStack>
                     <Button
-                      hidden={approved}
-                      onClick={onApproveLimitOrderTx}
-                      colorScheme="teal"
-                      size="lg"
-                    >
-                      Approve
-                    </Button>
-                    <Button
-                      onClick={onPutLimitOrder}
-                      hidden={!approved}
+                      onClick={onPlaceOrderLimit}
                       colorScheme="teal"
                       size="lg"
                     >
                       Put Limit Order
                     </Button>
-                    {putLimitOrder.error && <p>Error: {putLimitOrder.error}</p>}
+                    {error && <p>Error: {error}</p>}
                   </Stack>
                 </TabPanel>
               </TabPanels>
@@ -397,7 +432,11 @@ const Home: NextPage = () => {
                       </Tag>
                     </HStack>
                     <HStack>
-                      <Text>You buy: {(sell * priceA) / priceB}</Text>
+                      <Text>
+                        You buy:{' '}
+                        {(sell == '' ? 0 : Number.parseFloat(sell) * priceA) /
+                          priceB}
+                      </Text>
                       <Tag size="lg" colorScheme="teal" borderRadius="full">
                         <Avatar
                           src="/StarkNet-Icon.png"
@@ -425,7 +464,7 @@ const Home: NextPage = () => {
                     <HStack>
                       <Spacer />
                       <Button
-                        onClick={cancelCurrentOrder}
+                        onClick={onCancelOrder}
                         colorScheme="teal"
                         size="lg"
                       >

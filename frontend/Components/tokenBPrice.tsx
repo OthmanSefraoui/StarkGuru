@@ -1,11 +1,9 @@
 import React, { useMemo } from 'react';
-import { useStarknet, useStarknetCall } from '@starknet-react/core';
-import { uint256ToBN } from 'starknet/dist/utils/uint256';
+import { useStarknetCall } from '@starknet-react/core';
 import { useAMMContract, useTokenBContract } from '~/hooks/contracts';
 import { Text } from '@chakra-ui/react';
 
 const TokenBPrice = () => {
-  const { account } = useStarknet();
   const { contract } = useAMMContract();
   const tokenAddress = useTokenBContract().contract?.address;
   const { data, loading, error } = useStarknetCall({
